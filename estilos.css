@@ -236,3 +236,80 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #f4f6f8; /* Um fundo sutil ao passar o mouse */
   color: #4A698B;
 }
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+ * ESTILOS DA PÁGINA DE AULA (SALA DE AULA)
+ * ========================================================================== */
+
+/* O container principal que cria as 2 colunas */
+.container-sala-de-aula {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* Coluna lateral de 300px e o resto do espaço para o conteúdo */
+  gap: 40px;
+  /* Adicionamos padding nas laterais e um max-width para o layout não ficar gigante em telas enormes */
+  max-width: 1400px;
+  margin: 40px auto; /* Espaçamento superior/inferior e centralização */
+  padding: 0 40px;
+}
+
+/* 1. Estilizando a caixa do menu lateral */
+.menu-lateral {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #EAEAEA;
+  /* A propriedade 'height: max-content' garante que a caixa não seja maior que seu conteúdo */
+  height: max-content; 
+}
+
+.menu-lateral h4 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.menu-lateral ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 2. Estilizando TODOS os links do menu */
+.menu-lateral a {
+  display: block; /* Faz o link ocupar a linha toda para facilitar o clique */
+  text-decoration: none;
+  color: #34495E; /* Cor padrão para links não-ativos */
+  padding: 10px 15px;
+  margin-bottom: 5px; /* Espacinho entre os links */
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 3. Efeito HOVER para os links normais */
+.menu-lateral a:hover {
+  background-color: #f0f2f5; /* Um cinza bem sutil */
+  color: #4A698B;
+}
+
+/* 4. Estilo de DESTAQUE para o link ATIVO */
+.menu-lateral a.aula-ativa {
+  background-color: #4A698B; /* Cor de Destaque */
+  color: white;
+  font-weight: bold;
+}
+
+/* 5. Estilizando a caixa do conteúdo principal */
+.conteudo-aula {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid #EAEAEA;
+}
