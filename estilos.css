@@ -158,158 +158,124 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
-
 /* ==========================================================================
- * ESTILOS DA PÁGINA DE CURSO
+ * ESTILOS DA PÁGINA DE AULA (Layout Elegante / Editorial)
  * ========================================================================== */
 
-/* --- Cabeçalho do Curso --- */
-.curso-cabecalho {
-  background-color: white;
-  text-align: center;
-  padding: 40px 20px;
-  border-bottom: 1px solid #EAEAEA;
-}
-
-.curso-cabecalho h1 {
-  margin-top: 0;
-}
-
-.curso-subtitulo {
-  font-size: 18px;
-  max-width: 700px; /* Evita que a linha fique muito longa */
-  margin: 10px auto 0; /* Centraliza o parágrafo na horizontal */
-  line-height: 1.6;
-}
-
-/* --- Lista de Aulas / Módulos --- */
-.curso-aulas {
-  padding: 40px 20px; /* Espaçamento geral da seção */
-  max-width: 900px; /* Define uma largura máxima para o conteúdo */
-  margin: 0 auto; /* Centraliza a seção na página */
-}
-
-.curso-aulas h2 {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.lista-modulos {
-  list-style: none; /* Remove os números do <ol> */
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 30px; /* Espaço entre os módulos */
-}
-
-.modulo {
-  background-color: white;
-  border: 1px solid #EAEAEA;
-  border-radius: 10px;
-  padding: 25px;
-}
-
-.modulo h3 {
-  margin-top: 0;
-  border-bottom: 1px solid #EAEAEA;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
-}
-
-/* --- Links das Aulas dentro dos Módulos --- */
-.modulo ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.modulo ul li a {
-  display: block; /* Faz o link ocupar a linha inteira, facilitando o clique */
-  padding: 12px 15px;
-  color: #34495E;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
-}
-
-.modulo ul li a:hover {
-  background-color: #f4f6f8; /* Um fundo sutil ao passar o mouse */
-  color: #4A698B;
-}
-
-
-
-
-
-
-
-
-
-
-/* ==========================================================================
- * ESTILOS DA PÁGINA DE AULA (SALA DE AULA)
- * ========================================================================== */
-
-/* O container principal que cria as 2 colunas */
+/* --- O Container Principal (Ainda usa Grid para a estrutura) --- */
 .container-sala-de-aula {
   display: grid;
-  grid-template-columns: 300px 1fr; /* Coluna lateral de 300px e o resto do espaço para o conteúdo */
-  gap: 40px;
-  /* Adicionamos padding nas laterais e um max-width para o layout não ficar gigante em telas enormes */
-  max-width: 1400px;
-  margin: 40px auto; /* Espaçamento superior/inferior e centralização */
-  padding: 0 40px;
+  grid-template-columns: 300px 1fr; /* Coluna lateral fixa, conteúdo flexível */
+  gap: 60px; /* Aumentamos o espaço entre as colunas para mais respiro */
+  
+  max-width: 1280px; /* Largura máxima para conforto de leitura */
+  margin: 60px auto; /* Centraliza o container e dá espaço vertical */
+  padding: 0 40px;   /* Espaçamento nas laterais da página */
 }
 
-/* 1. Estilizando a caixa do menu lateral */
+/* --- 1. O Menu Lateral (Agora mais leve) --- */
 .menu-lateral {
-  background-color: white;
-  padding: 25px;
-  border-radius: 10px;
-  border: 1px solid #EAEAEA;
-  /* A propriedade 'height: max-content' garante que a caixa não seja maior que seu conteúdo */
-  height: max-content; 
+  /* REMOVEMOS: background, border, border-radius, box-shadow */
+  /* ADICIONAMOS uma linha sutil para separar do conteúdo */
+  border-right: 1px solid #EAEAEA;
+  padding-right: 60px; /* Espaço entre o texto do menu e a linha */
 }
 
 .menu-lateral h4 {
   margin-top: 0;
-  font-size: 18px;
+  font-size: 16px;
+  text-transform: uppercase; /* Deixa o título em maiúsculas, como em uma revista */
+  letter-spacing: 1px;     /* Aumenta o espaçamento entre as letras */
+  color: #34495E;
 }
 
 .menu-lateral ol {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 20px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaço entre os links das aulas */
 }
 
-/* 2. Estilizando TODOS os links do menu */
+/* Estilo para TODOS os links do menu */
 .menu-lateral a {
-  display: block; /* Faz o link ocupar a linha toda para facilitar o clique */
+  display: block;
   text-decoration: none;
-  color: #34495E; /* Cor padrão para links não-ativos */
-  padding: 10px 15px;
-  margin-bottom: 5px; /* Espacinho entre os links */
-  border-radius: 6px;
-  transition: all 0.2s ease-in-out;
+  color: #5a6a7a; /* Cor mais suave para os links não-ativos */
+  font-size: 16px;
+  transition: color 0.2s ease;
 }
 
-/* 3. Efeito HOVER para os links normais */
+/* Efeito hover para os links normais */
 .menu-lateral a:hover {
-  background-color: #f0f2f5; /* Um cinza bem sutil */
-  color: #4A698B;
+  color: #4A698B; /* Apenas muda a cor ao passar o mouse */
 }
 
-/* 4. Estilo de DESTAQUE para o link ATIVO */
+/* Estilo de DESTAQUE para o link ATIVO (foco na tipografia) */
 .menu-lateral a.aula-ativa {
-  background-color: #4A698B; /* Cor de Destaque */
-  color: white;
+  color: #4A698B; /* Cor principal */
   font-weight: bold;
 }
 
-/* 5. Estilizando a caixa do conteúdo principal */
+/* --- 2. O Conteúdo da Aula (Foco na legibilidade) --- */
 .conteudo-aula {
-  background-color: white;
-  padding: 40px;
-  border-radius: 10px;
-  border: 1px solid #EAEAEA;
+  /* REMOVEMOS: background, border, etc. O conteúdo agora "flutua" */
+  padding-top: 5px; /* Pequeno ajuste para alinhar com o título do menu */
+}
+
+.conteudo-aula h1 {
+  margin-top: 0;
+  line-height: 1.3;
+}
+
+.conteudo-aula p {
+  font-size: 18px;        /* Tamanho de fonte confortável para leitura */
+  line-height: 1.8;       /* Espaçamento entre linhas generoso */
+  color: #34495E;
+}
+
+/* --- 3. O Novo Componente: Caixa de Informação --- */
+.caixa-info {
+  margin: 40px 0; /* Espaço para separar do texto principal */
+  padding: 25px;
+  border-radius: 8px;
+  background-color: rgba(74, 105, 139, 0.05); /* Fundo azul, 5% de opacidade */
+  border-left: 5px solid #4A698B; /* A "âncora" visual */
+}
+
+.caixa-info h4 {
+  margin-top: 0;
+  color: #4A698B; /* Título da caixa com a cor principal */
+}
+
+.caixa-info p {
+  font-size: 16px; /* Texto da caixa um pouco menor */
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Variação de "Aviso" para a caixa */
+.caixa-info.aviso {
+  background-color: rgba(255, 193, 7, 0.1); /* Fundo amarelo, 10% opacidade */
+  border-left-color: #FFC107;
+}
+.caixa-info.aviso h4 {
+  color: #c79806;
+}
+
+/* --- Responsividade para a Página da Aula --- */
+@media (max-width: 900px) {
+  .container-sala-de-aula {
+    /* Desfaz o layout de grid e faz os itens ficarem em coluna */
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .menu-lateral {
+    border-right: none; /* Remove a linha vertical no mobile */
+    border-bottom: 1px solid #EAEAEA; /* Adiciona uma linha horizontal */
+    padding-right: 0;
+    padding-bottom: 30px; /* Espaço antes do conteúdo da aula */
+  }
 }
