@@ -1,0 +1,238 @@
+/* ==========================================================================
+ * CONFIGURAÇÃO GERAL E FONTES
+ * ========================================================================== */
+
+/* ATENÇÃO: Lembre-se que este CSS só funciona se você adicionar o <link>
+ * correto do Google Fonts no seu arquivo HTML! */
+
+/* Estilo para todo o corpo da página (TEXTO DE LEITURA) */
+body {
+  /* A fonte para parágrafos deve ser a mais limpa e legível (Sans-Serif) */
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: #EAEAEA;  /* Fundo Cinza Papel */
+  color: #34495E;            /* Texto Principal Azul Ardósia */
+  margin: 0; /* Boa prática: remover a margem padrão do body */
+  padding: 0; /* Boa prática: remover o padding padrão do body */
+}
+
+/* Estilo para TÍTULOS */
+h1, h2, h3, h4, h5, h6 {
+  /* A fonte com personalidade (Serif) vai nos títulos para dar autoridade */
+  font-family: 'Lora', serif;
+  color: #4A698B; /* Cor Principal Azul Blueprint, para dar destaque aos títulos */
+}
+
+
+/* ==========================================================================
+ * LAYOUT E COMPONENTES PRINCIPAIS
+ * ========================================================================== */
+
+/* --- CABEÇALHO E NAVEGAÇÃO --- */
+
+.topo {
+  /* Layout com Flexbox para alinhar título à esquerda e menu à direita */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: white;
+  padding: 12px 40px; /* Espaçamento interno: 12px vertical, 40px horizontal */
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.topo h1 {
+  font-size: 32px;
+  margin: 0; /* Essencial para remover margens padrão e controlar a altura */
+}
+
+.menu-principal ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.menu-principal a {
+  text-decoration: none;
+  color: #34495E;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+.menu-principal a:hover {
+  color: #4A698B;
+  text-decoration: underline;
+}
+
+/* --- OUTROS COMPONENTES --- */
+
+.botao-principal {
+  background-color: #FFC107;      /* Cor de Acento Amarelo Ouro */
+  color: #34495E;                 /* O Azul Ardósia oferece ótimo contraste */
+  padding: 15px 30px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;''
+}
+/* Estilo para a seção que contém o catálogo */
+.secao-catalogo {
+  padding: 60px 40px; /* Adiciona um respiro para a seção inteira */
+  text-align: center; /* Centraliza o H2 "Explore Nossos Cursos" */
+}
+
+/* 1. A Grade de Cursos (Corrigido) */
+.grid-cursos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Perfeito! 3 colunas */
+  gap: 30px; /* ADICIONADO: Espaço de 30px entre cada card */
+  margin-top: 40px; /* Espaço entre o título H2 e os cards */
+  text-align: left; /* Alinha o texto dos cards à esquerda */
+}
+
+/* 2. O Card do Curso (Corrigido e Melhorado) */
+.card-curso {
+  background-color: white;
+  padding: 25px; /* Um padding igual em todos os lados funciona bem em cards */
+  border: 1px solid #EAEAEA; /* CORRIGIDO: Borda sutil, completa */
+  border-radius: 10px; /* SUGESTÃO: Cantos mais arredondados e modernos */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05); /* Sombra um pouco mais suave */
+  text-decoration: none; /* Remove o sublinhado do link */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animação suave para o hover */
+}
+
+/* 3. Efeito Hover (Toque Profissional) */
+.card-curso:hover {
+  transform: translateY(-5px); /* Levanta o card sutilmente */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+}
+
+/* 4. Estilo do Texto Dentro do Card */
+.card-curso h3 {
+  margin-top: 0; /* Remove espaço extra no topo do H3 */
+  color: #4A698B; /* Cor Principal (Azul Blueprint) */
+}
+
+.card-curso p {
+  color: #34495E; /* Cor de Texto Principal (Azul Ardósia) */
+  line-height: 1.6; /* Melhora a legibilidade do parágrafo */
+}
+
+/* 5. Responsividade (O Mais Importante!) */
+@media (max-width: 900px) {
+  .grid-cursos {
+    grid-template-columns: repeat(2, 1fr); /* Em telas médias (tablets), mostra 2 colunas */
+  }
+}
+
+@media (max-width: 600px) {
+  .secao-catalogo {
+    padding: 40px 20px; /* Diminui o padding da seção em telas pequenas */
+  }
+  .grid-cursos {
+    grid-template-columns: 1fr; /* Em telas pequenas (celulares), mostra 1 coluna */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+ * ESTILOS DA PÁGINA DE CURSO
+ * ========================================================================== */
+
+/* --- Cabeçalho do Curso --- */
+.curso-cabecalho {
+  background-color: white;
+  text-align: center;
+  padding: 40px 20px;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.curso-cabecalho h1 {
+  margin-top: 0;
+}
+
+.curso-subtitulo {
+  font-size: 18px;
+  max-width: 700px; /* Evita que a linha fique muito longa */
+  margin: 10px auto 0; /* Centraliza o parágrafo na horizontal */
+  line-height: 1.6;
+}
+
+/* --- Lista de Aulas / Módulos --- */
+.curso-aulas {
+  padding: 40px 20px; /* Espaçamento geral da seção */
+  max-width: 900px; /* Define uma largura máxima para o conteúdo */
+  margin: 0 auto; /* Centraliza a seção na página */
+}
+
+.curso-aulas h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.lista-modulos {
+  list-style: none; /* Remove os números do <ol> */
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Espaço entre os módulos */
+}
+
+.modulo {
+  background-color: white;
+  border: 1px solid #EAEAEA;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.modulo h3 {
+  margin-top: 0;
+  border-bottom: 1px solid #EAEAEA;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+/* --- Links das Aulas dentro dos Módulos --- */
+.modulo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modulo ul li a {
+  display: block; /* Faz o link ocupar a linha inteira, facilitando o clique */
+  padding: 12px 15px;
+  color: #34495E;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.modulo ul li a:hover {
+  background-color: #f4f6f8; /* Um fundo sutil ao passar o mouse */
+  color: #4A698B;
+}
