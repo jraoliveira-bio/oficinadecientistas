@@ -29,16 +29,29 @@ h1, h2, h3, h4, h5, h6 {
 
 /* --- CABEÇALHO E NAVEGAÇÃO --- */
 
+/* --- ESTRUTURA GLOBAL ALINHADA (NOVO BLOCO) --- */
+/* Aplicamos as mesmas regras de largura e centralização para todos os blocos principais */
+.topo,
+.container-sala-de-aula,
+footer {
+  max-width: 1280px;  /* Largura máxima do conteúdo */
+  margin-left: auto;  /* Truque para centralizar */
+  margin-right: auto; /* Truque para centralizar */
+  padding-left: 40px;  /* Espaçamento lateral consistente */
+  padding-right: 40px; /* Espaçamento lateral consistente */
+}
+
+/* --- CABEÇALHO E NAVEGAÇÃO (REGRA ATUALIZADA) --- */
 .topo {
-  /* Layout com Flexbox para alinhar título à esquerda e menu à direita */
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   background-color: white;
-  padding: 12px 40px; /* Espaçamento interno: 12px vertical, 40px horizontal */
+  padding-top: 12px;
+  padding-bottom: 12px;
   border-bottom: 1px solid #EAEAEA;
 }
+/* (As regras para .topo h1, .menu-principal, etc., continuam as mesmas) */
 
 .topo h1 {
   font-size: 32px;
@@ -77,7 +90,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 18px;
   font-weight: bold;
   text-decoration: none;
-  display: inline-block;''
+  display: inline-block;
 }
 /* Estilo para a seção que contém o catálogo */
 .secao-catalogo {
@@ -163,15 +176,19 @@ h1, h2, h3, h4, h5, h6 {
  * ========================================================================== */
 
 /* --- O Container Principal (Ainda usa Grid para a estrutura) --- */
+/* --- PÁGINA DE AULA (SALA DE AULA) (REGRA ATUALIZADA) --- */
 .container-sala-de-aula {
   display: grid;
-  grid-template-columns: 300px 1fr; /* Coluna lateral fixa, conteúdo flexível */
-  gap: 60px; /* Aumentamos o espaço entre as colunas para mais respiro */
-  
-  max-width: 1280px; /* Largura máxima para conforto de leitura */
-  margin: 60px auto; /* Centraliza o container e dá espaço vertical */
-  padding: 0 40px;   /* Espaçamento nas laterais da página */
+  grid-template-columns: 260px 1fr; /* Menu mais estreito */
+  gap: 30px;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  /* O padding agora é controlado pela regra global acima */
+  padding-left: 0;
+  padding-right: 0;
 }
+/* (As regras para .menu-lateral, .conteudo-aula, etc., continuam as mesmas) */
+
 
 /* --- 1. O Menu Lateral (Agora mais leve) --- */
 .menu-lateral {
@@ -278,4 +295,38 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 0;
     padding-bottom: 30px; /* Espaço antes do conteúdo da aula */
   }
+}
+
+/* --- RODAPÉ (NOVA REGRA) --- */
+footer {
+  /* Separação visual do resto do conteúdo */
+  border-top: 1px solid #EAEAEA;
+  margin-top: 60px; /* Espaço em branco acima do rodapé */
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  /* Estilo do texto */
+  text-align: center;
+  font-size: 14px;
+  color: #5a6a7a;
+}
+
+/* --- Estilo para Vídeos Responsivos do YouTube --- */
+
+.video-container {
+  position: relative;
+  /* A mágica está aqui: 56.25% é a proporção de 16:9 (9 / 16 = 0.5625) */
+  padding-bottom: 56.25%; 
+  height: 0;
+  overflow: hidden;
+  margin: 20px 0; /* Um espaço acima e abaixo do vídeo */
+  border-radius: 10px; /* Opcional: para deixar as bordas arredondadas */
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
