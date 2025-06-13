@@ -86,20 +86,17 @@ footer {
 
 /* --- RECRIADO: Card de Curso com novo design --- */
 .card-curso {
-  background-color: rgba(255, 255, 255, 0.7); /* Fundo branco com 70% de opacidade */
-  backdrop-filter: blur(10px); /* Efeito de vidro fosco no fundo (suporte varia entre navegadores) */
-  padding: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Borda branca semi-transparente */
-  border-radius: 12px;
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08); /* Sombra mais suave e difusa */
-  text-decoration: none;
-  transition: all 0.3s ease;
+background-color: rgba(255, 255, 255, 0.8); /* Aumentei um pouco a opacidade padrão /
+border: 1px solid rgba(255, 255, 255, 0.6); / Borda um pouco mais visível */
+border-radius: 12px;
+box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+text-decoration: none;
+transition: all 0.3s ease;
 }
 
 .card-curso:hover {
-  transform: translateY(-8px);
-  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
-  background-color: rgba(255, 255, 255, 0.9); /* Fica mais opaco no hover */
+background-color: rgba(255, 255, 255, 0.95); /* Mais opaco no hover */
+box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 .card-curso h3 { margin-top: 0; color: #4A698B; }
