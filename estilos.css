@@ -23,6 +23,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Esta regra garante que os blocos principais tenham a mesma largura e alinhamento */
 .topo,
 .secao-catalogo,
+.secao-apresentacao,
 .curso-cabecalho,  /* <-- ADICIONADO */
 .curso-aulas,      /* <-- ADICIONADO */
 .container-sala-de-aula,
@@ -83,6 +84,25 @@ footer {
   margin-top: 40px;
   text-align: left;
 }
+
+.secao-apresentacao {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  text-align: center;
+  border-bottom: 1px solid #EAEAEA; /* Para separar do catálogo de cursos */
+}
+
+.secao-apresentacao h2 {
+  font-size: 36px;
+  margin-bottom: 0; /* REMOVE a margem de baixo do título */
+}
+
+.secao-apresentacao p {
+  font-size: 18px;
+  color: #5a6a7a;
+  margin-top: 8px; /* DEFINE uma margem superior pequena para o parágrafo */
+}
+
 
 /* --- RECRIADO: Card de Curso com novo design --- */
 .card-curso {
