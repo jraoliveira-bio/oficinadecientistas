@@ -105,22 +105,41 @@ footer {
 
 
 /* --- RECRIADO: Card de Curso com novo design --- */
+/* --- Estilos para os Cards de Curso na Homepage --- */
+.grid-cursos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+  text-align: left;
+}
+
 .card-curso {
-background-color: rgba(255, 255, 255, 0.8); /* Aumentei um pouco a opacidade padrão /
-border: 1px solid rgba(255, 255, 255, 0.6); / Borda um pouco mais visível */
-border-radius: 12px;
-box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
-text-decoration: none;
-transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.3); /* Fundo branco com 70% de opacidade */
+  backdrop-filter: blur(10px); /* Efeito de vidro fosco (suporte varia) */
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: #34495E; /* Garante que o texto dentro do link não fique azul */
 }
 
 .card-curso:hover {
-background-color: rgba(255, 255, 255, 0.95); /* Mais opaco no hover */
-box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
-.card-curso h3 { margin-top: 0; color: #4A698B; }
-.card-curso p { color: #34495E; line-height: 1.6; }
+.card-curso h3 {
+  margin-top: 0;
+  color: #4A698B;
+}
+
+.card-curso p {
+  line-height: 1.6;
+}
 
 
 /* ==========================================================================
