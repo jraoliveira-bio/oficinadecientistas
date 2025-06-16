@@ -136,3 +136,18 @@ footer {
 @media (max-width: 600px) {
   /* ... suas regras responsivas ... */
 }
+
+
+
+
+/* ==========================================================================
+ * ESTILOS DA PAGINA INICIAL
+ * ========================================================================== */
+
+
+.logo-apresentacao {
+ display: block; /* Faz o logo ocupar a largura disponível e quebrar a linha */
+ max-width: 150px; /* Defina um tamanho máximo para o logo */
+ height: auto; /* Mantém a proporção da imagem */
+ margin: 0 auto 20px auto; /* Centraliza horizontalmente e adiciona margem abaixo */
+}
