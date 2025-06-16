@@ -4,7 +4,7 @@
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: #EAEAEA;
+  background-color: #DCDFE2; /* Fundo do navegador (Cinza Nanquim) */
   color: #34495E;
   margin: 0;
   padding: 0;
@@ -15,37 +15,40 @@ h1, h2, h3, h4, h5, h6 {
   color: #4A698B;
 }
 
+* {
+  box-sizing: border-box; /* Garante que o layout seja previsível */
+}
+
+
 /* ==========================================================================
- * LAYOUT E COMPONENTES GLOBAIS
+ * LAYOUT GLOBAL
  * ========================================================================== */
 
-/* --- ESTRUTURA GLOBAL ALINHADA --- */
-/* Esta regra garante que os blocos principais tenham a mesma largura e alinhamento */
-.topo,
-.secao-catalogo,
-.curso-cabecalho,  /* <-- ADICIONADO */
-.curso-aulas,      /* <-- ADICIONADO */
-.container-sala-de-aula,
-footer {
+.pagina-container {
+  background-color: #EAEAEA; /* Fundo principal do conteúdo (Cinza Papel) */
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 40px;
-  padding-right: 40px;
 }
 
-/* --- CABEÇALHO E NAVEGAÇÃO --- */
+/* --- CABEÇALHO (Faixa de Largura Total) --- */
 .topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  background-color: rgb(223, 223, 223);
   border-bottom: 1px solid #EAEAEA;
 }
 
-.topo h1 {
+/* Container do conteúdo do cabeçalho (com largura máxima) */
+.topo-conteudo {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topo-conteudo h1 {
   font-size: 26px;
   margin: 0;
 }
@@ -56,10 +59,12 @@ footer {
 
 /* --- RODAPÉ --- */
 footer {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 40px;
   border-top: 1px solid #EAEAEA;
   margin-top: 60px;
-  padding-top: 30px;
-  padding-bottom: 30px;
   text-align: center;
   font-size: 14px;
   color: #5a6a7a;
@@ -67,15 +72,23 @@ footer {
 
 
 /* ==========================================================================
- * ESTILOS DA PÁGINA INICIAL (INDEX.HTML)
+ * ESTILOS DE SEÇÕES E COMPONENTES
  * ========================================================================== */
 
+/* --- Seções da Homepage --- */
+.secao-apresentacao,
 .secao-catalogo {
   padding-top: 60px;
   padding-bottom: 60px;
+  padding-left: 40px;
+  padding-right: 40px;
   text-align: center;
 }
+.secao-apresentacao { border-bottom: 1px solid #EAEAEA; }
+.secao-apresentacao h2 { font-size: 36px; margin-bottom: 0; }
+.secao-apresentacao p { font-size: 18px; color: #5a6a7a; margin-top: 8px; }
 
+/* --- Catálogo de Cursos (Homepage) --- */
 .grid-cursos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -84,78 +97,41 @@ footer {
   text-align: left;
 }
 
-/* --- RECRIADO: Card de Curso com novo design --- */
 .card-curso {
-background-color: rgba(255, 255, 255, 0.8); /* Aumentei um pouco a opacidade padrão /
-border: 1px solid rgba(255, 255, 255, 0.6); / Borda um pouco mais visível */
-border-radius: 12px;
-box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
-text-decoration: none;
-transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: #34495E;
 }
-
-.card-curso:hover {
-background-color: rgba(255, 255, 255, 0.95); /* Mais opaco no hover */
-box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
-}
-
+.card-curso:hover { transform: translateY(-8px); box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12); background-color: rgba(255, 255, 255, 0.9); }
 .card-curso h3 { margin-top: 0; color: #4A698B; }
-.card-curso p { color: #34495E; line-height: 1.6; }
+.card-curso p { line-height: 1.6; }
 
+/* --- Página de Apresentação do Curso --- */
+.curso-cabecalho { text-align: center; padding: 60px 40px 40px 40px; }
+/* ... outras regras da página de curso ... */
 
-/* ==========================================================================
- * ESTILOS DA PÁGINA DE CURSO (APRESENTAÇÃO)
- * ========================================================================== */
-
-.curso-cabecalho { text-align: center; padding-top: 60px; padding-bottom: 40px; }
-.curso-cabecalho h1 { margin-top: 0; }
-.curso-subtitulo { font-size: 18px; max-width: 700px; margin: 10px auto 0; line-height: 1.6; }
-
-.curso-aulas { padding-top: 40px; padding-bottom: 60px; }
-.curso-aulas h2 { text-align: center; margin-bottom: 40px; }
-.lista-modulos { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 30px; }
-.modulo { background-color: white; border: 1px solid #EAEAEA; border-radius: 10px; padding: 25px; }
-.modulo h3 { margin-top: 0; border-bottom: 1px solid #EAEAEA; padding-bottom: 15px; margin-bottom: 15px; }
-.modulo ul { list-style: none; padding: 0; margin: 0; }
-.modulo ul li a { display: block; padding: 12px 15px; color: #34495E; text-decoration: none; border-radius: 6px; transition: background-color 0.2s ease; }
-.modulo ul li a:hover { background-color: #f4f6f8; color: #4A698B; }
-
-
-/* ==========================================================================
- * ESTILOS DA PÁGINA DE AULA (SALA DE AULA)
- * ========================================================================== */
-
+/* --- Página de Aula (Sala de Aula) --- */
 .container-sala-de-aula {
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 60px;
   margin-top: 60px;
   margin-bottom: 60px;
+  padding: 0 40px;
 }
-
-.menu-lateral { border-right: 1px solid #EAEAEA; padding-right: 60px; }
-/* ... O restante do seu CSS para a sala de aula, que já estava bom ... */
+/* ... outras regras da sala de aula ... */
 
 /* ==========================================================================
  * RESPONSIVIDADE
  * ========================================================================== */
 @media (max-width: 900px) {
-  .grid-cursos {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .container-sala-de-aula {
-    grid-template-columns: 1fr;
-  }
-  .menu-lateral { border-right: none; border-bottom: 1px solid #EAEAEA; padding-right: 0; padding-bottom: 30px; }
+  /* ... suas regras responsivas ... */
 }
-
 @media (max-width: 600px) {
-  /* Regra global para diminuir o padding lateral no mobile */
-  .topo, .secao-catalogo, .curso-cabecalho, .curso-aulas, .container-sala-de-aula, footer {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .grid-cursos {
-    grid-template-columns: 1fr;
-  }
+  /* ... suas regras responsivas ... */
 }
