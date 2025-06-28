@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .topo-conteudo h1 {
-  font-size: 26px;
+  font-size: 24px;
   margin: 0;
   color: white;
 }
@@ -79,7 +79,7 @@ footer {
 /* --- Seções da Homepage --- */
 .secao-apresentacao,
 .secao-catalogo {
-  padding-top: 60px;
+  padding-top: 45px;
   padding-bottom: 60px;
   padding-left: 40px;
   padding-right: 40px;
@@ -150,4 +150,111 @@ footer {
  max-width: 150px; /* Defina um tamanho máximo para o logo */
  height: auto; /* Mantém a proporção da imagem */
  margin: 0 auto 20px auto; /* Centraliza horizontalmente e adiciona margem abaixo */
+}
+
+/* REGRA NOVA: para o container que agrupa logo e título */
+.logo-titulo-wrapper {
+  display: flex;          /* Alinha os itens lado a lado */
+  align-items: center;    /* Alinha verticalmente no centro (muito importante!) */
+  gap: 15px;              /* Cria um espaço de 15px entre o logo e o título */
+}
+
+/* REGRA NOVA: para estilizar a imagem do logo no header */
+.logo-header {
+  height: 40px; /* Define uma altura fixa para o logo. Ajuste conforme necessário. */
+  width: auto;  /* A largura se ajusta para manter a proporção da imagem */
+}
+
+/* ==========================================================================
+ * SEÇÃO DE CHAMADA PRINCIPAL (Layout Editorial)
+ * ========================================================================== */
+
+.chamada-principal {
+  background-color: rgba(74, 105, 139, 0.03); /* O seu azul super sutil */
+  padding: 60px 0; /* Apenas espaçamento vertical na faixa */
+  border-top: 1px solid #EAEAEA;
+  border-bottom: 1px solid #EAEAEA; /* Bordas para definir melhor a faixa */
+}
+
+/* Regra para o container que alinha o conteúdo */
+.chamada-conteudo {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 40px; /* Alinhamento com o resto da página */
+}
+
+.chamada-conteudo h2 {
+  margin-top: 0;
+  margin-bottom: 15px; /* Espaço entre o título e o parágrafo */
+  font-size: 24px;
+}
+
+.chamada-conteudo p {
+  /* Limitamos a largura da linha para facilitar a leitura */
+  max-width: 800px; 
+  margin: 0; /* Removemos a margem auto, pois agora o alinhamento é à esquerda */
+  line-height: 1.7;
+  font-size: 18px;
+  color: #5a6a7a;
+}
+
+/* ==========================================================================
+ * SEÇÃO DE CURSO EM DESTAQUE (Homepage)
+ * ========================================================================== */
+
+.secao-destaque-curso {
+  display: flex;
+  align-items: center; /* Alinha as colunas verticalmente */
+  gap: 50px; /* Espaço entre o texto e o card */
+  
+  /* Herdando o alinhamento global */
+  max-width: 1280px;
+  margin: 60px auto;
+  padding: 0 40px;
+}
+
+.texto-destaque {
+  flex-basis: 50%; /* Define que o texto ocupa 50% do espaço */
+}
+
+.card-destaque {
+  flex-basis: 50%; /* Define que o card ocupa 50% do espaço */
+  height: 450px; /* Altura fixa para o card, ajuste conforme necessário */
+  border-radius: 12px;
+  text-decoration: none;
+  position: relative; /* Essencial para posicionar o texto por cima */
+  overflow: hidden; /* Garante que nada vaze das bordas arredondadas */
+  margin: 50px;
+  
+  /* --- A MÁGICA DO GRADIENTE E IMAGEM --- */
+  background-image: 
+    /* Camada 2: A imagem de fundo */
+    url('imagens/gatocard2.png');
+
+  background-size: cover; /* Faz a imagem cobrir todo o card */
+  background-position: center; /* Centraliza a imagem */
+  transition: transform 0.3s ease;
+}
+
+.card-destaque:hover {
+  transform: scale(1.03); /* Efeito de zoom sutil no hover */
+}
+
+/* Conteúdo de texto sobre o card */
+.card-destaque-conteudo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 30px;
+}
+
+.card-destaque-conteudo h4 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.card-destaque-conteudo p {
+  margin: 5px 0 0 0;
+  font-size: 16px;
 }
