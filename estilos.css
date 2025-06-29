@@ -130,38 +130,8 @@ footer {
 /* ==========================================================================
  * RESPONSIVIDADE
  * ========================================================================== */
-@media (max-width: 900px) {
-  /* ... suas regras responsivas ... */
-}
-@media (max-width: 600px) {
-  /* ... suas regras responsivas ... */
-}
-@media (max-width: 768px) { /* Usando um breakpoint maior para tablets */
-  /* ... outras regras ... */
-  .secao-destaque-curso {
-    flex-direction: column; /* Faz os itens flex se empilharem na vertical */
-  }
-}
 
-@media (max-width: 900px) {
-  .grid-cursos {
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
-  }
-}
-@media (max-width: 600px) {
-  .grid-cursos {
-    grid-template-columns: 1fr; /* 1 coluna */
-  }
-}
-@media (max-width: 768px) {
-  /* ... outras regras responsivas que você já tem ... */
 
-  /* Regra para o cabeçalho no mobile */
-  .topo-conteudo {
-    flex-direction: column; /* Faz o título e o menu ficarem em coluna */
-    gap: 20px; /* Adiciona um espaço vertical entre o título e o menu */
-  }
-}
 
 
 /* ==========================================================================
@@ -255,7 +225,6 @@ footer {
   background-image: 
     /* Camada 2: A imagem de fundo */
     url('imagens/gatocard2.png');
-
   background-size: cover; /* Faz a imagem cobrir todo o card */
   background-position: center; /* Centraliza a imagem */
   transition: transform 0.3s ease;
@@ -282,3 +251,122 @@ footer {
   margin: 5px 0 0 0;
   font-size: 16px;
 }
+
+.menu-toggle,
+.menu-hamburger {
+  display: none; /* Escondido por padrão em telas grandes */
+}
+
+/* ==========================================================================
+ * RESPONSIVIDADE (TUDO ORGANIZADO)
+ * ========================================================================== */
+
+/* Para telas de até 900px de largura (tablets, etc.) */
+@media (max-width: 900px) {
+  .grid-cursos {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  }
+}
+
+/* Para telas de até 768px de largura (celulares e tablets menores) */
+@media (max-width: 768px) {
+
+  /* --- Cabeçalho e Menu Hamburger --- */
+  .topo-conteudo {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; /* Garante alinhamento vertical */
+  }
+
+  .menu-hamburger {
+    display: flex; /* Mostra o ícone do hamburger */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .menu-hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .menu-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #34495E;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .menu-principal ul {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+  
+  .menu-principal a {
+      font-size: 24px;
+  }
+
+  /* Lógica para mostrar o menu e animar o ícone */
+  .menu-toggle:checked ~ .menu-principal {
+    transform: translateX(0);
+  }
+
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+  }
+
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* --- Seção de Destaque --- */
+  .secao-destaque-curso {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .texto-destaque {
+    display: block;
+    width: 100%;
+    text-align: center;
+    flex-basis: auto;
+  }
+
+  .card-destaque {
+    display: block;
+    width: 100%;
+    margin: 40px auto 0 auto;
+    flex-basis: auto;
+    height: auto;
+    aspect-ratio: 970 / 596; /* Mantive a proporção que você definiu */
+    background-image: url('imagens/gatocard2-mobile.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
+
+/* Para telas de até 600px de largura (celulares menores) */
+
+  .grid-cursos {
+    grid-template-columns: 1fr; /* 1 coluna */
+  }
