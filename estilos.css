@@ -358,7 +358,7 @@ footer {
     flex-basis: auto;
     height: auto;
     aspect-ratio: 970 / 596; /* Mantive a proporção que você definiu */
-    background-image: url('imagens/gatocard2-mobile.png');
+    background-image: url('imagens/patocard-mobile.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
