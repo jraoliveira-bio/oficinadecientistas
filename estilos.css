@@ -136,8 +136,32 @@ footer {
 @media (max-width: 600px) {
   /* ... suas regras responsivas ... */
 }
+@media (max-width: 768px) { /* Usando um breakpoint maior para tablets */
+  /* ... outras regras ... */
+  .secao-destaque-curso {
+    flex-direction: column; /* Faz os itens flex se empilharem na vertical */
+  }
+}
 
+@media (max-width: 900px) {
+  .grid-cursos {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  }
+}
+@media (max-width: 600px) {
+  .grid-cursos {
+    grid-template-columns: 1fr; /* 1 coluna */
+  }
+}
+@media (max-width: 768px) {
+  /* ... outras regras responsivas que você já tem ... */
 
+  /* Regra para o cabeçalho no mobile */
+  .topo-conteudo {
+    flex-direction: column; /* Faz o título e o menu ficarem em coluna */
+    gap: 20px; /* Adiciona um espaço vertical entre o título e o menu */
+  }
+}
 
 
 /* ==========================================================================
