@@ -263,6 +263,422 @@ footer {
 }
 
 /* ==========================================================================
+ * PÁGINA DE CURSOS (/cursos)
+ * ========================================================================== */
+
+/* --- Seção Manifesto --- */
+.secao-manifesto {
+  padding: 60px 40px;
+  background-color: rgba(74, 105, 139, 0.03); /* Fundo azul bem sutil */
+  border-bottom: 1px solid #EAEAEA;
+  text-align: center;
+}
+
+.manifesto-conteudo h2 {
+  margin-top: 0;
+}
+
+.manifesto-conteudo p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #5a6a7a;
+  max-width: 800px;
+  margin: 15px auto 0 auto; /* Centraliza o parágrafo */
+}
+
+/* --- Seção Vitrine de Cursos --- */
+.secao-vitrine-cursos {
+  padding: 60px 40px;
+}
+
+.secao-vitrine-cursos h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.vitrine-grid {
+  display: grid;
+  /* Grid flexível: Mínimo de 320px de largura, máximo de 1fr (ocupa o espaço) */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1200px; /* Limita a largura da grade */
+  margin: 0 auto; /* Centraliza a grade */
+}
+
+/* --- Card de Curso Padronizado --- */
+.card-curso-completo {
+  display: block;
+  text-decoration: none;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #EAEAEA;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.card-curso-completo:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.10);
+}
+
+.card-curso-completo img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9; /* Proporção da imagem */
+  object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+}
+
+.card-curso-conteudo {
+  padding: 20px 25px 25px 25px;
+}
+
+.card-curso-conteudo h3 {
+  margin: 0 0 10px 0;
+  color: #4A698B;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espaço entre o ícone e o texto */
+}
+
+.card-curso-conteudo h3 .fa-video {
+  color: #34495E;
+  font-size: 18px;
+}
+
+.card-curso-descricao {
+  font-size: 16px;
+  color: #5a6a7a;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.card-curso-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap; /* Permite que as tags quebrem a linha se necessário */
+}
+
+.tag-meta {
+  background-color: #EAEAEA;
+  color: #5a6a7a;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+ * PÁGINA DE APRESENTAÇÃO DE CURSO (/curso-escrita)
+ * ========================================================================== */
+
+/* --- Seção Hero --- */
+.hero-curso {
+  background-color: #34495E; /* Cor de fundo escura do cabeçalho */
+  color: white;
+  text-align: center;
+  padding: 80px 40px;
+}
+
+.hero-curso h1 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 42px;
+}
+
+.subtitulo-hero {
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  opacity: 0.9;
+}
+
+/* --- Botão Principal (reutilizável) --- */
+.botao-principal {
+    display: inline-block;
+    background-color: #4A698B;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.botao-principal:hover {
+    background-color: #34495E;
+    transform: translateY(-2px);
+}
+
+/* --- Seção Aprendizado --- */
+.secao-aprendizado {
+  padding: 60px 40px;
+  background-color: #f7f7f7;
+}
+
+.secao-aprendizado h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.lista-aprendizado {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Duas colunas */
+  gap: 20px;
+}
+
+.lista-aprendizado li {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  font-size: 17px;
+}
+
+.lista-aprendizado .fa-check-circle {
+  color: #4A698B;
+  margin-top: 4px;
+}
+
+/* --- Seção Grade Curricular (Acordeão) --- */
+.secao-grade-curricular {
+  padding: 60px 40px;
+}
+
+.secao-grade-curricular h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.acordeon-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.acordeon-item {
+  border-bottom: 1px solid #EAEAEA;
+}
+.acordeon-item:first-child {
+    border-top: 1px solid #EAEAEA;
+}
+
+.acordeon-cabecalho {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #34495E;
+}
+
+.acordeon-cabecalho:hover {
+  background-color: #f7f7f7;
+}
+
+.acordeon-titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.acordeon-titulo .fa-video, 
+.acordeon-titulo .fa-book-open {
+  color: #4A698B;
+  width: 20px; /* Alinha os títulos mesmo sem ícone */
+}
+
+.icone-acordeon {
+  transition: transform 0.3s ease;
+}
+
+.acordeon-item.aberto .icone-acordeon {
+  transform: rotate(45deg);
+}
+
+.acordeon-conteudo {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  padding: 0 20px;
+}
+
+.acordeon-conteudo p {
+  padding-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* --- Seção CTA Final --- */
+.secao-cta-final {
+  background-color: #f7f7f7;
+  text-align: center;
+  padding: 60px 40px;
+  border-top: 1px solid #EAEAEA;
+}
+
+.secao-cta-final h3 {
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+/* ==========================================================================
+ * LAYOUT DA SALA DE AULA (/aulaXX)
+ * ========================================================================== */
+
+.container-sala-de-aula {
+  display: grid;
+  grid-template-columns: 280px 1fr; /* Coluna fixa de 280px e o resto flexível */
+  gap: 40px;
+  padding: 40px;
+  align-items: flex-start; /* Alinha os itens no topo */
+}
+
+/* --- Menu Lateral de Aulas --- */
+.menu-aulas {
+  position: sticky; /* Efeito "fixo" ao rolar */
+  top: 40px; /* Distância do topo */
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #EAEAEA;
+}
+
+.menu-aulas h3 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.menu-aulas ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-aulas li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #34495E;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  font-weight: 600;
+}
+
+.menu-aulas li a:hover {
+  background-color: #EAEAEA;
+}
+
+.menu-aulas li.aula-ativa a {
+  background-color: #DCDFE2;
+  color: #34495E;
+}
+
+.menu-aulas li a .fas {
+  width: 20px;
+  text-align: center;
+  color: #4A698B;
+}
+
+/* --- Conteúdo Principal da Aula --- */
+.conteudo-aula h1 {
+  margin-top: 0;
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.video-responsivo {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporção 16:9 */
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 30px;
+  border-radius: 12px;
+}
+
+.video-responsivo iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.texto-aula {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* --- Caixas de Informação --- */
+.info-box {
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 8px;
+  border-left-width: 5px;
+  border-left-style: solid;
+}
+
+.info-box-titulo {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-box p {
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+
+/* Variação: Dica */
+.info-box.dica {
+  background-color: #e6f7ff;
+  border-left-color: #1890ff;
+}
+.info-box.dica .info-box-titulo { color: #1890ff; }
+
+/* Variação: Atenção */
+.info-box.atencao {
+  background-color: #fffbe6;
+  border-left-color: #faad14;
+}
+.info-box.atencao .info-box-titulo { color: #faad14; }
+
+/* Variação: Saiba Mais */
+.info-box.saiba-mais {
+  background-color: #f6f6f7;
+  border-left-color: #5a6a7a;
+}
+.info-box.saiba-mais .info-box-titulo { color: #5a6a7a; }
+
+/* --- Navegação entre Aulas --- */
+.navegacao-aulas {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #EAEAEA;
+}
+
+/* ==========================================================================
  * RESPONSIVIDADE (TUDO ORGANIZADO)
  * ========================================================================== */
 
@@ -371,3 +787,21 @@ footer {
   .grid-cursos {
     grid-template-columns: 1fr; /* 1 coluna */
   }
+
+  /* DENTRO de @media (max-width: 768px) { ... } */
+
+/* --- Ajustes para a Sala de Aula no Mobile --- */
+.container-sala-de-aula {
+  grid-template-columns: 1fr; /* Muda para uma única coluna */
+  padding: 20px; /* Reduz o padding */
+  gap: 30px;
+}
+
+.menu-aulas {
+  position: static; /* Remove o efeito "fixo" */
+  top: auto;
+}
+
+.conteudo-aula h1 {
+  font-size: 28px; /* Reduz o título principal */
+}
