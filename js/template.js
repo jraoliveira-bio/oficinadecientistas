@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     // ATENÇÃO: Carrega os arquivos a partir da raiz do site (/)
-    loadHTML('header-placeholder', '/_header.html');
-    loadHTML('footer-placeholder', '/_footer.html');
+    loadHTML('header-placeholder', '/oficinadecientistas/_header.html');
+    loadHTML('footer-placeholder', '/oficinadecientistas/_footer.html');
 
     // Observador para atualizar o ano no rodapé
     const observer = new MutationObserver((mutations, obs) => {
