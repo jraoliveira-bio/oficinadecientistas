@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
+    environment: github-pages
     runs-on: ubuntu-latest
     steps:
       # 1) checkout com token e histórico completo
@@ -33,6 +34,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          # usa o mesmo GITHUB_TOKEN do checkout
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: ./dist
