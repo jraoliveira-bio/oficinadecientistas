@@ -15,7 +15,7 @@ import BoxArtigo from '~/components/BoxArtigo.astro';
             <aside class="menu-aulas">
                 <h3>Escrita Científica</h3>
                 <ol>
-                    <li class="aula-ativa"><a href="/cursos/curso-escrita/aula01/"><i class="fas fa-video"></i> Aula 01: O Esqueleto de um Artigo</a></li>
+                    <li class="aula-ativa"><a href="{`${base}cursos/curso-escrita/aula01/`}"><i class="fas fa-video"></i> Aula 01: O Esqueleto de um Artigo</a></li>
                     <li><a href="#"><i class="fas fa-video"></i> Aula 02: Construindo Parágrafos</a></li>
                     <li><a href="#"><i class="fas fa-book-open"></i> Aula 03: Leitura Complementar</a></li>
                     <li><a href="#"><i class="fas fa-video"></i> Aula 04: A Arte da Revisão</a></li>
@@ -55,14 +55,14 @@ import BoxArtigo from '~/components/BoxArtigo.astro';
 
 
     <PullOutBox align="left">
-        <img src="/imagens/gatocard2.png" alt="Gato analisando um texto">
+        <img src="{`${base}imagens/gatocard2.png`}" alt="Gato analisando um texto">
         <em>Uma charge para ilustrar a importância da revisão por pares.</em>
     </PullOutBox>
 
     <p>Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.</p>
 
     <p>Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.</p>
-    <BoxArtigo type="chave" title="Estrutura IMRaD na Prática" imagem="/imagens/gatocard2-mobile.png">
+    <BoxArtigo type="chave" title="Estrutura IMRaD na Prática" imagem="{`${base}imagens/gatocard2-mobile.png`}">
 
   <span slot="legenda">
     Um diagrama simplificado da estrutura IMRaD, o padrão-ouro para artigos científicos.
