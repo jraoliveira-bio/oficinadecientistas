@@ -1,22 +1,36 @@
-name: GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main # ou o nome da sua branch principal, ex: master, darktheme
-  workflow_dispatch:
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1. Puxa seu código
       - uses: actions/checkout@v3
+
+      # 2. Seta o Node
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - run: npm install
-      - run: npx astro build        # <— usa npx em vez de chamar direto o binário
-      - uses: peaceiris/actions-gh-pages@v3
+
+      # 3. Instala dependências
+      - run: npm ci
+
+      # 4. Garante permissão de execução ao binário do Astro
+      - name: Fix Astro CLI permissions
+        run: chmod +x ./node_modules/.bin/astro
+
+      # 5. Builda o site
+      - name: Build with Astro
+        run: npm run build
+
+      # 6. Publica em gh-pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./dist
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
