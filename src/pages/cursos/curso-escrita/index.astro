@@ -1,0 +1,100 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Divider from '../../../components/Divider.astro'; // ADICIONE ESTA LINHA
+---
+
+<Layout title="Curso de Escrita Científica">
+    <main>
+        <section class="secao-emblema">
+            <img src="/logo1.png" alt="Logo Oficina de Cientistas" class="logo-emblema">
+            <h3>Escrita Científica: Da Estrutura ao Impacto</h3>
+            
+             <Divider image="divider3.png" />
+
+        </section>
+
+        <div class="texto-introdutorio">
+            <h4>A Origem da Ideia</h4>
+            <p>Durante os anos finais do meu doutorado, comecei a participar de reuniões de escrita no laboratório do meu coorientador (o LETA - Laboratório de Ecologia Teórica e Aplicada), do Dr. Cristian Dambros, nas quais, a cada encontro, discutíamos um capítulo de um livro sobre escrita científica.</p>
+            <p>Até então, eu havia desenvolvido meu jeito de escrever por conta própria — e fiquei bastante surpreso ao descobrir que se pode aprender sobre escrita da mesma forma que se aprende a pintar, desenhar ou fazer cálculos.</p>
+
+            <h4>Nossa Proposta: Um Caminho Estruturado</h4>
+            <p>Infelizmente, a maioria dos alunos não possui a escrita científica como parte da sua formação. Somos obrigados a escrever longas dissertações e artigos criteriosos sem que ninguém nos ensine exatamente como fazê-lo. O que se sucede é um desenvolvimento baseado na observação, tentativa e erro.</p>
+            
+            <blockquote class="pull-quote">
+                "Mas esse processo é tão irracional quanto tentar aprender karatê na prática — brigando, antes mesmo de aprender os golpes básicos — e receber, como instrução de um professor, apenas os comentários após uma rodada de combate."
+            </blockquote>
+
+            <h4>Os Ciclos de Aprendizado</h4>
+            <p>Este curso aborda o básico — e um pouco mais do que o básico — sobre os vários elementos de um texto científico. Ele foi desenvolvido tendo como público-alvo os alunos da pós-graduação, mas seu conteúdo é certamente valioso para outras áreas. O curso é dividido em três ciclos:</p>
+
+            <div class="ciclos-container">
+                <div class="ciclo-item">
+                    <h5>Ciclo 1: As Fundações</h5>
+                    <p>Descobriremos o que define um texto científico, como lapidar a pergunta do seu trabalho e como escrever um parágrafo coeso.</p>
+                </div>
+                <div class="ciclo-item">
+                    <h5>Ciclo 2: A Arquitetura</h5>
+                    <p>Mergulharemos nas seções principais de um texto, como a introdução e a discussão. A força destas seções depende das fundações.</p>
+                </div>
+                <div class="ciclo-item">
+                    <h5>Ciclo 3: A Reescrita</h5>
+                    <p>Discutiremos como editar e reescrever, uma tarefa tão fundamental que a distinção entre "escrever" e "reescrever" perde o sentido.</p>
+                </div>
+            </div>
+
+            <p>As aulas foram pensadas para serem assistidas em sequência para um aprendizado completo, mas cada aula também funciona de forma independente como uma consulta pontual.</p>
+        </div>
+
+        <div class="cta-container">
+            <a href="#grade" class="botao-principal">Ir para a Primeira Aula</a>
+        </div>
+
+        <section id="grade" class="secao-grade-curricular">
+            <h2>Grade Curricular</h2>
+            <div class="acordeon-container">
+                <div class="acordeon-item">
+                    <button class="acordeon-cabecalho">
+                        <span class="acordeon-titulo"><i class="fas fa-video"></i> Aula 01: O Esqueleto de um Artigo</span>
+                        <i class="fas fa-plus icone-acordeon"></i>
+                    </button>
+                    <div class="acordeon-conteudo"><p>Descrição da Aula 01...</p></div>
+                </div>
+                <div class="acordeon-item">
+                    <button class="acordeon-cabecalho">
+                        <span class="acordeon-titulo"><i class="fas fa-video"></i> Aula 02: Construindo Parágrafos</span>
+                        <i class="fas fa-plus icone-acordeon"></i>
+                    </button>
+                    <div class="acordeon-conteudo"><p>Descrição da Aula 02...</p></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="cta-container">
+            <a href="#grade" class="botao-principal">Ir para a Primeira Aula</a>
+        </div>
+    </main>
+</Layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // O código do acordeão que já tínhamos feito vai aqui...
+        const acordeonItems = document.querySelectorAll('.acordeon-item');
+        acordeonItems.forEach(item => {
+            const cabecalho = item.querySelector('.acordeon-cabecalho');
+            cabecalho.addEventListener('click', () => {
+                const conteudo = item.querySelector('.acordeon-conteudo');
+                const isAberto = item.classList.contains('aberto');
+                item.classList.toggle('aberto');
+                const icone = cabecalho.querySelector('.icone-acordeon');
+                if (isAberto) {
+                    conteudo.style.maxHeight = null;
+                    icone.classList.replace('fa-minus', 'fa-plus');
+                } else {
+                    conteudo.style.maxHeight = conteudo.scrollHeight + "px";
+                    icone.classList.replace('fa-plus', 'fa-minus');
+                }
+            });
+        });
+    });
+</script>

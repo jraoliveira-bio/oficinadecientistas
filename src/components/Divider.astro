@@ -1,0 +1,13 @@
+---
+// src/components/Divider.astro
+
+// Isso permite que o componente receba o nome da imagem como um "parâmetro".
+// Se nenhuma imagem for passada, ele não mostra nada.
+const { image } = Astro.props;
+---
+
+{image && (
+    <div class="divider-container">
+        <img src={`/imagens/${image}`} alt="Divisor ornamental" />
+    </div>
+)}

@@ -1,0 +1,47 @@
+---
+// src/components/PullOutBox.astro
+
+// A propriedade 'align' vai definir se a caixa flutua para a esquerda ou direita.
+// O padrão será 'left' se nada for especificado.
+const { align = 'left' } = Astro.props;
+
+// Define a classe CSS com base na propriedade 'align'
+const alignmentClass = align === 'right' ? 'align-right' : 'align-left';
+---
+
+<aside class={`pull-out-box ${alignmentClass}`}>
+  <slot /> </aside>
+
+<style>
+  .pull-out-box {
+    width: 45%; /* Ocupa um pouco menos da metade da largura */
+    padding: 15px 20px;
+    margin-bottom: 1rem; /* Espaço abaixo da caixa */
+    background-color: whitesmoke;
+    border: 1px solid #f5edde; /* Borda fina para dar definição */
+    border-radius: 20px;
+    font-size: 16px; /* Fonte ligeiramente menor */
+    font-style: italic; /* Estilo de nota de margem */
+    color: #273543;
+  }
+
+  .align-left {
+    float: left;
+    margin-right: 25px; /* Espaço para o texto fluir à direita */
+  }
+
+  .align-right {
+    float: right;
+    margin-left: 25px; /* Espaço para o texto fluir à esquerda */
+  }
+
+  /* Garante que o conteúdo dentro da caixa se comporte bem */
+  .pull-out-box :global(p) {
+    margin-top: 0;
+  }
+  .pull-out-box :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+</style>
