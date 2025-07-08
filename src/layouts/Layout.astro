@@ -1,8 +1,11 @@
 ---
-// src/layouts/Layout.astro (Versão Final e Completa)
+// src/layouts/Layout.astro
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
 const { title } = Astro.props;
+
+// A mesma lógica para garantir a barra no final
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -11,9 +14,9 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - Oficina de Cientistas</title>
     
-    <link rel="stylesheet" href={import.meta.env.BASE_URL + "estilos.css"}>
-    <link rel="icon" type="image/png" href={import.meta.env.BASE_URL + "favicon-96x96.png"} sizes="96x96" />
-    <link rel="apple-touch-icon" href={import.meta.env.BASE_URL + "apple-touch-icon.png"}>
+    <link rel="stylesheet" href=`${base}estilos.css`>
+    <link rel="icon" type="image/png" href=`${base}favicon-96x96.png` sizes="96x96" />
+    <link rel="apple-touch-icon" href=`${base}apple-touch-icon.png`>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +30,6 @@ const { title } = Astro.props;
         <Footer />
     </div>
     <script>
-        // Este script para o ano vai funcionar em todas as páginas
         const yearSpan = document.getElementById('currentYear');
         if (yearSpan) {
             yearSpan.textContent = new Date().getFullYear();

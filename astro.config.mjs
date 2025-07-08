@@ -1,7 +1,16 @@
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// https://astro.build/config
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
-  site: 'https://jraoliveira-bio.github.io',
-  base: '/oficinadecientistas',
+  vite: {
+    resolve: {
+      alias: {
+        '~': path.resolve(__dirname, './src'),
+      },
+    },
+  },
 });

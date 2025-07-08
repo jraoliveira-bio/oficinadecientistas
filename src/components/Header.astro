@@ -1,7 +1,14 @@
+---
+// src/components/Header.astro
+
+// Esta linha garante que a nossa base sempre termine com uma barra "/"
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+---
+
 <header class="topo">
     <div class="topo-conteudo">
       <div class="logo-titulo-wrapper">
-        <img src={import.meta.env.BASE_URL + "logo2.png"} alt="Logo da Oficina de Cientistas" class="logo-header">
+        <img src=`${base}logo2.png` alt="Logo da Oficina de Cientistas" class="logo-header">
         <h1>Oficina de Cientistas</h1>
       </div>
 
@@ -12,11 +19,11 @@
 
       <nav class="menu-principal">
         <ul>
-          <li><a href={import.meta.env.BASE_URL}>Home</a></li>
-          <li><a href={import.meta.env.BASE_URL + "cursos/"}>Cursos</a></li>
-          <li><a href={import.meta.env.BASE_URL + "aulas-especiais/"}>Aulas Especiais</a></li>
-          <li><a href={import.meta.env.BASE_URL + "sobre/"}>Sobre</a></li>
-          <li><a href={import.meta.env.BASE_URL + "links/"}>Links</a></li>
+          <li><a href={base}>Home</a></li>
+          <li><a href=`${base}cursos/`>Cursos</a></li>
+          <li><a href=`${base}aulas-especiais/`>Aulas Especiais</a></li>
+          <li><a href=`${base}sobre/`>Sobre</a></li>
+          <li><a href=`${base}links/`>Links</a></li>
         </ul>
       </nav>
     </div>
