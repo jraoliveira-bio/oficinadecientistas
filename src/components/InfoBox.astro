@@ -1,0 +1,134 @@
+---
+// src/components/InfoBox.astro
+
+// 1. RECEBENDO AS "INSTRUÇÕES" (PROPS)
+// Aqui, pegamos as propriedades 'type' e 'title' que serão passadas para o componente.
+// Definimos 'saiba-mais' como o tipo padrão se nenhum for fornecido.
+const { type = 'saiba-mais', title } = Astro.props;
+
+// 2. MAPA DE ESTILOS
+// Em vez de if/else, criamos um "mapa" para associar cada tipo ao seu ícone e classe de cor.
+const styleMap = {
+  dica: {
+    iconClass: 'fa-solid fa-lightbulb',
+    colorClass: 'info-box-dica'
+  },
+  atencao: {
+    iconClass: 'fa-solid fa-triangle-exclamation',
+    colorClass: 'info-box-atencao'
+  },
+  'saiba-mais': {
+    iconClass: 'fa-solid fa-book-reader',
+    colorClass: 'info-box-saiba-mais'
+  },
+   'chave': {
+    iconClass: 'fa-solid fa-key',
+    colorClass: 'info-box-chave'
+  }
+};
+
+const currentStyle = styleMap[type];
+---
+
+<div class={`info-box ${currentStyle.colorClass}`}>
+  
+  {title && (
+    <h4 class="info-box-titulo">
+      <i class={`fas ${currentStyle.iconClass}`}></i>
+      {title}
+    </h4>
+  )}
+
+  <div class="info-box-conteudo">
+    <slot />
+  </div>
+
+</div>
+
+
+<style>
+  /* --- ESTILO BASE DA CAIXA EDITORIAL --- */
+  .info-box {
+    margin: 30px 0;
+    padding: 20px 25px;
+    border-radius: 8px;
+    
+
+    /* 2. Borda fina para dar definição */
+    border: 1px solid #c4bbbb;
+    
+    /* Borda esquerda mais grossa, que será colorida pelas variações */
+    border-left-width: 4px;
+    border-left-style: solid;
+
+    /* 3. Sombra muito suave para dar profundidade */
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+
+    transition: all 0.3s ease-out;
+  }
+
+  .info-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.07);
+  }
+
+  .info-box-titulo {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+
+  .info-box-conteudo :global(p) {
+    margin-bottom: 0;
+    font-family: 'Bitter', serif;
+    line-height: 1.7;
+    color: #34495E;
+  }
+
+  .info-box-conteudo :global(p:not(:last-child)) {
+    margin-bottom: 1rem;
+  }
+
+
+/* --- VARIAÇÕES DE COR - OPÇÃO 2: PALETA EDITORIAL --- */
+
+/* Variação: Dica */
+.info-box-dica {
+  background-color: #eef6ff; /* Fundo azul-acinzentado muito sutil */
+  border-left-color: #4A698B; /* Azul-ardósia, sério e elegante */
+}
+.info-box-dica .info-box-titulo { 
+  color: #4A698B; 
+}
+
+/* Variação: Atenção */
+.info-box-atencao {
+  background-color: #fcf8e3; /* Fundo creme/baunilha, clássico para alertas */
+  border-left-color: #C7A22B; /* Ocre/mostarda, para atenção sóbria */
+}
+.info-box-atencao .info-box-titulo { 
+  color: #C7A22B; 
+}
+
+/* Variação: Saiba Mais */
+.info-box-saiba-mais {
+  background-color: #fafafad5; /* Fundo cinza-claro, neutro */
+  border-left-color: #6B7280; /* Cinza-médio para referência */
+}
+.info-box-saiba-mais .info-box-titulo { 
+  color: #6B7280; 
+}
+
+/* NOVA VARIAÇÃO: Conceito-Chave */
+.info-box-chave {
+  background-color: #f0f7f2; /* Fundo verde-claro e sutil */
+  border-left-color: #348455; /* Verde sálvia/floresta, cor de aprovação */
+}
+.info-box-chave .info-box-titulo {
+  color: #348455;
+}
+</style>

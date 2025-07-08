@@ -1,0 +1,114 @@
+---
+// src/components/BoxArtigo.astro
+
+// A prop 'type' agora se chama 'palette' para refletir a intenção de design.
+// O padrão será 'neutro'.
+const { palette = 'neutro', title, imagem } = Astro.props;
+
+// O mapa de estilos agora só define a classe do tema de cor.
+const themeClass = `theme-${palette}`; 
+---
+
+<div class={`box-artigo-editorial ${themeClass}`}>
+  
+  {title && (
+    <h4 class="box-artigo-titulo">{title}</h4>
+  )}
+
+  {imagem && (
+    <figure class="box-artigo-figura">
+      <img src={imagem} alt={title || 'Imagem de destaque do artigo'} />
+      <figcaption>
+        <slot name="legenda" />
+      </figcaption>
+    </figure>
+  )}
+
+  <div class="box-artigo-conteudo">
+    <div class="coluna">
+      <slot name="coluna-esquerda" />
+    </div>
+    <div class="coluna">
+      <slot name="coluna-direita" />
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .box-artigo-editorial {
+    margin: 40px 0;
+    padding: 25px 30px;
+    border-radius: 4px;
+    
+    /* ESTILO NOVO: Bordas duplas verticais */
+    border-left: 3px solid;
+    border-right: 3px solid;
+
+    /* Borda superior e inferior muito sutis para fechar o quadro */
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+  }
+
+  .box-artigo-titulo {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .box-artigo-figura {
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+  .box-artigo-figura img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .box-artigo-figura figcaption {
+    font-size: 15px;
+    font-style: italic;
+    color: #5a6a7a;
+  }
+
+  .box-artigo-conteudo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+
+  .coluna :global(p) {
+    margin-top: 0;
+    line-height: 1.7;
+  }
+
+  /* --- PALETAS DE COR --- */
+  .theme-vermelho {
+    border-color: #d37a7a; /* Vermelho terracota dessaturado */
+    background-color: #fcf2f2;
+  }
+  .theme-vermelho .box-artigo-titulo { color: #b95c50; }
+
+  .theme-roxo {
+    border-color: #a39cc4; /* Roxo ameixa/lavanda dessaturado */
+    background-color: #f5f3f7;
+  }
+  .theme-roxo .box-artigo-titulo { color: #6D5B87; }
+
+  .theme-neutro {
+    border-color: #d1d5db; /* Cinza claro */
+    background-color: #fafafa;
+  }
+  .theme-neutro .box-artigo-titulo { color: #6B7280; }
+
+  /* --- RESPONSIVIDADE --- */
+  @media (max-width: 768px) {
+    .box-artigo-conteudo {
+      grid-template-columns: 1fr; /* Uma coluna só no mobile */
+    }
+  }
+</style>
