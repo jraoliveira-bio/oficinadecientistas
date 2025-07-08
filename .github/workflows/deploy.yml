@@ -9,28 +9,30 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Puxa seu código
+      # 1) checkout com token e histórico completo
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: true
 
-      # 2. Seta o Node
+      # 2) instala Node e dependências
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-
-      # 3. Instala dependências
       - run: npm ci
 
-      # 4. Garante permissão de execução ao binário do Astro
+      # 3) corrige permissão do astro CLI
       - name: Fix Astro CLI permissions
         run: chmod +x ./node_modules/.bin/astro
 
-      # 5. Builda o site
+      # 4) build
       - name: Build with Astro
         run: npm run build
 
-      # 6. Publica em gh-pages
+      # 5) deploy para gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
+          # usa o mesmo GITHUB_TOKEN do checkout
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
