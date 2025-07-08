@@ -7,37 +7,39 @@ on:
 
 jobs:
   pages:
-    # marca este job como “Pages build and deployment workflow”
     runs-on: ubuntu-latest
     environment: github-pages
     permissions:
-      pages: write        # permite gravar no ambiente Pages
-      id-token: write     # necessário para o deploy-pages
+      pages: write
+      id-token: write
 
     steps:
+      # 1) checkout com token e histórico completo
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           persist-credentials: true
 
+      # 2) instala Node e dependências
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-
       - run: npm ci
 
+      # 3) corrige permissão do astro CLI
       - name: Fix Astro CLI permissions
         run: chmod +x ./node_modules/.bin/astro
 
+      # 4) build
       - name: Build with Astro
         run: npm run build
 
-      # 1) envia o dist/ como “artifact” para o Pages
+      # 5) envia o dist/ como artefato para o Pages
       - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./dist
 
-      # 2) publica o artifact no GitHub Pages
+      # 6) faz o deploy no GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
