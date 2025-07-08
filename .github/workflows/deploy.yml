@@ -26,7 +26,7 @@ jobs:
           node-version: '18'
       - run: npm ci
 
-      # 3) corrige permissão do astro CLI
+      # 3) corrige permissão do Astro CLI
       - name: Fix Astro CLI permissions
         run: chmod +x ./node_modules/.bin/astro
 
@@ -34,12 +34,12 @@ jobs:
       - name: Build with Astro
         run: npm run build
 
-      # 5) envia o dist/ como artefato para o Pages
+      # 5) envia o dist/ como artefato para o Pages (v3 corrige uso de upload-artifact v3)
       - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
-      # 6) faz o deploy no GitHub Pages
+      # 6) publica o site no GitHub Pages (atualizado para v4)
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
