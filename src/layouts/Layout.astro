@@ -10,16 +10,15 @@ const { title } = Astro.props;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - Oficina de Cientistas</title>
-
-    <link rel="stylesheet" href="/estilos.css">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <link rel="stylesheet" href={import.meta.env.BASE_URL + "estilos.css"}>
+    <link rel="icon" type="image/png" href={import.meta.env.BASE_URL + "favicon-96x96.png"} sizes="96x96" />
+    <link rel="apple-touch-icon" href={import.meta.env.BASE_URL + "apple-touch-icon.png"}>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <div class="pagina-container">
