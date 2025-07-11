@@ -1,0 +1,73 @@
+---
+# Frontmatter: Metadados da sua página
+layout: '~/layouts/AulaLayout.astro'
+title: 'Aula 01: Título longo de uma aula especialmente longa pra testar o layout'
+description: 'Aprenda a estrutura macro de um artigo científico, geralmente seguindo o padrão IMRaD (Introdução, Métodos, Resultados e Discussão), para aumentar o impacto da sua pesquisa.'
+slug: 'aula01' # Usado pelo layout para saber qual aula está ativa
+---
+
+{/* Imports: Traga seus componentes e imagens para o escopo do MDX */}
+import PullOutBox from '~/components/PullOutBox.astro';
+import InfoBox from '~/components/InfoBox.astro';
+import BoxArtigo from '~/components/BoxArtigo.astro';
+import gatoCard2 from '~/../public/imagens/gatocard2.png';
+import gatoCard2Mobile from '~/../public/imagens/gatocard2-mobile.png';
+
+
+## Notas da Aula
+
+<PullOutBox align="right">
+    <p><strong>Definição Rápida:</strong> O "esqueleto" de um artigo refere-se à sua estrutura macro, geralmente seguindo o padrão IMRaD (Introdução, Métodos, Resultados e Discussão).</p>
+</PullOutBox>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et est sed felis aliquet sollicitudin. Proin et magna eu nisl sollicitudin tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer eu ante non felis tincidunt consectetur. Praesent id elit eu ligula facilisis dictum. Donec id elit non mi porta gravida at eget metus.
+
+Vivamus in erat ut urna cursus vestibulum. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.
+
+<InfoBox type="dica" title="Dica">
+    <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p>
+</InfoBox>
+<InfoBox type="atencao" title="Ponto de Atenção">
+    <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p>
+</InfoBox>
+<InfoBox type="saiba-mais" title="Saiba mais">
+    <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p>
+</InfoBox>
+<InfoBox type="chave" title="Conceito-Chave">
+    <p>Este é um conceito fundamental que será usado ao longo de todo o curso.</p>
+</InfoBox>
+
+<PullOutBox align="left">
+    <img src={gatoCard2.src} alt="Gato analisando um texto" />
+    <em>Uma charge para ilustrar a importância da revisão por pares.</em>
+</PullOutBox>
+
+Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+
+Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+
+<BoxArtigo type="chave" title="Estrutura IMRaD na Prática" imagem={gatoCard2Mobile.src}>
+    <span slot="legenda">
+        Um diagrama simplificado da estrutura IMRaD, o padrão-ouro para artigos científicos.
+    </span>
+
+    <div slot="coluna-esquerda">
+        <p><strong>Introdução:</strong> Apresenta o "porquê" da pesquisa. Qual é o problema e por que ele é importante?</p>
+        <p><strong>Métodos:</strong> Descreve o "como". Os materiais e procedimentos usados devem ser claros o suficiente para que outros possam replicar o estudo.</p>
+    </div>
+    
+    <div slot="coluna-direita">
+        <p><strong>Resultados:</strong> Mostra "o quê" foi encontrado. Apresenta os dados de forma objetiva, geralmente com tabelas e gráficos, sem interpretação.</p>
+        <p><strong>Discussão:</strong> Explica "o que significa". Aqui você interpreta os resultados, os compara com outros estudos e discute as implicações.</p>
+    </div>
+</BoxArtigo>
+
+<BoxArtigo palette="vermelho" title="Estudo de Caso: O Paradoxo de Simpson">
+    <div slot="coluna-esquerda">...</div>
+    <div slot="coluna-direita">...</div>
+</BoxArtigo>
+
+<BoxArtigo palette="roxo" title="Metodologia: Análise de Componentes Principais">
+    <div slot="coluna-esquerda">...</div>
+    <div slot="coluna-direita">...</div>
+</BoxArtigo>

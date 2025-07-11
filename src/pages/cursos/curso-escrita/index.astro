@@ -1,52 +1,23 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-const base = import.meta.env.BASE_URL.endsWith('/')
-  ? import.meta.env.BASE_URL
-  : import.meta.env.BASE_URL + '/';
+import { Content } from './introducao.md';
 import Divider from '../../../components/Divider.astro'; // ADICIONE ESTA LINHA
+import imagemDoDivisor from '~/../public/imagens/divider3.png'; 
+const base = import.meta.env.BASE_URL.endsWith('/')
+? import.meta.env.BASE_URL
+: import.meta.env.BASE_URL + '/';
 ---
 
 <Layout title="Curso de Escrita Científica">
     <main>
         <section class="secao-emblema">
-            <img src="/logo1.png" alt="Logo Oficina de Cientistas" class="logo-emblema">
+            <img src={`${base}logo1.png`} alt="Logo Oficina de Cientistas" class="logo-emblema">
             <h3>Escrita Científica: Da Estrutura ao Impacto</h3>
-            
-             <Divider image="divider3.png" />
-
+            <Divider image={imagemDoDivisor.src} />
         </section>
 
         <div class="texto-introdutorio">
-            <h4>A Origem da Ideia</h4>
-            <p>Durante os anos finais do meu doutorado, comecei a participar de reuniões de escrita no laboratório do meu coorientador (o LETA - Laboratório de Ecologia Teórica e Aplicada), do Dr. Cristian Dambros, nas quais, a cada encontro, discutíamos um capítulo de um livro sobre escrita científica.</p>
-            <p>Até então, eu havia desenvolvido meu jeito de escrever por conta própria — e fiquei bastante surpreso ao descobrir que se pode aprender sobre escrita da mesma forma que se aprende a pintar, desenhar ou fazer cálculos.</p>
-
-            <h4>Nossa Proposta: Um Caminho Estruturado</h4>
-            <p>Infelizmente, a maioria dos alunos não possui a escrita científica como parte da sua formação. Somos obrigados a escrever longas dissertações e artigos criteriosos sem que ninguém nos ensine exatamente como fazê-lo. O que se sucede é um desenvolvimento baseado na observação, tentativa e erro.</p>
-            
-            <blockquote class="pull-quote">
-                "Mas esse processo é tão irracional quanto tentar aprender karatê na prática — brigando, antes mesmo de aprender os golpes básicos — e receber, como instrução de um professor, apenas os comentários após uma rodada de combate."
-            </blockquote>
-
-            <h4>Os Ciclos de Aprendizado</h4>
-            <p>Este curso aborda o básico — e um pouco mais do que o básico — sobre os vários elementos de um texto científico. Ele foi desenvolvido tendo como público-alvo os alunos da pós-graduação, mas seu conteúdo é certamente valioso para outras áreas. O curso é dividido em três ciclos:</p>
-
-            <div class="ciclos-container">
-                <div class="ciclo-item">
-                    <h5>Ciclo 1: As Fundações</h5>
-                    <p>Descobriremos o que define um texto científico, como lapidar a pergunta do seu trabalho e como escrever um parágrafo coeso.</p>
-                </div>
-                <div class="ciclo-item">
-                    <h5>Ciclo 2: A Arquitetura</h5>
-                    <p>Mergulharemos nas seções principais de um texto, como a introdução e a discussão. A força destas seções depende das fundações.</p>
-                </div>
-                <div class="ciclo-item">
-                    <h5>Ciclo 3: A Reescrita</h5>
-                    <p>Discutiremos como editar e reescrever, uma tarefa tão fundamental que a distinção entre "escrever" e "reescrever" perde o sentido.</p>
-                </div>
-            </div>
-
-            <p>As aulas foram pensadas para serem assistidas em sequência para um aprendizado completo, mas cada aula também funciona de forma independente como uma consulta pontual.</p>
+            <Content />
         </div>
 
         <div class="cta-container">
@@ -81,7 +52,6 @@ import Divider from '../../../components/Divider.astro'; // ADICIONE ESTA LINHA
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // O código do acordeão que já tínhamos feito vai aqui...
         const acordeonItems = document.querySelectorAll('.acordeon-item');
         acordeonItems.forEach(item => {
             const cabecalho = item.querySelector('.acordeon-cabecalho');

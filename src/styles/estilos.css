@@ -1,0 +1,435 @@
+/* ==========================================================================
+   1. CONFIGURAÇÃO GERAL E FONTES
+   ========================================================================== */
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  background-image: linear-gradient(to right, #DCDFE2, #EAEAEA);
+  color: #34495E;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lora', serif;
+  color: #4A698B;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   2. LAYOUT GLOBAL (HEADER, FOOTER, CONTAINERS)
+   ========================================================================== */
+
+.pagina-container {
+  background-color: transparent;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* --- CABEÇALHO (Faixa de Largura Total) --- */
+.topo {
+  background-color: #34495E;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.topo-conteudo {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Logo e Título do Site --- */
+.logo-titulo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-header {
+  height: 40px;
+  width: auto;
+}
+
+.topo-conteudo h1 {
+  font-size: 24px;
+  margin: 0;
+  color: white;
+}
+
+/* --- Menu Principal de Navegação --- */
+.menu-principal ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.menu-principal a {
+  text-decoration: none;
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 0;
+  transition: opacity 0.2s ease;
+}
+
+.menu-principal a:hover {
+  opacity: 0.7;
+}
+
+footer {
+  padding: 30px 40px;
+  border-top: 1px solid #EAEAEA;
+  margin-top: 60px;
+  text-align: center;
+  font-size: 14px;
+  color: #5a6a7a;
+}
+
+/* ==========================================================================
+   3. COMPONENTES REUTILIZÁVEIS
+   ========================================================================== */
+
+/* --- Botões --- */
+.botao-principal {
+  display: inline-block;
+  background-color: #4A698B;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.botao-principal:hover {
+  background-color: #34495E;
+  transform: translateY(-2px);
+}
+
+/* --- Cards --- */
+.card-curso {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: #34495E;
+}
+.card-curso:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.card-curso h3 { margin-top: 0; color: #4A698B; }
+.card-curso p { line-height: 1.6; }
+
+.card-destaque {
+  display: block;
+  flex-basis: 50%;
+  border-radius: 12px;
+  text-decoration: none;
+  overflow: hidden;
+  border: 1px solid #EAEAEA;
+  transition: all 0.3s ease;
+}
+.card-destaque:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
+}
+.card-destaque img {
+  width: 100%;
+  display: block;
+}
+.card-destaque-conteudo {
+  background-color: transparent;
+  padding: 20px 25px;
+}
+.card-destaque-conteudo h4 { margin: 0 0 5px 0; font-size: 20px; color: #4A698B; }
+.card-destaque-conteudo p { margin: 0; font-size: 16px; color: #5a6a7a; }
+
+.card-curso-completo {
+  display: block;
+  text-decoration: none;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #EAEAEA;
+  background-color: rgb(244, 242, 240);
+  transition: all 0.3s ease;
+}
+.card-curso-completo:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.10);
+}
+.card-curso-completo img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.card-curso-conteudo {
+  padding: 20px 25px 25px 25px;
+}
+.card-curso-conteudo h3 { margin: 0 0 10px 0; color: #4A698B; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+.card-curso-conteudo h3 .fa-video,
+.card-curso-conteudo h3 .fa-book-open { color: #34495E; font-size: 18px; }
+.card-curso-descricao { font-size: 16px; color: #5a6a7a; line-height: 1.6; margin-bottom: 20px; }
+
+/* --- Tags --- */
+.card-curso-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tag-meta {
+  background-color: #EAEAEA;
+  color: #5a6a7a;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.tag-status-rec {
+  color: #d9534f;
+  font-weight: 600;
+  background-color: #fcf2f2;
+  border: 1px solid #f0d1d0;
+}
+
+/* --- Divisor --- */
+.divider-container {
+  margin: 30px 0;
+  text-align: center;
+}
+.divider-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- Acordeão --- */
+.acordeon-container { max-width: 800px; margin: 0 auto; }
+.acordeon-item { border-bottom: 1px solid #EAEAEA; }
+.acordeon-item:first-child { border-top: 1px solid #EAEAEA; }
+.acordeon-cabecalho { width: 100%; background: none; border: none; padding: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; text-align: left; font-family: 'Source Sans Pro', sans-serif; font-size: 18px; font-weight: 600; color: #34495E; }
+.acordeon-cabecalho:hover { background-color: #f7f7f7; }
+.acordeon-titulo { display: flex; align-items: center; gap: 12px; }
+.acordeon-titulo .fa-video,
+.acordeon-titulo .fa-book-open { color: #4A698B; width: 20px; }
+.icone-acordeon { transition: transform 0.3s ease; }
+.acordeon-item.aberto .icone-acordeon { transform: rotate(45deg); }
+.acordeon-conteudo { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; padding: 0 20px; }
+.acordeon-conteudo p { padding-bottom: 20px; line-height: 1.6; }
+
+
+/* --- Menu Hamburger --- */
+.menu-toggle,
+.menu-hamburger {
+  display: none;
+}
+.logo-header {
+  height: 40px;
+  width: auto;
+}
+.logo-titulo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* ==========================================================================
+   4. SEÇÕES DE PÁGINA ESPECÍFICAS
+   ========================================================================== */
+
+/* --- Homepage --- */
+.secao-apresentacao {
+  padding: 45px 40px 60px 40px;
+  text-align: center;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.logo-apresentacao {
+  display: block;
+  max-width: 150px;
+  height: auto;
+  margin: 0 auto 20px auto;
+}
+
+.secao-apresentacao h2 {
+  font-size: 36px;
+  margin-bottom: 0;
+}
+
+.secao-apresentacao p {
+  font-size: 18px;
+  color: #5a6a7a;
+  margin-top: 8px;
+}
+
+.chamada-principal {
+  background-color: rgba(74, 105, 139, 0.03);
+  padding: 60px 0;
+  border-top: 1px solid #EAEAEA;
+  border-bottom: 1px solid #EAEAEA;
+}
+.chamada-conteudo { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+.chamada-conteudo h2 { margin-top: 0; margin-bottom: 15px; font-size: 24px; }
+.chamada-conteudo p { max-width: 800px; margin: 0; line-height: 1.7; font-size: 18px; color: #5a6a7a; }
+
+.secao-destaque-curso { display: flex; align-items: center; gap: 50px; max-width: 1280px; margin: 60px auto; padding: 0 40px; }
+.texto-destaque { flex-basis: 50%; }
+
+.secao-catalogo { padding: 45px 40px 60px 40px; text-align: center; }
+.grid-cursos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 40px; text-align: left; }
+
+/* --- Página de Apresentação de Curso --- */
+.secao-emblema { text-align: center; padding: 60px 40px 30px 40px; border-bottom: 1px solid #EAEAEA; }
+.logo-emblema { display: block; max-width: 70px; height: auto; margin: 0 auto 15px auto; }
+.secao-emblema h3 { font-size: 24px; font-weight: 600; margin: 0; color: #34495E; }
+
+.secao-manifesto { padding: 60px 40px; background-color: rgba(74, 105, 139, 0.03); border-bottom: 1px solid #EAEAEA; text-align: center; }
+.manifesto-conteudo h2 { margin-top: 0; }
+.manifesto-conteudo p { font-size: 18px; line-height: 1.7; color: #5a6a7a; max-width: 800px; margin: 15px auto 0 auto; }
+
+.secao-vitrine-cursos { padding: 60px 40px; }
+.secao-vitrine-cursos h2 { text-align: center; margin-top: 0; margin-bottom: 40px; }
+.vitrine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+
+.texto-introdutorio { max-width: 800px; margin: 50px auto; padding: 0 20px; font-size: 18px; line-height: 1.8; }
+.texto-introdutorio h4 { font-size: 22px; margin-top: 30px; margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px; }
+.pull-quote { border-left: 3px solid #4A698B; padding-left: 25px; margin: 40px 0; font-size: 19px; font-style: italic; color: #34495E; }
+.ciclos-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 30px 0; }
+.ciclo-item h5 { margin-top: 0; font-size: 18px; color: #34495E; }
+.ciclo-item p { font-size: 16px; line-height: 1.6; }
+.cta-container { text-align: center; padding: 0 0 60px 0;  }
+
+.secao-grade-curricular { padding: 60px 40px; }
+.secao-grade-curricular h2 { text-align: center; margin-top: 0; margin-bottom: 40px; }
+
+/* --- Layout da Sala de Aula --- */
+.menu-aulas h3 { margin-top: 0; padding-bottom: 10px; border-bottom: 1px solid #EAEAEA; font-size: 20px; }
+.menu-aulas ol { list-style: none; padding-left: 0; margin: 10px 0 0 0; }
+.menu-aulas li { border-radius: 8px; transition: background-color 0.2s ease; }
+.menu-aulas li:not(:last-child) { margin-bottom: 5px; }
+.menu-aulas li a { display: block; padding: 10px 15px; text-decoration: none; color: #34495E; font-weight: 400; font-size: 16px;}
+.menu-aulas li a:hover { background-color: #e9e9e9; }
+.menu-aulas li.aula-ativa { background-color: #DCDFE2; }
+.menu-aulas li.aula-ativa a { color: #34495E; }
+.menu-aulas li a .fas { margin-right: 8px; width: 20px; text-align: center; color: #4A698B; }
+
+.conteudo-aula h1 { margin-top: 0; font-size: 36px; margin-bottom: 30px; }
+.video-responsivo { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 30px; border-radius: 12px; background-color: #000; }
+.video-responsivo iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.texto-aula { font-size: 18px; line-height: 1.8; margin-top: 40px; display: flow-root; }
+.texto-aula h2 { margin-top: 40px; }
+.navegacao-aulas { display: flex; justify-content: space-between; align-items: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid #EAEAEA; }
+
+
+/* ==========================================================================
+   5. RESPONSIVIDADE (MOBILE-FIRST)
+   ========================================================================== */
+
+/* Estilos para telas a partir de 768px (tablets e desktops) */
+@media (min-width: 768px) {
+
+  /* --- Layout da Sala de Aula --- */
+  .container-sala-de-aula {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    padding: 40px;
+    align-items: flex-start;
+  }
+  .menu-aulas {
+    position: sticky;
+    top: 40px;
+  }
+
+  /* --- Outros Layouts --- */
+  .secao-destaque-curso {
+    flex-direction: row;
+  }
+  .grid-cursos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ciclos-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .lista-aprendizado {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Estilos para telas a partir de 900px */
+@media (min-width: 900px) {
+  .grid-cursos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* O menu hamburger é o único que precisa ser definido para telas pequenas */
+@media (max-width: 768px) {
+  .menu-hamburger { display: flex; flex-direction: column; justify-content: space-around; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
+  .menu-hamburger span { display: block; width: 100%; height: 3px; background-color: white; border-radius: 3px; transition: all 0.3s ease-in-out; }
+  .menu-principal { display: flex; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #34495E; transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
+  .menu-principal ul { flex-direction: column; gap: 40px; text-align: center; }
+  .menu-principal a { font-size: 24px; }
+  .menu-toggle:checked ~ .menu-principal { transform: translateX(0); }
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(2) { opacity: 0; }
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+}
+
+
+/* =============================================== */
+/* ESTILOS PARA CONTEÚDO GERADO POR MARKDOWN       */
+/* =============================================== */
+
+/* Aplica a fonte principal a todos os parágrafos dentro da área de texto da aula */
+.texto-aula p {
+  font-family: 'Source Sans Pro', sans-serif; /* Confirme se este é o nome da sua fonte de parágrafo */
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5em; /* Adiciona um espaço entre os parágrafos */
+}
+
+/* Estiliza os subtítulos H2 */
+.texto-aula h2 {
+  font-family: 'Lora', serif; /* Confirme se este é o nome da sua fonte de títulos */
+  font-size: 1.8rem;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid #eee; /* Exemplo de um detalhe visual */
+  padding-bottom: 0.3em;
+}
+
+/* Estiliza outros elementos comuns do Markdown */
+.texto-aula h3 {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.texto-aula ul,
+.texto-aula ol {
+  margin-left: 2em;
+  margin-bottom: 1.5em;
+}
+
+.texto-aula li {
+  margin-bottom: 0.5em;
+}
+
+.texto-aula strong {
+  font-weight: 600; /* O padrão é 'bold', 600 é um pouco mais específico */
+}
