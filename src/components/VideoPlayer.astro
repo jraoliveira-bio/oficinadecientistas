@@ -1,0 +1,206 @@
+---
+// src/components/VideoPlayer.astro
+interface Chapter {
+  time: string;
+  title: string;
+}
+interface TranscriptLine {
+  time: string;
+  text: string;
+}
+export interface Props {
+  videoId: string;
+  chapters: Chapter[];
+  transcript: TranscriptLine[];
+}
+const { videoId, chapters, transcript } = Astro.props;
+---
+
+<div class="video-player-container" id="video-player-wrapper">
+  
+  <div class="video-wrapper">
+    <div id="youtube-player"></div>
+  </div>
+
+  <details class="accordion">
+    <summary class="accordion-header">Índice de Tópicos</summary>
+    <div class="accordion-content">
+      <ul class="chapters-list">
+        {chapters.map((chapter) => (
+          <li>
+            <a href="#" class="timestamp-link" data-time={chapter.time}>
+              <span class="timestamp">{chapter.time}</span>
+              <span class="title">{chapter.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </details>
+
+  <details class="accordion">
+    <summary class="accordion-header">Transcrição Completa</summary>
+    <div class="accordion-content transcript-content">
+      {transcript.map((line) => (
+        <p>
+          <a href="#" class="timestamp-link" data-time={line.time}>
+            <strong class="timestamp">[{line.time}]</strong>
+          </a>
+          <span> {line.text}</span>
+        </p>
+      ))}
+    </div>
+  </details>
+
+</div>
+
+<style>
+  .video-player-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    font-family: 'Georgia', serif;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+
+  /* --- Player de Vídeo Responsivo (MÉTODO MODERNO E CORRETO) --- */
+  .video-wrapper {
+    position: relative;
+    aspect-ratio: 16 / 9; /* Define a proporção de forma nativa */
+    width: 100%;
+    background-color: #000;
+  }
+
+  .video-wrapper iframe {
+    position: absolute;
+    inset: 0; /* Abreviação para top, right, bottom, left = 0 */
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* --- Estilos do Acordeão --- */
+  .accordion {
+    border-top: 1px solid #e0e0e0;
+  }
+  .accordion-header {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+  }
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  .accordion-header:hover {
+    background-color: #f9f9f9;
+  }
+  .accordion-header::after {
+    content: '+';
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+  }
+  .accordion[open] > .accordion-header::after {
+    transform: rotate(45deg);
+  }
+  .accordion-content {
+    padding: 0 1.5rem 1.5rem;
+    line-height: 1.7;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+  
+  /* --- Estilos das Listas e Timestamps --- */
+  .chapters-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .chapters-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #e0e0e0;
+  }
+  .chapters-list li:last-child {
+    border-bottom: none;
+  }
+  .transcript-content p {
+    margin: 0 0 1rem;
+  }
+  .transcript-content p:last-child {
+    margin-bottom: 0;
+  }
+  .timestamp-link {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .transcript-content .timestamp-link {
+    display: inline;
+  }
+  .timestamp {
+    background-color: #f2f2f2;
+    color: #0056b3;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: 'Courier New', monospace;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  .timestamp-link:hover .timestamp {
+    background-color: #e0eaf6;
+    color: #003d82;
+  }
+  .timestamp-link .title {
+    flex-grow: 1;
+  }
+</style>
+
+<script define:vars={{ videoId }}>
+  let player;
+  function timeToSeconds(timeStr) {
+    const parts = timeStr.split(':').map(Number);
+    if (parts.length === 3) {
+      return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    }
+    return parts[0] * 60 + parts[1];
+  }
+  window.onYouTubeIframeAPIReady = function() {
+    if (!videoId) return;
+    player = new YT.Player('youtube-player', {
+      height: '100%',
+      width: '100%',
+      videoId: videoId,
+      playerVars: {
+        'playsinline': 1,
+        'rel': 0,
+      },
+    });
+  }
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  const container = document.getElementById('video-player-wrapper');
+  container.addEventListener('click', (event) => {
+    const link = event.target.closest('.timestamp-link');
+    if (!link) return;
+    event.preventDefault();
+    const timeStr = link.dataset.time;
+    if (timeStr && player && typeof player.seekTo === 'function') {
+      const seconds = timeToSeconds(timeStr);
+      player.seekTo(seconds, true);
+    }
+  });
+</script>

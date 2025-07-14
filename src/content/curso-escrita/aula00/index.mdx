@@ -1,18 +1,71 @@
 ---
-# Frontmatter: Metadados da sua página
-layout: '~/layouts/AulaLayout.astro'
-title: 'Aula 00: Protótipo de uma sala de aula'
-description: 'Aprenda a estrutura macro de um artigo científico, geralmente seguindo o padrão IMRaD (Introdução, Métodos, Resultados e Discussão), para aumentar o impacto da sua pesquisa.'
-slug: 'aula01' # Usado pelo layout para saber qual aula está ativa
+title: 'Aula 00: O Esqueleto Fundamental de um Artigo de Grande Impacto'
+shortTitle: 'Aula 00: Prototype'
+description: 'Aprenda a estrutura macro de um artigo científico, geralmente seguindo o padrão IMRaD, para aumentar o impacto da sua pesquisa.'
+ordem: 0
+
+# Sintaxe corrigida para YAML 100% válido.
+# Chave: valor
+videoId: 'jA7iHSAumao'
+
+# 'chapters' é uma chave que contém uma lista (array).
+chapters:
+  # Cada '-' inicia um novo item na lista (objeto).
+  - time: '00:00'
+    title: 'Introdução: A importância da estrutura'
+  - time: '00:52'
+    title: 'O que significa IMRaD?'
+  - time: '01:21'
+    title: 'A Seção de Introdução (Introduction)'
+  - time: '03:04'
+    title: 'A Seção de Métodos (Methods)'
+  - time: '04:51'
+    title: 'A Seção de Resultados (Results)'
+  - time: '06:33'
+    title: 'A Seção de Discussão (Discussion)'
+  - time: '08:25'
+    title: 'Resumo e Dicas Finais'
+
+# 'transcript' também é uma lista.
+transcript:
+  - time: '00:02'
+    text: 'Neste vídeo, vamos discutir como escrever um artigo científico usando a estrutura IMRaD.'
+  - time: '00:52'
+    text: 'Então, o que é IMRaD? É um acrônimo para Introdução, Métodos, Resultados e Discussão.'
+  - time: '01:21'
+    text: 'A seção de Introdução estabelece o contexto do seu trabalho. Você precisa apresentar o tópico...'
+  - time: '01:28'
+    text: '...e explicar por que sua pesquisa é importante. Termine com a sua pergunta de pesquisa ou hipótese.'
+  - time: '03:04'
+    text: 'A seguir, a seção de Métodos. Aqui você descreve exatamente o que você fez...'
+  - time: '03:10'
+    text: '...para que outros pesquisadores possam replicar seu estudo. Seja preciso e detalhado.'
+  - time: '04:51'
+    text: 'Na seção de Resultados, você apresenta suas descobertas de forma objetiva, sem interpretação.'
+  - time: '06:33'
+    text: 'Finalmente, a seção de Discussão. É aqui que você interpreta seus resultados.'
+  - time: '06:40'
+    text: 'O que suas descobertas significam? Como elas se comparam a outros estudos?'
 ---
 
-{/* Imports: Traga seus componentes e imagens para o escopo do MDX */}
+{/* 1. IMPORTS DE COMPONENTES */}
+{/* Os imports continuam aqui, fora do frontmatter */}
 import PullOutBox from '~/components/PullOutBox.astro';
 import InfoBox from '~/components/InfoBox.astro';
 import BoxArtigo from '~/components/BoxArtigo.astro';
 import gatoCard2 from '~/../public/imagens/gatocard2.png';
 import gatoCard2Mobile from '~/../public/imagens/gatocard2-mobile.png';
+import VideoPlayer from '~/components/VideoPlayer.astro';
 
+{/*
+  Agora, o componente VideoPlayer pode acessar as variáveis
+  definidas no frontmatter sem problemas.
+*/}
+<VideoPlayer 
+  videoId={frontmatter.videoId} 
+  chapters={frontmatter.chapters} 
+  transcript={frontmatter.transcript} 
+/>
 
 ## Notas da Aula
 
