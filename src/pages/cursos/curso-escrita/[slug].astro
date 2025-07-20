@@ -1,0 +1,22 @@
+---
+// src/pages/cursos/curso-escrita/[slug].astro
+import { getCollection } from 'astro:content';
+import AulaLayout from '~/layouts/AulaLayout.astro';
+
+// ✅ ESTA FUNÇÃO ESTAVA FALTANDO
+// Ela busca todas as aulas e diz ao Astro para criar uma página para cada uma.
+export async function getStaticPaths() {
+  const aulas = await getCollection('curso-escrita');
+  return aulas.map(aula => ({
+    params: { slug: aula.slug },
+    props: aula,
+  }));
+}
+
+// Pega a aula correta para esta página, passada pelo getStaticPaths
+const aula = Astro.props;
+const { Content } = await aula.render();
+---
+<AulaLayout frontmatter={aula.data}>
+  <Content />
+</AulaLayout>

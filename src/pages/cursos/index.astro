@@ -1,8 +1,8 @@
 ---
 import Layout from '~/layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.endsWith('/')
-  ? import.meta.env.BASE_URL
-  : import.meta.env.BASE_URL + '/';
+? import.meta.env.BASE_URL
+: import.meta.env.BASE_URL + '/';
 ---
 
 <Layout title="Cursos">
@@ -17,8 +17,8 @@ const base = import.meta.env.BASE_URL.endsWith('/')
         <section class="secao-vitrine-cursos">
             <h2>Nossos Cursos</h2>
             <div class="vitrine-grid">
-                <a href="{`${base}cursos/curso-escrita/`}" class="card-curso-completo">
-                    <img src="{`${base}imagens/gatocard2.png`}" alt="Ilustração para o curso de Escrita Científica">
+                <a href={`${base}cursos/curso-escrita/`}" class="card-curso-completo">
+                    <img src={`${base}imagens/gatocard2.png`} alt="Ilustração para o curso de Escrita Científica">
                     <div class="card-curso-conteudo">
                         <h3>
                             <i class="fas fa-video"></i>
