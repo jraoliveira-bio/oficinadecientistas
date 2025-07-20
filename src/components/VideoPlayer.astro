@@ -1,5 +1,6 @@
 ---
 // src/components/VideoPlayer.astro
+// 1. DEFINIÇÃO DAS PROPS
 interface Chapter {
   time: string;
   title: string;
@@ -22,185 +23,279 @@ const { videoId, chapters, transcript } = Astro.props;
     <div id="youtube-player"></div>
   </div>
 
-  <details class="accordion">
-    <summary class="accordion-header">Índice de Tópicos</summary>
-    <div class="accordion-content">
-      <ul class="chapters-list">
-        {chapters.map((chapter) => (
-          <li>
-            <a href="#" class="timestamp-link" data-time={chapter.time}>
-              <span class="timestamp">{chapter.time}</span>
-              <span class="title">{chapter.title}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </details>
+  <div class="interactive-panel" id="interactive-panel">
+    <nav class="tab-nav" role="tablist" aria-label="Navegação de conteúdo">
+      <button id="tab-topics" class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-topics" data-tab="topics">
+        Tópicos
+        <span class="arrow-icon"></span>
+      </button>
+      <button id="tab-transcript" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-transcript" data-tab="transcript">
+        Transcrição
+        <span class="arrow-icon"></span>
+      </button>
+    </nav>
 
-  <details class="accordion">
-    <summary class="accordion-header">Transcrição Completa</summary>
-    <div class="accordion-content transcript-content">
-      {transcript.map((line) => (
-        <p>
-          <a href="#" class="timestamp-link" data-time={line.time}>
-            <strong class="timestamp">[{line.time}]</strong>
-          </a>
-          <span> {line.text}</span>
-        </p>
-      ))}
-    </div>
-  </details>
+    <div class="tab-content-panel">
+      <div id="panel-topics" class="tab-pane active" role="tabpanel" aria-labelledby="tab-topics">
+        <ul class="content-list">
+          {chapters.map((chapter, index) => (
+            <li class="list-item" data-index={index}>
+              <a href="#" class="timestamp-link" data-time={chapter.time}>{chapter.time}</a>
+              <span class="text-content">{chapter.title}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
+      <div id="panel-transcript" class="tab-pane" role="tabpanel" aria-labelledby="tab-transcript">
+        <div class="content-list">
+          {transcript.map((line, index) => (
+            <p class="list-item" data-index={index}>
+              <a href="#" class="timestamp-link" data-time={line.time}>{line.time}</a>
+              <span class="text-content">{line.text}</span>
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
   .video-player-container {
     max-width: 800px;
     margin: 2rem auto;
-    font-family: 'Georgia', serif;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #0000001b;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: #dee1e4;
     overflow: hidden;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.1)
   }
 
-  /* --- Player de Vídeo Responsivo (MÉTODO MODERNO E CORRETO) --- */
+  /* Player de Vídeo */
   .video-wrapper {
     position: relative;
-    aspect-ratio: 16 / 9; /* Define a proporção de forma nativa */
+    aspect-ratio: 16 / 9;
     width: 100%;
     background-color: #000;
   }
-
   .video-wrapper iframe {
     position: absolute;
-    inset: 0; /* Abreviação para top, right, bottom, left = 0 */
+    inset: 0;
     width: 100%;
     height: 100%;
     border: none;
   }
 
-  /* --- Estilos do Acordeão --- */
-  .accordion {
+  /* Interface de Abas */
+  .interactive-panel {
     border-top: 1px solid #e0e0e0;
+    padding: 0 1.5rem;
   }
-  .accordion-header {
-    padding: 1rem 1.5rem;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    list-style: none;
+  .tab-nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.2s ease;
+    gap: 2rem;
+    border-bottom: 1px solid #f0f0f0;
   }
-  .accordion-header::-webkit-details-marker {
-    display: none;
+  .tab-button {
+    border: none; background: none; padding: 1rem 0.25rem; cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1rem; font-weight: 600; color: #666; position: relative;
+    transition: color 0.3s ease;
   }
-  .accordion-header:hover {
-    background-color: #f9f9f9;
+  .tab-button:hover { color: #000; }
+  .tab-button::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 100%; height: 3px; background-color: #0056b3;
+    transform: scaleX(0); transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  .accordion-header::after {
-    content: '+';
-    font-size: 1.5rem;
-    font-weight: 300;
-    transition: transform 0.3s ease;
+  .tab-button.active { color: #000; }
+  .tab-button.active::after { transform: scaleX(1); }
+  .arrow-icon {
+    display: inline-block; margin-left: 0.5rem; font-size: 0.7em;
+    color: #999; transition: transform 0.3s ease;
   }
-  .accordion[open] > .accordion-header::after {
-    transform: rotate(45deg);
+  .tab-button .arrow-icon::before { content: '▼'; opacity: 0; transition: opacity 0.2s ease; }
+  .tab-button.active .arrow-icon::before { opacity: 1; }
+  .interactive-panel.panel-open .tab-button.active .arrow-icon { transform: rotate(180deg); }
+
+  /* MUDANÇA 1: Animação de Abertura do Painel */
+  .tab-content-panel {
+    max-height: 0; /* Começa fechado */
+    overflow: hidden; /* Esconde o conteúdo que transborda */
+    transition: max-height 0.5s ease-in-out; /* Anima a altura */
   }
-  .accordion-content {
-    padding: 0 1.5rem 1.5rem;
-    line-height: 1.7;
-    color: #333;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  .interactive-panel.panel-open .tab-content-panel {
+    /* Define uma altura máxima para o estado aberto */
+    /* Este valor deve ser grande o suficiente para o conteúdo. */
+    /* A altura real será controlada pelo .content-list abaixo */
+    max-height: 400px; 
   }
-  
-  /* --- Estilos das Listas e Timestamps --- */
-  .chapters-list {
-    list-style: none;
-    padding: 0;
+
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* MUDANÇA 2: Altura Máxima e Barra de Rolagem */
+  .content-list {
+    padding: 1.5rem 0.5rem 1.5rem 0; /* Adiciona padding para a barra de rolagem não colar no texto */
     margin: 0;
-  }
-  .chapters-list li {
-    padding: 0.5rem 0;
-    border-bottom: 1px dashed #e0e0e0;
-  }
-  .chapters-list li:last-child {
-    border-bottom: none;
-  }
-  .transcript-content p {
-    margin: 0 0 1rem;
-  }
-  .transcript-content p:last-child {
-    margin-bottom: 0;
-  }
-  .timestamp-link {
-    text-decoration: none;
-    color: #333;
+    list-style: none;
     display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 350px; /* A altura máxima real do conteúdo */
+    overflow-y: auto; /* Barra de rolagem vertical aparece se necessário */
+    position: relative;
   }
-  .transcript-content .timestamp-link {
-    display: inline;
+
+  .list-item {
+    display: flex; align-items: baseline; gap: 1.5rem; margin: 0;
+    padding: 0.5rem; border-radius: 6px; /* Adiciona padding para o destaque */
+    transition: background-color 0.3s ease; /* Anima a cor de fundo do destaque */
   }
-  .timestamp {
-    background-color: #f2f2f2;
-    color: #0056b3;
-    font-weight: bold;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.9em;
-    font-family: 'Courier New', monospace;
+  .list-item .timestamp-link {
+    flex-shrink: 0; width: 70px; font-family: 'Courier New', monospace;
+    font-weight: bold; font-size: 0.95em; color: #0056b3;
+    text-decoration: none; background-color: #f2f2f2;
+    padding: 4px 8px; border-radius: 4px; text-align: center;
     transition: background-color 0.2s ease;
-    white-space: nowrap;
   }
-  .timestamp-link:hover .timestamp {
-    background-color: #e0eaf6;
-    color: #003d82;
+  .list-item .timestamp-link:hover { background-color: #e0eaf6; }
+  .list-item .text-content { line-height: 1.6; color: #333; }
+
+  /* MUDANÇA 3: Estilo Visual do Destaque */
+  .list-item.current {
+    background-color: #e7f1ff; /* Cor de fundo para o item ativo */
   }
-  .timestamp-link .title {
-    flex-grow: 1;
+  .list-item.current .text-content {
+    font-weight: 500; /* Deixa o texto do item ativo um pouco mais forte */
   }
 </style>
 
 <script define:vars={{ videoId }}>
   let player;
+  let timeUpdater = null; // Variável para controlar o setInterval
+
   function timeToSeconds(timeStr) {
     const parts = timeStr.split(':').map(Number);
-    if (parts.length === 3) {
-      return parts[0] * 3600 + parts[1] * 60 + parts[2];
-    }
-    return parts[0] * 60 + parts[1];
+    return parts.length === 3
+      ? parts[0] * 3600 + parts[1] * 60 + parts[2]
+      : parts[0] * 60 + parts[1];
   }
+
+  // --- LÓGICA DO PLAYER DO YOUTUBE ---
   window.onYouTubeIframeAPIReady = function() {
     if (!videoId) return;
     player = new YT.Player('youtube-player', {
-      height: '100%',
-      width: '100%',
-      videoId: videoId,
-      playerVars: {
-        'playsinline': 1,
-        'rel': 0,
-      },
+      height: '100%', width: '100%', videoId: videoId,
+      playerVars: { 'playsinline': 1, 'rel': 0 },
+      events: {
+        'onStateChange': onPlayerStateChange // Adiciona um "vigia" para o estado do player
+      }
     });
   }
+  
   const tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
   const firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  const container = document.getElementById('video-player-wrapper');
-  container.addEventListener('click', (event) => {
-    const link = event.target.closest('.timestamp-link');
-    if (!link) return;
-    event.preventDefault();
-    const timeStr = link.dataset.time;
-    if (timeStr && player && typeof player.seekTo === 'function') {
-      const seconds = timeToSeconds(timeStr);
-      player.seekTo(seconds, true);
+
+  // --- LÓGICA DAS ABAS E DESTAQUES ---
+  document.addEventListener('DOMContentLoaded', () => {
+    const mainContainer = document.getElementById('video-player-wrapper');
+    const panelContainer = document.getElementById('interactive-panel');
+    const tabNav = panelContainer.querySelector('.tab-nav');
+
+    mainContainer.addEventListener('click', (e) => {
+      const timestampLink = e.target.closest('.timestamp-link');
+      if (timestampLink) {
+        e.preventDefault();
+        const timeStr = timestampLink.dataset.time;
+        if (timeStr && player && typeof player.seekTo === 'function') {
+          player.seekTo(timeToSeconds(timeStr), true);
+        }
+        return;
+      }
+
+      const clickedTab = e.target.closest('.tab-button');
+      if (clickedTab) {
+        const tabToActivate = clickedTab.dataset.tab;
+        const isAlreadyActive = clickedTab.classList.contains('active');
+        if (isAlreadyActive) {
+          panelContainer.classList.toggle('panel-open');
+        } else {
+          panelContainer.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+          panelContainer.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+          clickedTab.classList.add('active');
+          panelContainer.querySelector(`#panel-${tabToActivate}`).classList.add('active');
+          panelContainer.classList.add('panel-open');
+        }
+      }
+    });
+  });
+
+  // --- NOVA LÓGICA DE MONITORAMENTO ---
+  function onPlayerStateChange(event) {
+    // Se o vídeo está tocando, inicia o monitoramento
+    if (event.data == YT.PlayerState.PLAYING) {
+      // Limpa qualquer monitoramento anterior para segurança
+      if (timeUpdater) clearInterval(timeUpdater);
+      // Inicia um novo monitoramento a cada 250ms
+      timeUpdater = setInterval(updateActiveItem, 250);
+    } else {
+      // Se o vídeo for pausado, finalizado, etc., para o monitoramento
+      clearInterval(timeUpdater);
+    }
+  }
+
+  // Substitua a função updateActiveItem inteira por esta versão
+function updateActiveItem() {
+  if (!player || typeof player.getCurrentTime !== 'function') return;
+
+  const currentTime = player.getCurrentTime();
+  const activePane = document.querySelector('.tab-pane.active');
+  if (!activePane) return;
+
+  const listItems = activePane.querySelectorAll('.list-item');
+  const scrollContainer = activePane.querySelector('.content-list'); // O nosso container com a rolagem
+  let currentActiveIndex = -1;
+
+  listItems.forEach((item, index) => {
+    const itemTime = timeToSeconds(item.querySelector('.timestamp-link').dataset.time);
+    if (currentTime >= itemTime) {
+      currentActiveIndex = index;
     }
   });
+
+  listItems.forEach((item, index) => {
+    if (index === currentActiveIndex) {
+      // Se este item se tornou o ativo AGORA
+      if (!item.classList.contains('current')) {
+        item.classList.add('current');
+        
+        // --- AQUI ESTÁ A MUDANÇA ---
+        // Em vez de scrollIntoView, calculamos e executamos a rolagem local.
+        
+        // Posição do topo do item em relação ao topo do container de rolagem
+        const itemOffsetTop = item.offsetTop;
+        
+        // Altura visível do container de rolagem
+        const containerHeight = scrollContainer.clientHeight;
+        
+        // Posição de rolagem desejada para centralizar o item
+        const desiredScrollTop = itemOffsetTop - (containerHeight / 2) + (item.clientHeight / 2);
+
+        // Executa a rolagem suave APENAS no container
+        scrollContainer.scroll({
+          top: desiredScrollTop,
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      // Garante que todos os outros itens não tenham o destaque
+      item.classList.remove('current');
+    }
+  });
+}
 </script>
