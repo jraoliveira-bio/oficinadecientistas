@@ -320,8 +320,15 @@ footer {
 .menu-aulas ol { list-style: none; padding-left: 0; margin: 10px 0 0 0; }
 .menu-aulas li { border-radius: 8px; transition: background-color 0.2s ease; }
 .menu-aulas li:not(:last-child) { margin-bottom: 5px; }
-.menu-aulas li a { display: block; padding: 10px 15px; text-decoration: none; color: #0c4665; font-weight: 400; font-size: 16px;}
-.menu-aulas li a:hover { background-color: #e9e9e9; }
+.menu-aulas li a { display: flex; justify-content: space-between;align-items: center; padding: 10px 15px; text-decoration: none; color: #0c4665; font-weight: 400; font-size: 16px; transition: background-color 0.2s ease, color 0.2s ease;}
+/* Adiciona o triângulo indicador na aula ativa */
+.menu-aulas li.aula-ativa a::after {
+  content: '◄'; /* O caractere do triângulo */
+  color: #8c4b4b; /* A cor vermelho-vinho de destaque */
+  font-size: 12px; /* Um tamanho sutil */
+  padding-left: 10px; /* Um respiro para não colar no texto */
+}
+.menu-aulas li a:hover { background-color: #e9e9e9; color: #8c4b4b;}
 /* Estiliza o fundo do item da lista (o <li>) quando ele está ativo */
 aside.menu-aulas li.aula-ativa {
   background-color: #f6f5ec7b; /* Um lilás/cinza bem claro para o fundo */
@@ -336,12 +343,176 @@ aside.menu-aulas li.aula-ativa a {
 }
 .menu-aulas li a .fas { margin-right: 8px; width: 20px; text-align: center; color: #214f82; }
 
-.conteudo-aula h1 { margin-top: 0; font-size: 36px; margin-bottom: 30px; }
+/* --- Conteúdo Principal da Aula --- */
+.conteudo-aula h1 {
+  margin-top: 0;
+  font-size: 32px;   /* Reduzido de 36px para um visual mais refinado */
+  text-align: center; /* Centraliza o título */
+  margin-bottom: 30px;
+}
 .video-responsivo { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 30px; border-radius: 12px; background-color: #000; }
 .video-responsivo iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.texto-aula { font-size: 18px; line-height: 1.8; margin-top: 40px; display: flow-root; }
+.texto-aula {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-top: 40px;
+  display: flow-root; /* Mantém a correção para os PullOutBox */
+}
+
+/* Estilo para links dentro do conteúdo da aula e links externos */
+.texto-aula a,
+.link-externo {
+  color: #4A698B; /* Cor azul dos títulos, para destaque */
+  font-weight: 600;
+  text-decoration: none;
+  
+  /* --- PREPARAÇÃO PARA O EFEITO MARCA-TEXTO --- */
+  background-image: linear-gradient(to top, rgba(140, 75, 75, 0.25) 50%, transparent 50%);
+  background-size: 100% 200%;
+  background-position: 0 0;
+  transition: background-position 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animação suave */
+  
+  /* Pequeno ajuste para o marcador ter um "respiro" */
+  padding: 2px 3px;
+  margin: -2px -3px;
+  border-radius: 4px;
+}
+
+.texto-aula a:hover,
+.link-externo:hover {
+  color: #34495E; /* Opcional: escurece o texto para melhor contraste */
+  background-position: 0 100%; /* O fundo "sobe" e colore o texto */
+}
+
 .texto-aula h2 { margin-top: 40px; }
 .navegacao-aulas { display: flex; justify-content: space-between; align-items: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid #EAEAEA; }
+
+/* --- Página Sobre --- */
+.pagina-sobre-container {
+  padding: 40px;
+}
+.pagina-sobre-container > h1 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 60px;
+}
+.sobre-secao {
+  padding: 60px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.sobre-secao:last-of-type {
+  border-bottom: none;
+}
+.sobre-secao h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 40px;  
+}
+/* Colore apenas o título da seção Manifesto */
+#manifesto h2 {
+ font-family: 'Special Elite', monospace; /* Fonte de máquina de escrever */
+  font-size: 36px;
+  text-align: center; /* Alinha à esquerda para quebrar a simetria */
+  color: #8c4b4b;
+  margin-bottom: 30px; /* Aumenta o espaço abaixo do título */
+} 
+
+.fundo-offwhite {
+  background-color: #fdfdfb;
+  margin-left: -40px; /* Faz o fundo ir de ponta a ponta */
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.texto-coluna-unica {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 18px;
+}
+.texto-coluna-manifesto {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 2;
+  font-size: 18px;
+  background-color: rgba(245, 245, 245, 0.842);
+}
+.quem-sou-eu-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+.bio-foto {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.quem-sou-eu-bio h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.quem-sou-eu-bio p {
+  margin-top: 0;
+  font-size: 16px;
+  color: #5a6a7a;
+}
+.link-externo {
+  font-weight: 600;
+  color: #4A698B;
+  text-decoration: none;
+  border-bottom: 1px dotted #4A698B;
+  transition: all 0.2s ease; /* Adicionando transição */
+}
+
+/* ADICIONE ESTA NOVA REGRA ABAIXO */
+.link-externo:hover {
+  color: #8c4b4b; /* Vermelho-vinho no hover */
+  border-bottom-color: #8c4b4b; /* A borda também muda de cor */
+}
+.visao-futuro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.visao-item {
+  text-align: center;
+}
+.visao-item .fas {
+  font-size: 32px;
+  color: #8c4b4b;
+  margin-bottom: 20px;
+}
+.visao-item h4 {
+  font-size: 20px;
+}
+
+/* --- RESPONSIVIDADE PARA A PÁGINA SOBRE --- */
+@media (max-width: 768px) {
+  .quem-sou-eu-grid,
+  .visao-futuro-grid {
+    grid-template-columns: 1fr;
+  }
+  .quem-sou-eu-grid {
+    gap: 30px;
+  }
+  .quem-sou-eu-bio {
+    grid-row: 1; /* Coloca a bio com a foto no topo no mobile */
+  }
+  .fundo-offwhite {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .pagina-sobre-container {
+    padding: 20px;
+  }
+}
 
 
 /* ==========================================================================
@@ -363,6 +534,45 @@ aside.menu-aulas li.aula-ativa a {
     position: sticky;
     top: 40px;
   }
+
+  /* ==========================================================================
+   Efeito de Letra Capitular (Drop Cap) para Artigos de Aula
+   ========================================================================== */
+
+/* ==========================================================================
+   Efeito de Letra Capitular (Estilo "Playfair Display")
+   ========================================================================== */
+
+/* ==========================================================================
+   Efeito de Letra Capitular (Drop Cap) para Artigos de Aula
+   ========================================================================== */
+
+/* ==========================================================================
+   Efeito de Letra Capitular (Estilo "Iluminado")
+   ========================================================================== */
+
+.texto-aula p:first-of-type::first-letter {
+  font-family: 'Lora', serif;
+  font-size: 60px; /* Um pouco menor para caber bem na caixa */
+  font-weight: 700;
+
+  /* --- O NOVO DESIGN --- */
+  
+  /* 1. A Caixa de Fundo */
+  background-color: #f7f2f2; /* Um tom de rosé/vinho muito claro e suave */
+  
+  /* 2. A Cor da Letra (para contrastar com o fundo) */
+  color: #8c4b4b; /* Um tom de vermelho vinho escuro e dessaturado */
+
+  /* 3. O Espaçamento e a Forma */
+  padding: 8px 12px;         /* Espaçamento interno para a letra "respirar" */
+  border-radius: 4px;        /* Cantos sutilmente arredondados */
+  margin-right: 10px;        /* Espaço à direita da caixa */
+  
+  /* --- Propriedades de Alinhamento --- */
+  float: left;
+  line-height: 1;
+}
 
   /* --- Outros Layouts --- */
   .secao-destaque-curso {

@@ -1,0 +1,22 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Manifesto from '~/components/secoes-sobre/Manifesto.astro';
+import QuemSouEu from '~/components/secoes-sobre/QuemSouEu.astro';
+import VisaoFuturo from '~/components/secoes-sobre/VisaoFuturo.astro';
+import Sustentabilidade from '~/components/secoes-sobre/Sustentabilidade.astro';
+import Bastidores from '~/components/secoes-sobre/Bastidores.astro';
+// Importe os outros componentes (Sustentabilidade, Bastidores) aqui também
+---
+
+<Layout title="Sobre a Oficina">
+  <main>
+    <div class="pagina-sobre-container">
+      <h1>Sobre a Oficina</h1>
+      <Manifesto />
+      <QuemSouEu />
+      <VisaoFuturo />
+      <Sustentabilidade />
+      <Bastidores />
+      </div>
+  </main>
+</Layout>
