@@ -387,6 +387,26 @@ aside.menu-aulas li.aula-ativa a {
 .texto-aula h2 { margin-top: 40px; }
 .navegacao-aulas { display: flex; justify-content: space-between; align-items: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid #EAEAEA; }
 
+/* Estilo para a "Folha de Papel" da seção Manifesto */
+.folha-manifesto {
+  background-color: #fdfdfb; /* Um off-white quente, cor de papel */
+  padding: 40px 50px;       /* Espaçamento interno generoso */
+  padding-bottom: 70px; /* E então SOBRESCREVE apenas o padding inferior com um valor maior */ 
+  max-width: 850px;         /* Limita a largura para melhor leitura */
+  margin: 0 auto;           /* Centraliza a folha na página */
+  border-radius: 4px;       /* Cantos sutilmente arredondados */
+  font-size: 18px;
+  line-height: 1.8;
+
+  /* Sombra suave para dar o efeito de profundidade e "elevar" o papel */
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Garante que o H2 dentro da folha (que já é vermelho) fique centralizado */
+.folha-manifesto h2 {
+  text-align: center;
+}
+
 /* --- Página Sobre --- */
 .pagina-sobre-container {
   padding: 40px;
@@ -429,13 +449,6 @@ aside.menu-aulas li.aula-ativa a {
   margin: 0 auto;
   line-height: 1.8;
   font-size: 18px;
-}
-.texto-coluna-manifesto {
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 2;
-  font-size: 18px;
-  background-color: rgba(245, 245, 245, 0.842);
 }
 .quem-sou-eu-grid {
   display: grid;
