@@ -1,0 +1,6 @@
+---
+// src/components/Image.astro
+const { src, alt, class: className } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<img src={`${base}/${src}`} alt={alt} class={className} />

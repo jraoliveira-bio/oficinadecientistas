@@ -1,56 +1,37 @@
 ---
-// src/layouts/Layout.astro
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
-
-// ✅ 1. CSS importado diretamente aqui (supondo que ele foi movido para src/styles/estilos.css)
-import '~/styles/estilos.css';
-
-const { frontmatter, title } = Astro.props;
-const pageTitle = frontmatter?.title || title || 'Oficina de Cientistas';
+const { title } = Astro.props;
+// Lógica segura que garante que a base sempre termine com uma barra
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <base href="/oficinadecientistas/">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{pageTitle} - Oficina de Cientistas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} - Oficina de Cientistas</title>
 
-    {/* Favicons */}
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href={`${base}estilos.css`}>
+    <link rel="icon" type="image/png" href={`${base}favicon-96x96.png`} sizes="96x96" />
+    <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`}>
 
-    {/* Links Externos */}
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap" 
-      rel="stylesheet"
-    />
-      <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
- </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
     <div class="pagina-container">
-      <Header />
-      <slot />
-      <Footer />
+        <Header />
+        <slot />
+        <Footer />
     </div>
-
     <script>
-      const yearSpan = document.getElementById('currentYear');
-      if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-      }
+        const yearSpan = document.getElementById('currentYear');
+        if (yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
     </script>
-  </body>
+</body>
 </html>
