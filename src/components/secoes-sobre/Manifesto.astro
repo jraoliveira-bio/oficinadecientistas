@@ -1,5 +1,8 @@
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+---
 <section id="manifesto" class="sobre-secao">
-  <div class="folha-manifesto">
+  <div class="folha-manifesto" style={`--bg-image: url(${base}imagens/textura-papel2.jpg)`}>
 
     <h2>MANIFESTO</h2>
 
@@ -7,5 +10,12 @@
     <p>A <strong>Oficina de Cientistas</strong> nasceu ao observar uma necessidade clara: existem jovens pesquisadores de imenso potencial que, ao chegarem na pós-graduação, se deparam com a exigência de produzir conhecimento de alto nível sem, muitas vezes, terem recebido as ferramentas fundamentais para lidar com todas as complexidades de um projeto científico.</p>
     <p>Nosso objetivo é fornecer um ciclo básico de habilidades essenciais para a prática científica. Planejamos montar uma grade de cursos <strong>gratuitos</strong> focados na formação de um pesquisador, pois acreditamos que se educar no Brasil envolve, necessariamente, uma boa dose de protagonismo na própria formação.</p>
 
+    <div class="assinatura-manifesto">
+      <img src={`${base}logo1.png`} alt="Logo Oficina de Cientistas" class="logo-assinatura">
+       <h4 class="nome-assinatura">Oficina de Cientistas</h4>
+      <p class="texto-logo-explicacao">
+        <em>O cogumelo representa a Oficina em si: o corpo visível e material de uma vasta rede subterrânea que, embora invisível, conecta e sustenta ecossistemas inteiros. Para nós, essa rede é a metáfora perfeita para a ciência: um conhecimento profundo, interconectado e construído pelo esforço colaborativo de muitos, ao longo do tempo. Já os esporos sinalizam o objetivo da Oficina: propagar o conhecimento científico e germinar novas redes.</em>
+      </p>
+    </div>
   </div>
 </section>

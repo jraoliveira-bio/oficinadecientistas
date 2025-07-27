@@ -1,4 +1,8 @@
-<section class="sobre-secao fundo-offwhite">
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+---
+
+<section class="sobre-secao secao-visao-futuro" style={`--visao-bg-image: url(${base}imagens/morrinho.png)`}>
   <h2>Visão de Futuro</h2>
   <div class="visao-futuro-grid">
     <div class="visao-item">

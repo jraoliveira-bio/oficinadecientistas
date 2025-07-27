@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/curso-escrita",
+  "definitions": {
+    "curso-escrita": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "ordem": {
+          "type": "number"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "ordem"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

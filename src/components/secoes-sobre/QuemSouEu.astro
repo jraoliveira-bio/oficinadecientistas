@@ -1,20 +1,26 @@
 ---
-// Garante que a nossa base sempre termine com uma barra "/"
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
 
-<section class="sobre-secao fundo-offwhite">
+<section id="quem-sou-eu" class="sobre-secao secao-quem-sou-eu">
   <h2>Quem Sou Eu</h2>
   <div class="quem-sou-eu-grid">
-    <div class="quem-sou-eu-texto">
+    
+    <div class="quem-sou-eu-texto texto-coluna-unica">
+      <p>Meu nome é João Rafael, sou biólogo com mestrado e doutorado em Entomologia pelo Instituto Nacional de Pesquisas da Amazônia (INPA), em Manaus.</p>
       <p>Ao longo dessa jornada, através da minha própria experiência e da de colegas e alunos, fui levado a uma reflexão contínua sobre nosso modo atual de formar novos pesquisadores. Vejo um sistema que, por vezes, realiza uma filtragem impessoal e inadequada para a realidade de um país tão desigual como o nosso.</p>
       <p>Este projeto é a minha maneira de contribuir para a solução desse problema, dentro dos limites das minhas possibilidades: quero possibilitar que um aluno dedicado desenvolva as habilidades fundamentais para concluir seu TCC, dissertação ou tese com mais confiança e segurança. E, quem sabe, até se divertir no processo.</p>
+      
+      <p class="texto-logo-explicacao">É dessa filosofia de conhecimento profundo e interconectado que nasceu o nosso símbolo: o cogumelo, com suas raízes formando uma vasta rede subterrânea (o micélio), representa a ciência em sua essência. Um conhecimento visível que brota de uma fundação de ideias interligadas e muitas vezes invisíveis.</p>
     </div>
+
     <div class="quem-sou-eu-bio">
-      <img src={`${base}imagens/joaooliveira.jpg`} alt="Foto de João Rafael Alves de Oliveira" class="bio-foto">
+      <img src=`${base}imagens/joaooliveira.jpg` alt="Foto de João Rafael Alves de Oliveira" class="bio-foto">
       <h4>João Rafael Alves de Oliveira</h4>
       <p>Doutor em Entomologia (INPA)</p>
       <a href="[SEU LINK LATTES]" target="_blank" class="link-externo">Currículo Lattes ↗</a>
+
+      <img src=`${base}logo1.png` alt="Logo Oficina de Cientistas" class="logo-divisor-bio">
     </div>
+
   </div>
-</section>

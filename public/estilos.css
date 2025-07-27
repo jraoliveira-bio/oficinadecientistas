@@ -389,22 +389,37 @@ aside.menu-aulas li.aula-ativa a {
 
 /* Estilo para a "Folha de Papel" da seção Manifesto */
 .folha-manifesto {
-  background-color: #fdfdfb; /* Um off-white quente, cor de papel */
-  padding: 40px 50px;       /* Espaçamento interno generoso */
-  padding-bottom: 70px; /* E então SOBRESCREVE apenas o padding inferior com um valor maior */ 
-  max-width: 850px;         /* Limita a largura para melhor leitura */
-  margin: 0 auto;           /* Centraliza a folha na página */
-  border-radius: 4px;       /* Cantos sutilmente arredondados */
-  font-size: 18px;
-  line-height: 1.8;
+  /* 1. A IMAGEM DE FUNDO */
+  background-image: var(--bg-image);
+  background-size: cover; /* Garante que a textura cubra toda a área */
 
-  /* Sombra suave para dar o efeito de profundidade e "elevar" o papel */
-  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08);
+  /* 2. ESTILOS VISUAIS */
+  padding: 70px 60px; /* Aumenta um pouco o padding horizontal */
+  max-width: 850px;
+  margin: 0 auto;
+  border-radius: 3px; /* Bordas menos arredondadas, mais "papel" */
+
+  /* 3. SOMBRA SUTIL */
+  /* Sombra mais suave para um efeito de folha sobre a mesa */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1), 0px 1px 4px rgba(0, 0, 0, 0.08);
+
+  /* Garante que o texto dentro seja legível */
+  color: #333; /* Um preto um pouco mais suave que o preto puro */
 }
-
 /* Garante que o H2 dentro da folha (que já é vermelho) fique centralizado */
+/* Título do Manifesto (Máquina de Escrever) */
 .folha-manifesto h2 {
+  font-family: 'Special Elite', monospace;
+  font-size: 32px; /* Um pouco menor para o estilo de máquina de escrever */
   text-align: center;
+  color: #333; /* Cor do texto da folha */
+  margin-bottom: 30px;
+}
+/* Parágrafos do Manifesto (Máquina de Escrever) */
+.folha-manifesto p {
+  font-family: 'Courier Prime', monospace; /* Nova fonte para leitura */
+  font-size: 16px; /* Tamanho de fonte típico de máquina de escrever */
+  line-height: 1.9;  /* Espaçamento maior entre linhas, como datilografado */
 }
 
 /* --- Página Sobre --- */
@@ -414,7 +429,7 @@ aside.menu-aulas li.aula-ativa a {
 .pagina-sobre-container > h1 {
   text-align: center;
   font-size: 42px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 .sobre-secao {
   padding: 60px 0;
@@ -434,43 +449,109 @@ aside.menu-aulas li.aula-ativa a {
   font-size: 36px;
   text-align: center; /* Alinha à esquerda para quebrar a simetria */
   color: #8c4b4b;
-  margin-bottom: 30px; /* Aumenta o espaço abaixo do título */
+  margin-top: 20px;
+  margin-bottom: 110px; /* Aumenta o espaço abaixo do título */
 } 
 
-.fundo-offwhite {
-  background-color: #fdfdfb;
+.secao-quem-sou-eu {
+  background-color: #fdfdfbbc;
   margin-left: -40px; /* Faz o fundo ir de ponta a ponta */
   margin-right: -40px;
   padding-left: 40px;
   padding-right: 40px;
 }
 .texto-coluna-unica {
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
   line-height: 1.8;
   font-size: 18px;
+  text-align: justify;
 }
+
+/* Estilo para a "assinatura" com o logo no final do Manifesto */
+.assinatura-manifesto {
+  margin-top: 150px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.logo-assinatura {
+  display: block;
+  width: 60px;
+  height: auto;
+  margin: 0 auto 15px auto;
+  opacity: 0.7; /* Efeito de "carimbo" */
+}
+.nome-assinatura {
+  font-family: 'Lora', serif; /* A mesma fonte dos títulos */
+  color: #4A698B;             /* A cor azul dos títulos */
+  font-size: 20px;
+  font-weight: 700;            /* Negrito */
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.assinatura-manifesto .texto-logo-explicacao {
+  font-family: 'Courier Prime', monospace; /* Nova fonte para leitura */
+  font-size: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  color: #2a2a2a;
+}
+/* --- Estilos para a seção "Quem Sou Eu" --- */
 .quem-sou-eu-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 50px;
-  max-width: 1000px;
+  grid-template-columns: 2fr 1fr; /* Coluna de texto (esquerda) 2x mais larga que a da bio */
+  gap: 60px; /* Aumenta o espaço entre as colunas */
+  max-width: 1100px;
   margin: 0 auto;
   align-items: flex-start;
 }
+
+.quem-sou-eu-texto p {
+  margin-top: 0;
+}
+
+.texto-logo-explicacao {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px dotted #ccc;
+    font-size: 17px;
+    color: #5a6a7a;
+}
+
+.quem-sou-eu-bio {
+  text-align: center; /* Centraliza os itens na coluna da bio */
+}
+
 .bio-foto {
   width: 100%;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  max-width: 200px; /* Limita o tamanho máximo da foto */
+  border-radius: 50%; /* Deixa a foto redonda */
+  margin: 0 auto 20px auto;
+  border: 4px solid white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
+
 .quem-sou-eu-bio h4 {
   margin-top: 0;
   margin-bottom: 5px;
+  font-size: 20px;
 }
+
 .quem-sou-eu-bio p {
   margin-top: 0;
   font-size: 16px;
   color: #5a6a7a;
+}
+
+/* Novo estilo para o logo como divisor */
+.logo-divisor-bio {
+  display: block;
+  width: 80px; /* Tamanho do logo */
+  height: auto;
+  margin: 40px auto 0 auto; /* Espaçamento acima e centralização */
+  opacity: 0.5; /* Deixa o logo mais sutil */
 }
 .link-externo {
   font-weight: 600;
@@ -484,6 +565,24 @@ aside.menu-aulas li.aula-ativa a {
 .link-externo:hover {
   color: #8c4b4b; /* Vermelho-vinho no hover */
   border-bottom-color: #8c4b4b; /* A borda também muda de cor */
+}
+.secao-visao-futuro {
+  background-color: #fdfdfb; /* O mesmo fundo off-white */
+
+  /* A sua ilustração como imagem de fundo */
+  background-image: var(--visao-bg-image); /* <-- Coloque o nome correto aqui se for diferente */
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 100% auto;
+
+  /* Padding extra na parte de baixo para a imagem aparecer */
+  padding-bottom: 80px;
+
+  /* Regras para ocupar a largura toda */
+  margin-left: -40px; 
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 .visao-futuro-grid {
   display: grid;
@@ -506,16 +605,17 @@ aside.menu-aulas li.aula-ativa a {
 
 /* --- RESPONSIVIDADE PARA A PÁGINA SOBRE --- */
 @media (max-width: 768px) {
-  .quem-sou-eu-grid,
   .visao-futuro-grid {
     grid-template-columns: 1fr;
   }
-  .quem-sou-eu-grid {
-    gap: 30px;
-  }
-  .quem-sou-eu-bio {
-    grid-row: 1; /* Coloca a bio com a foto no topo no mobile */
-  }
+.quem-sou-eu-grid {
+  grid-template-columns: 1fr; /* Volta para 1 coluna */
+  gap: 40px;
+}
+.quem-sou-eu-bio {
+  grid-row: 1; /* Move a bio (com a foto) para o topo no mobile */
+}
+
   .fundo-offwhite {
     margin-left: -20px;
     margin-right: -20px;
@@ -525,6 +625,38 @@ aside.menu-aulas li.aula-ativa a {
   .pagina-sobre-container {
     padding: 20px;
   }
+}
+
+/* --- Parágrafo de Destaque (Substitui o pull-quote) --- */
+.paragrafo-destaque {
+  font-style: italic;
+  font-size: 19px; /* Um pouco maior que o texto normal */
+  color: #34495E;  /* Cor de texto mais escura para dar peso */
+  margin: 40px 0; /* Espaçamento vertical para "respirar" */
+  padding-left: 25px; /* Espaçamento à esquerda da linha */
+  border-left: 3px solid #4A698B; /* A linha vertical azul */
+}
+
+/* --- Estilo para Charges e Figuras no Conteúdo --- */
+.charge-artigo {
+  margin: 40px auto; /* Espaçamento vertical e centralização horizontal */
+  max-width: 100%;   /* Garante que a figura não ultrapasse seu contêiner */
+  width: 700px;      /* Define uma largura máxima para a charge */
+}
+
+.charge-artigo img {
+  width: 100%;       /* A imagem se ajusta à largura da figura */
+  height: auto;      /* Mantém a proporção da imagem */
+  display: block;    /* Remove espaçamentos extras que a tag <img> pode ter */
+  border-radius: 4px;
+}
+
+.charge-artigo figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 15px;
+  font-style: italic;
+  color: #5a6a7a;    /* Cor de texto secundária */
 }
 
 
@@ -552,17 +684,6 @@ aside.menu-aulas li.aula-ativa a {
    Efeito de Letra Capitular (Drop Cap) para Artigos de Aula
    ========================================================================== */
 
-/* ==========================================================================
-   Efeito de Letra Capitular (Estilo "Playfair Display")
-   ========================================================================== */
-
-/* ==========================================================================
-   Efeito de Letra Capitular (Drop Cap) para Artigos de Aula
-   ========================================================================== */
-
-/* ==========================================================================
-   Efeito de Letra Capitular (Estilo "Iluminado")
-   ========================================================================== */
 
 .texto-aula p:first-of-type::first-letter {
   font-family: 'Lora', serif;
