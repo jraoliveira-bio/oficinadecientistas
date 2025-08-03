@@ -1,0 +1,3 @@
+Para criar uma tabela .json que o componente Table.astro consiga ler, transforme um .csv separado por ";" em .json com o seguinte comando na pasta raiz do proejto:
+
+python scripts/converter.py scripts/csv_source/nomedoarquivo.csv src/data/nomedoarquivo.json

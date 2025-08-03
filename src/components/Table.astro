@@ -1,0 +1,101 @@
+---
+// src/components/Table.astro
+
+// O componente espera receber uma propriedade 'data', 
+// que será o objeto inteiro lido do nosso arquivo .json.
+const { data } = Astro.props;
+
+// Por segurança, garantimos que 'headers' e 'rows' sejam listas vazias se os dados não forem passados.
+const headers = data?.headers || [];
+const rows = data?.rows || [];
+---
+
+<div class="table-wrapper">
+  <table class="tabela-customizavel">
+    <thead>
+      <tr>
+        {headers.map(header => <th>{header.label}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(row => (
+        <tr>
+          {headers.map(header => (
+            <td data-label={header.label}>{row[header.key]}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .table-wrapper {
+    margin: 40px 0;
+    width: 100%;
+    overflow-x: auto; /* Adiciona rolagem horizontal em telas muito pequenas, se necessário */
+  }
+
+  .tabela-customizavel {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+
+  .tabela-customizavel thead {
+    background-color: #f7f7f7;
+  }
+
+  .tabela-customizavel th,
+  .tabela-customizavel td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+
+  .tabela-customizavel th {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-texto-principal);
+  }
+
+  /* Estilo "Zebra" para o corpo da tabela */
+.tabela-customizavel tbody tr:nth-child(odd) {
+  background-color: #fafafa; /* Um cinza bem claro para as linhas ímpares */
+}
+
+.tabela-customizavel tbody tr:nth-child(even) {
+  background-color: #ffffff; /* Branco para as linhas pares */
+}
+
+  /* --- RESPONSIVIDADE --- */
+  @media (max-width: 768px) {
+    .tabela-customizavel thead {
+      display: none; /* Esconde o cabeçalho no mobile */
+    }
+    .tabela-customizavel tr {
+      display: block;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      background-color: #fafafa !important; /* ✅ Garante que TODAS as linhas tenham fundo */
+    }
+    .tabela-customizavel td {
+      display: block;
+      text-align: left; /* ✅ Alinha o texto principal à esquerda */
+      border-bottom: 1px dotted #ccc;
+    }
+    .tabela-customizavel td:last-child {
+      border-bottom: none;
+    }
+    .tabela-customizavel td::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: 600;
+      color: var(--cor-texto-principal);
+      margin-right: 1rem;
+      /* Opcional: Adiciona um alinhamento para o título não quebrar */
+      width: 40%;
+      text-align: left;
+    }
+  }

@@ -1,0 +1,127 @@
+---
+// src/components/LaboratorioMental.astro
+
+// Opcional: podemos receber um título personalizado se quisermos
+const { title = "Laboratório Mental" } = Astro.props;
+---
+
+<section class="lab-container">
+  <header class="lab-header">
+    <div class="lab-icon">
+      <i class="fas fa-brain"></i>
+    </div>
+    <div class="lab-title-group">
+      <h2>{title}</h2>
+      <button class="lab-explainer-toggle">
+        O que é esta seção?
+        <span class="arrow-icon">▼</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="lab-explainer-content">
+    <div class="explainer-inner">
+      <p>Uma das habilidades mais poderosas da espécie humana é sua capacidade de criar e simular cenários virtuais complexos. Com um horizonte temporal muito longo: somos capazes de visualizar e planejar simular situações impossívelmente complexas para outras espécias, como plantar intencionalmente uma árvore frutífera, construir habitações, manufaturar itens utilitários. Hoje em dia, somos capazes de imaginar e criar coisas como reatores nucleares e telescópios em órbita!</p>
+      <p>A principal ferramenta de Einstein era utilizar sua mente como um verdadeiro laboratório mental. Com o que ele sabia sobre as coisas a qual estudava, ele imaginava experimentos como "o que aconteceria se eu cavalgasse um raio de luz"? Nas aulas com selo "Laboratório Mental" vamos criar experimentos imaginários para explicar conceitos ou desenvolver ideias.</p>
+    </div>
+  </div>
+
+  <div class="lab-main-content">
+    <slot /> </div>
+
+</section>
+
+<script>
+  // Encontra todos os laboratórios na página (pode haver mais de um)
+  const laboratorios = document.querySelectorAll('.lab-container');
+
+  laboratorios.forEach(lab => {
+    const toggleButton = lab.querySelector('.lab-explainer-toggle');
+    const content = lab.querySelector('.lab-explainer-content');
+
+    toggleButton.addEventListener('click', () => {
+      lab.classList.toggle('is-open');
+      const isOpen = lab.classList.contains('is-open');
+
+      if (isOpen) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+      } else {
+        content.style.maxHeight = null;
+      }
+    });
+  });
+</script>
+
+<style>
+  .lab-container {
+    --cor-principal: #00695C; /* Verde-jade escuro para detalhes */
+    --cor-fundo: #f0f7f7;   /* Verde-jade muito pálido para o fundo */
+
+    margin: 60px 0;
+    border-radius: 12px;
+    background-color: var(--cor-fundo);
+    border: 1px solid #dceaea;
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Importante para o border-radius funcionar no conteúdo */
+  }
+
+  .lab-header {
+    display: flex;
+    align-items: flex-start;
+    padding: 25px 30px;
+    gap: 20px;
+  }
+
+  .lab-icon .fas {
+    font-size: 32px;
+    color: var(--cor-principal);
+    margin-top: 5px;
+  }
+
+  .lab-title-group h2 {
+    font-family: 'Special Elite', monospace; /* Fonte de máquina de escrever para dar personalidade */
+    font-size: 28px;
+    color: var(--cor-principal);
+    margin: 0 0 5px 0;
+  }
+
+  .lab-explainer-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: #5a6a7a;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .lab-explainer-toggle .arrow-icon {
+    transition: transform 0.3s ease;
+  }
+  .lab-container.is-open .lab-explainer-toggle .arrow-icon {
+    transform: rotate(180deg);
+  }
+
+  .lab-explainer-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+  }
+
+  .explainer-inner {
+    padding: 0 30px 25px 30px;
+    border-top: 1px solid #dceaea;
+    margin-left: 72px; /* Alinha com o início do título */
+    font-size: 16px;
+    line-height: 1.6;
+    color: #5a6a7a;
+  }
+
+  .lab-main-content {
+    padding: 30px;
+    background-color: white; /* O conteúdo principal fica em uma "folha" branca interna */
+  }
+</style>

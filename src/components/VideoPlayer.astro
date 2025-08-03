@@ -14,7 +14,7 @@ export interface Props {
   chapters: Chapter[];
   transcript: TranscriptLine[];
 }
-const { videoId, chapters, transcript } = Astro.props;
+const { videoId, chapters = [], transcript = [] } = Astro.props;
 ---
 
 <div class="video-player-container" id="video-player-wrapper">
@@ -23,42 +23,61 @@ const { videoId, chapters, transcript } = Astro.props;
     <div id="youtube-player"></div>
   </div>
 
-  <div class="interactive-panel" id="interactive-panel">
-    <nav class="tab-nav" role="tablist" aria-label="Navegação de conteúdo">
-      <button id="tab-topics" class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-topics" data-tab="topics">
-        Tópicos
-        <span class="arrow-icon"></span>
-      </button>
-      <button id="tab-transcript" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-transcript" data-tab="transcript">
-        Transcrição
-        <span class="arrow-icon"></span>
-      </button>
-    </nav>
+  {/* ✅ 2. A VERIFICAÇÃO PRINCIPAL COMEÇA AQUI */}
+  {/* O painel interativo inteiro só aparece se houver Tópicos OU Transcrição */}
+  {(chapters.length > 0 || transcript.length > 0) && (
+    <div class="interactive-panel" id="interactive-panel">
+      <nav class="tab-nav" role="tablist" aria-label="Navegação de conteúdo">
+        
+        {/* O botão "Tópicos" só aparece se a lista 'chapters' tiver itens */}
+        {chapters.length > 0 && (
+          <button id="tab-topics" class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-topics" data-tab="topics">
+            Tópicos
+            <span class="arrow-icon"></span>
+          </button>
+        )}
 
-    <div class="tab-content-panel">
-      <div id="panel-topics" class="tab-pane active" role="tabpanel" aria-labelledby="tab-topics">
-        <ul class="content-list">
-          {chapters.map((chapter, index) => (
-            <li class="list-item" data-index={index}>
-              <a href="#" class="timestamp-link" data-time={chapter.time}>{chapter.time}</a>
-              <span class="text-content">{chapter.title}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+        {/* O botão "Transcrição" só aparece se a lista 'transcript' tiver itens */}
+        {transcript.length > 0 && (
+          <button id="tab-transcript" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-transcript" data-tab="transcript">
+            Transcrição
+            <span class="arrow-icon"></span>
+          </button>
+        )}
+      </nav>
 
-      <div id="panel-transcript" class="tab-pane" role="tabpanel" aria-labelledby="tab-transcript">
-        <div class="content-list">
-          {transcript.map((line, index) => (
-            <p class="list-item" data-index={index}>
-              <a href="#" class="timestamp-link" data-time={line.time}>{line.time}</a>
-              <span class="text-content">{line.text}</span>
-            </p>
-          ))}
-        </div>
+      <div class="tab-content-panel">
+        
+        {/* O painel de Tópicos só aparece se a lista 'chapters' tiver itens */}
+        {chapters.length > 0 && (
+          <div id="panel-topics" class="tab-pane active" role="tabpanel" aria-labelledby="tab-topics">
+            <ul class="content-list">
+              {chapters.map((chapter, index) => (
+                <li class="list-item" data-index={index}>
+                  <a href="#" class="timestamp-link" data-time={chapter.time}>{chapter.time}</a>
+                  <span class="text-content">{chapter.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* O painel de Transcrição só aparece se a lista 'transcript' tiver itens */}
+        {transcript.length > 0 && (
+          <div id="panel-transcript" class="tab-pane" role="tabpanel" aria-labelledby="tab-transcript">
+            <div class="content-list">
+              {transcript.map((line, index) => (
+                <p class="list-item" data-index={index}>
+                  <a href="#" class="timestamp-link" data-time={line.time}>{line.time}</a>
+                  <span class="text-content">{line.text}</span>
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
-  </div>
+  )}
 </div>
 
 <style>

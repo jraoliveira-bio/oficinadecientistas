@@ -1,0 +1,52 @@
+---
+// src/components/Sintese.astro
+---
+<section class="caixa-sintese">
+  <h4 class="sintese-titulo">
+    Síntese
+  </h4>
+  <div class="sintese-conteudo">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .caixa-sintese {
+    margin: 60px auto;
+    padding: 25px 30px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background-color: #fafafa;
+    max-width: 900px;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+  }
+
+  .sintese-titulo {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #6B7280;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+    /* Alterações aqui 👇 */
+    text-align: center; 
+  }
+
+  .sintese-conteudo :global(p) {
+    margin: 0;
+    line-height: 1.7;
+    font-family: var(--fonte-slab);
+  }
+  
+  .sintese-conteudo :global(.take-home-grid) {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .sintese-conteudo :global(.take-home-grid) {
+    }
+  }
+</style>

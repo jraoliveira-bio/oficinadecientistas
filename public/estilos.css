@@ -365,8 +365,31 @@ aside.menu-aulas li.aula-ativa a {
   color: #4A698B; /* Cor azul dos títulos, para destaque */
   font-weight: 600;
   text-decoration: none;
+
+}  
+
+.titulo-aula {
+  margin-bottom: 40px; /* Espaçamento entre titulo da aula e primeiro parágrafo */
+}
+/* ==========================================================================
+   Efeito de Letra Capitular (Estilo "Iluminado" com Classe)
+   ========================================================================== */
+
+.paragrafo-capitular::first-letter {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  background-color: #f7f2f2;
+  color: #8c4b4b;
+  padding: 5px 14px;
+  border-radius: 4px;
+  margin-right: 12px;
+  float: left;
+  line-height: 0.85;
+  font-size: 50px;
+}
+
   
-  /* --- PREPARAÇÃO PARA O EFEITO MARCA-TEXTO --- */
+  /* --- PREPARAÇÃO PARA O EFEITO MARCA-TEXTO --- */{
   background-image: linear-gradient(to top, rgba(140, 75, 75, 0.25) 50%, transparent 50%);
   background-size: 100% 200%;
   background-position: 0 0;
@@ -377,6 +400,7 @@ aside.menu-aulas li.aula-ativa a {
   margin: -2px -3px;
   border-radius: 4px;
 }
+
 
 .texto-aula a:hover,
 .link-externo:hover {
@@ -420,6 +444,34 @@ aside.menu-aulas li.aula-ativa a {
   font-family: 'Courier Prime', monospace; /* Nova fonte para leitura */
   font-size: 16px; /* Tamanho de fonte típico de máquina de escrever */
   line-height: 1.9;  /* Espaçamento maior entre linhas, como datilografado */
+}
+
+/* --- Tabela de Conceitos (Aula Textual) --- */
+.tabela-conceitos {
+  width: 100%;
+  border-collapse: collapse; /* Remove o espaçamento entre as células */
+  margin: 40px 0;
+  font-size: 16px;
+}
+
+.tabela-conceitos thead {
+  background-color: #f7f7f7; /* Um fundo sutil para o cabeçalho */
+}
+
+.tabela-conceitos th,
+.tabela-conceitos td {
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid #e0e0e0; /* Linhas divisórias sutis */
+}
+
+.tabela-conceitos th {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-texto-principal);
+}
+
+.tabela-conceitos tbody tr:nth-child(odd) {
+  background-color: #fafafa; /* Linhas alternadas para melhor legibilidade */
 }
 
 /* --- Página Sobre --- */
@@ -679,35 +731,7 @@ aside.menu-aulas li.aula-ativa a {
     position: sticky;
     top: 40px;
   }
-
-  /* ==========================================================================
-   Efeito de Letra Capitular (Drop Cap) para Artigos de Aula
-   ========================================================================== */
-
-
-.texto-aula p:first-of-type::first-letter {
-  font-family: 'Lora', serif;
-  font-size: 60px; /* Um pouco menor para caber bem na caixa */
-  font-weight: 700;
-
-  /* --- O NOVO DESIGN --- */
-  
-  /* 1. A Caixa de Fundo */
-  background-color: #f7f2f2; /* Um tom de rosé/vinho muito claro e suave */
-  
-  /* 2. A Cor da Letra (para contrastar com o fundo) */
-  color: #8c4b4b; /* Um tom de vermelho vinho escuro e dessaturado */
-
-  /* 3. O Espaçamento e a Forma */
-  padding: 8px 12px;         /* Espaçamento interno para a letra "respirar" */
-  border-radius: 4px;        /* Cantos sutilmente arredondados */
-  margin-right: 10px;        /* Espaço à direita da caixa */
-  
-  /* --- Propriedades de Alinhamento --- */
-  float: left;
-  line-height: 1;
-}
-
+ 
   /* --- Outros Layouts --- */
   .secao-destaque-curso {
     flex-direction: row;
@@ -722,7 +746,9 @@ aside.menu-aulas li.aula-ativa a {
     grid-template-columns: 1fr 1fr;
   }
 }
+/* DENTRO de @media (max-width: 768px) { ... } */
 
+ 
 /* Estilos para telas a partir de 900px */
 @media (min-width: 900px) {
   .grid-cursos {

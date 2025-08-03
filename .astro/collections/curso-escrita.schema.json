@@ -10,6 +10,9 @@
         "description": {
           "type": "string"
         },
+        "menu": {
+          "type": "boolean"
+        },
         "ordem": {
           "type": "number"
         },
@@ -23,6 +26,7 @@
       "required": [
         "title",
         "description",
+        "menu",
         "ordem"
       ],
       "additionalProperties": false

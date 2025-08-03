@@ -7,6 +7,7 @@ const cursoEscritaCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    menu: z.boolean(), 
     ordem: z.number(), // Para ordenar as aulas no menu
     shortTitle: z.string().optional(), // Título curto para o menu (opcional)
   }),
