@@ -11,23 +11,48 @@
     {
       "key": "descricao",
       "label": "Descrição"
+    },
+    {
+      "key": "",
+      "label": ""
     }
   ],
   "rows": [
     {
       "conceito": "Tipológico (ou Morfológico)",
       "criterioPrincipal": "Aparência física",
-      "descricao": "Define espécies com base em características morfológicas fixas. Se parecem diferentes, são espécies diferentes."
+      "descricao": "Define espécies com base em características morfológicas fixas. Se parecem diferentes, são espécies diferentes.",
+      "": ""
     },
     {
       "conceito": "Biológico de Espécie",
       "criterioPrincipal": "Isolamento reprodutivo",
-      "descricao": "Define uma espécie como um grupo que pode intercruzar e produzir descendentes férteis, mas é isolado de outros grupos."
+      "descricao": "Define uma espécie como um grupo que pode intercruzar e produzir descendentes férteis, mas é isolado de outros grupos.",
+      "": ""
     },
     {
       "conceito": "Ecológico de Espécie",
       "criterioPrincipal": "Nicho ecológico",
-      "descricao": "Define uma espécie com base na sua \"profissão\" no ecossistema"
+      "descricao": "Define uma espécie com base na sua zona de adaptação que ocupa (isso é, nicho ecológico)",
+      "": ""
+    },
+    {
+      "conceito": "Filogenético de Espécie",
+      "criterioPrincipal": "Ancestralidade comum e exclusividade",
+      "descricao": "Define uma espécie como o menor grupo de organismos que compartilha um ancestral comum e pode ser distinguido de outros grupos por um conjunto único de características herdadas (sinapomorfias)",
+      "": ""
+    },
+    {
+      "conceito": "Reconhecimento de Espécie",
+      "criterioPrincipal": "Sistema de reconhecimento de parceiros",
+      "descricao": "Define uma espécie como o grupo mais inclusivo de organismos que compartilha um sistema comum para reconhecer parceiros para o acasalamento (sinais químicos, sonoros, visuais, etc.)",
+      "": ""
+    },
+    {
+      "conceito": "Unificado de Espécie",
+      "criterioPrincipal": "Separação de linhagens",
+      "descricao": "Propõe que a definição teórica fundamental de espécie é simplesmente uma linhagem de populações que evolui separadamente de outras. Os demais conceitos são critérios operacionais (evidências) usados para inferir quando essa separação de fato ocorreu.",
+      "": ""
     }
   ]
 }

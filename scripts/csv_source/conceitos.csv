@@ -1,4 +1,7 @@
-Conceito;Critério Principal;Descrição
-Tipológico (ou Morfológico);Aparência física;Define espécies com base em características morfológicas fixas. Se parecem diferentes, são espécies diferentes.
-Biológico de Espécie;Isolamento reprodutivo;Define uma espécie como um grupo que pode intercruzar e produzir descendentes férteis, mas é isolado de outros grupos.
-Ecológico de Espécie;Nicho ecológico;Define uma espécie com base na sua "profissão" no ecossistema; a zona adaptativa única que ela ocupa.
+Conceito;Critério Principal;Descrição;
+Tipológico (ou Morfológico);Aparência física;Define espécies com base em características morfológicas fixas. Se parecem diferentes, são espécies diferentes.;
+Biológico de Espécie;Isolamento reprodutivo;Define uma espécie como um grupo que pode intercruzar e produzir descendentes férteis, mas é isolado de outros grupos.;
+Ecológico de Espécie;Nicho ecológico;Define uma espécie com base na sua zona de adaptação que ocupa (isso é, nicho ecológico);
+Filogenético de Espécie;Ancestralidade comum e exclusividade;Define uma espécie como o menor grupo de organismos que compartilha um ancestral comum e pode ser distinguido de outros grupos por um conjunto único de características herdadas (sinapomorfias);
+Reconhecimento de Espécie;Sistema de reconhecimento de parceiros;Define uma espécie como o grupo mais inclusivo de organismos que compartilha um sistema comum para reconhecer parceiros para o acasalamento (sinais químicos, sonoros, visuais, etc.);
+Unificado de Espécie;Separação de linhagens;Propõe que a definição teórica fundamental de espécie é simplesmente uma linhagem de populações que evolui separadamente de outras. Os demais conceitos são critérios operacionais (evidências) usados para inferir quando essa separação de fato ocorreu.;

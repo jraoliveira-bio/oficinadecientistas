@@ -1,0 +1,29 @@
+---
+// src/components/Figure.astro
+interface Props {
+  legenda: string;
+}
+
+const { legenda } = Astro.props;
+---
+<figure class="container-figura">
+  <slot /> {/* <-- O conteúdo (tabela, imagem, etc.) será inserido aqui */}
+  <figcaption class="legenda-figura">
+    {legenda}
+  </figcaption>
+</figure>
+
+<style>
+  /* Use os mesmos estilos da Solução 1 */
+  .container-figura {
+    margin-block: 2em;
+    margin-inline: 0;
+  }
+  .legenda-figura {
+    font-size: 16px;
+    font-style: italic;
+    color: #273543;
+    text-align: left;
+    margin-top: 8px;
+  }
+</style>
