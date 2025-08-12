@@ -713,25 +713,17 @@ transcript:
 
 ---
 
-{/* 1. IMPORTS DE COMPONENTES */}
-{/* Os imports continuam aqui, fora do frontmatter */}
 import PullOutBox from '~/components/PullOutBox.astro';
 import InfoBox from '~/components/InfoBox.astro';
 import BoxArtigo from '~/components/BoxArtigo.astro';
 import gatoCard2 from '~/../public/imagens/gatocard2.png';
 import gatoCard2Mobile from '~/../public/imagens/gatocard2-mobile.png';
 import VideoPlayer from '~/components/VideoPlayer.astro';
+import NotaDeMargem from '~/components/NotaDeMargem.astro';
 
-{/*
-  Agora, o componente VideoPlayer pode acessar as variáveis
-  definidas no frontmatter sem problemas.
-*/}
-<VideoPlayer 
-  videoId={frontmatter.videoId} 
-  chapters={frontmatter.chapters} 
-  transcript={frontmatter.transcript} 
-/>
+export const { videoId, chapters, transcript } = frontmatter;
 
+<VideoPlayer videoId={videoId} chapters={chapters} transcript={transcript} />
 ---
 <h2 class="titulo-aula"> Notas da Aula </h2>
 
@@ -744,6 +736,21 @@ import VideoPlayer from '~/components/VideoPlayer.astro';
 
 
 Vivamus in erat ut urna cursus vestibulum. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.
+
+<NotaDeMargem
+  resumo="Resumo curtinho que chama atenção para a ideia-chave deste parágrafo."
+  lado="esquerda"
+  cor="jade"
+  largura="20ch"
+  offset="2rem"
+  icone=""
+>
+  <p>
+    Este é o parágrafo principal, longo, ao qual a nota de margem se refere.
+    O conteúdo flui normalmente e a nota “sangra” para a área em branco lateral no desktop.
+    Em telas pequenas, a nota vira um bloco acima deste parágrafo.
+  </p>
+</NotaDeMargem>
 
 <InfoBox type="dica" title="Dica">
     <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p>
