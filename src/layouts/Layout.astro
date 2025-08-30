@@ -11,6 +11,19 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - Oficina de Cientistas</title>
+    <script is:inline>
+  (function () {
+    try {
+      const root = document.documentElement; // <html>
+      root.classList.add('ml-preload'); // evita flicker/transições no 1º paint
+
+      // aceita '1' ou 'true' (legado)
+      const v = localStorage.getItem('oficina.modoLeitura');
+      const on = v === '1' || v === 'true';
+      if (on) root.classList.add('modo-leitura-ativo', 'modo-leitura-handle-pronto');
+    } catch (e) {}
+  })();
+</script>
     <link rel="stylesheet" href={`${base}estilos.css`}>
     <link rel="icon" type="image/png" href={`${base}favicon-96x96.png`} sizes="96x96" />
     <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`}>
@@ -22,6 +35,9 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Pré-paint: decide o estado do modo leitura o mais cedo possível -->
+<!-- Pré-paint: aplica estado no <html> antes do primeiro paint -->
+
 </head>
 <body>
     <div class="pagina-container">

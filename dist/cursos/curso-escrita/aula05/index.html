@@ -1,0 +1,858 @@
+<!DOCTYPE html><html lang="pt-br"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Aula 05 -  - Oficina de Cientistas</title><link rel="stylesheet" href="/oficinadecientistas/estilos.css"><link rel="icon" type="image/png" href="/oficinadecientistas/favicon-96x96.png" sizes="96x96"><link rel="apple-touch-icon" href="/oficinadecientistas/apple-touch-icon.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet"><style>:root{--t: .5s;--easing: ease-in-out;--gap-sala: 1.5rem;--menu-largura: 320px}.container-sala-de-aula[data-astro-cid-35myrs3q]{display:grid;grid-template-columns:var(--menu-largura) 1fr;gap:var(--gap-sala);transition:grid-template-columns var(--t) var(--easing)}.menu-aulas[data-astro-cid-35myrs3q]{position:relative;transform:translate(0);opacity:1;transition:transform var(--t) var(--easing),opacity var(--t) var(--easing);will-change:transform;z-index:2}.conteudo-aula[data-astro-cid-35myrs3q]{min-width:0;transition:padding var(--t) var(--easing)}.toggle-leitura[data-astro-cid-35myrs3q]{position:absolute;top:.5rem;right:.5rem;display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .6rem;border:1px solid currentColor;border-radius:.5rem;background:transparent;cursor:pointer;font:500 .9rem/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{display:inline-block;transform-origin:center;transition:transform var(--t) var(--easing)}body.modo-leitura-ativo .toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{transform:rotate(180deg)}.conteudo-aula .nota-de-margem .nota{opacity:0;pointer-events:none;transition:opacity var(--t) var(--easing)}body.modo-leitura-ativo .container-sala-de-aula[data-astro-cid-35myrs3q]{grid-template-columns:0px 1fr}body.modo-leitura-ativo .menu-aulas[data-astro-cid-35myrs3q]{transform:translate(-100%);opacity:0;pointer-events:none}body.modo-leitura-ativo .conteudo-aula .nota-de-margem .nota{opacity:1;pointer-events:auto}@media (prefers-reduced-motion: reduce){.container-sala-de-aula[data-astro-cid-35myrs3q],.menu-aulas[data-astro-cid-35myrs3q],.conteudo-aula[data-astro-cid-35myrs3q],.conteudo-aula .nota-de-margem .nota,.toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{transition:none!important}}
+</style><style>.box-artigo-editorial[data-astro-cid-lo3wbj2t]{margin:40px 0;padding:25px 30px;border-radius:4px;border-left:3px solid;border-right:3px solid;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;box-shadow:0 4px 16px #0000000d}.box-artigo-titulo[data-astro-cid-lo3wbj2t]{margin-top:0;margin-bottom:20px;font-size:20px;font-weight:600}.box-artigo-figura[data-astro-cid-lo3wbj2t]{margin:0 0 20px;text-align:center}.box-artigo-figura[data-astro-cid-lo3wbj2t] img[data-astro-cid-lo3wbj2t]{max-width:100%;height:auto;border-radius:4px;margin-bottom:10px}.box-artigo-figura[data-astro-cid-lo3wbj2t] figcaption[data-astro-cid-lo3wbj2t]{font-size:15px;font-style:italic;color:#5a6a7a}.box-artigo-conteudo[data-astro-cid-lo3wbj2t]{display:grid;grid-template-columns:1fr 1fr;gap:25px}.coluna[data-astro-cid-lo3wbj2t] p{margin-top:0;line-height:1.7}.theme-vermelho[data-astro-cid-lo3wbj2t]{border-color:#d4a237;background-color:#fffaf0}.theme-vermelho[data-astro-cid-lo3wbj2t] .box-artigo-titulo[data-astro-cid-lo3wbj2t]{color:#b95c50}.theme-roxo[data-astro-cid-lo3wbj2t]{border-color:#a39cc4;background-color:#f5f3f7}.theme-roxo[data-astro-cid-lo3wbj2t] .box-artigo-titulo[data-astro-cid-lo3wbj2t]{color:#6d5b87}.theme-neutro[data-astro-cid-lo3wbj2t]{border-color:#d1d5db;background-color:#fafafa}.theme-neutro[data-astro-cid-lo3wbj2t] .box-artigo-titulo[data-astro-cid-lo3wbj2t]{color:#6b7280}@media (max-width: 768px){.box-artigo-conteudo[data-astro-cid-lo3wbj2t]{grid-template-columns:1fr}}
+</style><style>.info-box[data-astro-cid-5nfkzq7w]{margin:30px 0;padding:20px 25px;border-radius:8px;border:1px solid #c4bbbb;border-left-width:4px;border-left-style:solid;box-shadow:0 4px 16px #0000000d;transition:all .3s ease-out}.info-box[data-astro-cid-5nfkzq7w]:hover{transform:translateY(-3px);box-shadow:0 8px 24px #00000012}.info-box-titulo[data-astro-cid-5nfkzq7w]{margin-top:0;margin-bottom:15px;font-size:18px;display:flex;align-items:center;gap:10px;font-weight:600}.info-box-conteudo[data-astro-cid-5nfkzq7w] p{margin-bottom:0;font-family:Bitter,serif;line-height:1.7;color:#34495e}.info-box-conteudo[data-astro-cid-5nfkzq7w] p:not(:last-child){margin-bottom:1rem}.info-box-dica[data-astro-cid-5nfkzq7w]{background-color:#eef6ff;border-left-color:#4a698b}.info-box-dica[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#4a698b}.info-box-atencao[data-astro-cid-5nfkzq7w]{background-color:#fcf2f2;border-left-color:#8c4b4b}.info-box-atencao[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#8c4b4b}.info-box-saiba-mais[data-astro-cid-5nfkzq7w]{background-color:#fafafad5;border-left-color:#6b7280}.info-box-saiba-mais[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#6b7280}.info-box-chave[data-astro-cid-5nfkzq7w]{background-color:#f0f7f2;border-left-color:#348455}.info-box-chave[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#348455}
+</style><style>.pull-out-box[data-astro-cid-qt2unnqb]{width:45%;padding:15px 20px;margin-bottom:1rem;background-color:#f5f5f5;border:1px solid #f5edde;border-radius:20px;font-size:16px;font-style:italic;color:#273543}.align-left[data-astro-cid-qt2unnqb]{float:left;margin-right:25px}.align-right[data-astro-cid-qt2unnqb]{float:right;margin-left:25px}.pull-out-box[data-astro-cid-qt2unnqb] p{margin-top:0}.pull-out-box[data-astro-cid-qt2unnqb] img{width:100%;height:auto;border-radius:4px}
+</style><style>.video-player-container[data-astro-cid-hbhdmhem]{max-width:800px;margin:2rem auto;border:1px solid #0000001b;border-radius:8px;background-color:#dee1e4;overflow:hidden;box-shadow:5px 10px 10px #0000001a}.video-wrapper[data-astro-cid-hbhdmhem]{position:relative;aspect-ratio:16 / 9;width:100%;background-color:#000}.video-wrapper[data-astro-cid-hbhdmhem] iframe[data-astro-cid-hbhdmhem]{position:absolute;inset:0;width:100%;height:100%;border:none}.interactive-panel[data-astro-cid-hbhdmhem]{border-top:1px solid #e0e0e0;padding:0 1.5rem}.tab-nav[data-astro-cid-hbhdmhem]{display:flex;gap:2rem;border-bottom:1px solid #f0f0f0}.tab-button[data-astro-cid-hbhdmhem]{border:none;background:none;padding:1rem .25rem;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:1rem;font-weight:600;color:#666;position:relative;transition:color .3s ease}.tab-button[data-astro-cid-hbhdmhem]:hover{color:#000}.tab-button[data-astro-cid-hbhdmhem]:after{content:"";position:absolute;bottom:-1px;left:0;width:100%;height:3px;background-color:#0056b3;transform:scaleX(0);transform-origin:center;transition:transform .3s cubic-bezier(.175,.885,.32,1.275)}.tab-button[data-astro-cid-hbhdmhem].active{color:#000}.tab-button[data-astro-cid-hbhdmhem].active:after{transform:scaleX(1)}.arrow-icon[data-astro-cid-hbhdmhem]{display:inline-block;margin-left:.5rem;font-size:.7em;color:#999;transition:transform .3s ease}.tab-button[data-astro-cid-hbhdmhem] .arrow-icon[data-astro-cid-hbhdmhem]:before{content:"▼";opacity:0;transition:opacity .2s ease}.tab-button[data-astro-cid-hbhdmhem].active .arrow-icon[data-astro-cid-hbhdmhem]:before{opacity:1}.interactive-panel[data-astro-cid-hbhdmhem].panel-open .tab-button[data-astro-cid-hbhdmhem].active .arrow-icon[data-astro-cid-hbhdmhem]{transform:rotate(180deg)}.tab-content-panel[data-astro-cid-hbhdmhem]{max-height:0;overflow:hidden;transition:max-height .5s ease-in-out}.interactive-panel[data-astro-cid-hbhdmhem].panel-open .tab-content-panel[data-astro-cid-hbhdmhem]{max-height:400px}.tab-pane[data-astro-cid-hbhdmhem]{display:none}.tab-pane[data-astro-cid-hbhdmhem].active{display:block}.content-list[data-astro-cid-hbhdmhem]{padding:1.5rem .5rem 1.5rem 0;margin:0;list-style:none;display:flex;flex-direction:column;gap:1rem;max-height:350px;overflow-y:auto;position:relative}.list-item[data-astro-cid-hbhdmhem]{display:flex;align-items:baseline;gap:1.5rem;margin:0;padding:.5rem;border-radius:6px;transition:background-color .3s ease}.list-item[data-astro-cid-hbhdmhem] .timestamp-link[data-astro-cid-hbhdmhem]{flex-shrink:0;width:70px;font-family:Courier New,monospace;font-weight:700;font-size:.95em;color:#0056b3;text-decoration:none;background-color:#f2f2f2;padding:4px 8px;border-radius:4px;text-align:center;transition:background-color .2s ease}.list-item[data-astro-cid-hbhdmhem] .timestamp-link[data-astro-cid-hbhdmhem]:hover{background-color:#e0eaf6}.list-item[data-astro-cid-hbhdmhem] .text-content[data-astro-cid-hbhdmhem]{line-height:1.6;color:#333}.list-item[data-astro-cid-hbhdmhem].current{background-color:#e7f1ff}.list-item[data-astro-cid-hbhdmhem].current .text-content[data-astro-cid-hbhdmhem]{font-weight:500}
+</style></head> <body> <div class="pagina-container"> <header class="topo"> <div class="topo-conteudo"> <div class="logo-titulo-wrapper"> <img src="/oficinadecientistas/logo2.png" alt="Logo da Oficina de Cientistas" class="logo-header"> <h1>Oficina de Cientistas</h1> </div> <input type="checkbox" id="menu-toggle" class="menu-toggle"> <label for="menu-toggle" class="menu-hamburger"> <span></span><span></span><span></span> </label> <nav class="menu-principal"> <ul> <li><a href="/oficinadecientistas/">Home</a></li> <li><a href="/oficinadecientistas/cursos/">Cursos</a></li> <li><a href="/oficinadecientistas/aulas-especiais/">Aulas Especiais</a></li> <li><a href="/oficinadecientistas/sobre/">Sobre</a></li> <li><a href="/oficinadecientistas/links/">Links</a></li> </ul> </nav> </div> </header>  <main class="container-sala-de-aula" data-astro-cid-35myrs3q> <aside class="menu-aulas" data-astro-cid-35myrs3q> <button id="toggle-leitura" class="toggle-leitura" aria-pressed="false" aria-label="Ativar modo leitura" title="Modo leitura" type="button" data-astro-cid-35myrs3q> <span class="icone" aria-hidden="true" data-astro-cid-35myrs3q>⫷</span> <span class="texto" data-astro-cid-35myrs3q>Modo leitura</span> </button> <h3 data-astro-cid-35myrs3q>Escrita Científica</h3> <ol data-astro-cid-35myrs3q> <li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula01" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 01: Se Comunicar Bem é Muito difícil </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/prototype" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 01: Se Comunicar Bem é Muito difícil </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/precisao" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Exatidão e Precisão - A Primeira Virtude da Ciência </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula02" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 02 - Encontrando a Sua História </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula03" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 03 -  </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula04" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 04 -  </a> </li><li class="aula-ativa" data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula05" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 05 -  </a> </li> </ol> </aside> <div class="conteudo-aula" data-astro-cid-35myrs3q>  <h1 id="sintaxe-corrigida-para-yaml-100-válido">Sintaxe corrigida para YAML 100% válido.</h1>
+<h1 id="chave-valor">Chave: valor</h1>
+<p>videoId: ‘jA7iHSAumao&#39;</p>
+<h1 id="chapters-é-uma-chave-que-contém-uma-lista-array">&#39;chapters’ é uma chave que contém uma lista (array).</h1>
+<p>chapters:</p>
+<h1 id="cada---inicia-um-novo-item-na-lista-objeto">Cada ’-’ inicia um novo item na lista (objeto).</h1>
+<ul>
+<li>time: ‘00:00’
+title: ‘Introdução: A importância da estrutura’</li>
+<li>time: ‘00:52’
+title: ‘O que significa IMRaD?’</li>
+<li>time: ‘01:21’
+title: ‘A Seção de Introdução (Introduction)’</li>
+<li>time: ‘03:04’
+title: ‘A Seção de Métodos (Methods)’</li>
+<li>time: ‘04:51’
+title: ‘A Seção de Resultados (Results)’</li>
+<li>time: ‘06:33’
+title: ‘A Seção de Discussão (Discussion)’</li>
+<li>time: ‘08:25’
+title: ‘Resumo e Dicas Finais&#39;</li>
+</ul>
+<h1 id="transcript-também-é-uma-lista">&#39;transcript’ também é uma lista.</h1>
+<p>transcript:</p>
+<ul>
+<li>time: ‘00:00’
+text: ‘Olá a todos.’</li>
+<li>time: ‘00:01’
+text: ‘Sejam muito bem-vindos a essa primeira aula da Oficina de Escrita Científica.’</li>
+<li>time: ‘00:05’
+text: ‘O meu nome é João Rafael Alves de Oliveira.’</li>
+<li>time: ‘00:07’
+text: ‘Eu sou biólogo.’</li>
+<li>time: ‘00:09’
+text: ‘Eu me graduei na Universidade Estadual de Santa Cruz, a UESC, lá em Leos, no sul da Bahia.’</li>
+<li>time: ‘00:13’
+text: ‘Eu fiz o mestrado, doutorado em entomologia no Instituto Nacional de Pesquisa da Amazônia, o IMPA.’</li>
+<li>time: ‘00:18’
+text: ‘Estas aulas que eu estou colocando no YouTube, elas fazem parte de uma Oficina de Escrita Científica que é voltada’</li>
+<li>time: ‘00:25’
+text: ‘para os alunos da Paz e Graduação, especialmente aqueles da Ciências Biológicas.’</li>
+<li>time: ‘00:29’
+text: ‘No entanto, acredito que essas aulas funcionem para alunos de qualquer nível, de qualquer curso, inclusive para as pessoas que não estão na área da pesquisa, porque afinal estamos falando de comunicação.’</li>
+<li>time: ‘00:39’
+text: ‘Então junto com estas aulas vai acompanhado o material escrito e eu vou estar sempre colocando isso à disposição na descrição do vídeo, então acompanhe essa parte.’</li>
+<li>time: ‘00:49’
+text: ‘Esse vai ser um curso completo sobre escrita científica, então eu quero que com estas aulas e com material extra a pessoa consiga entender tudo da parte técnica sobre escrever ciência.’</li>
+<li>time: ‘01:00’
+text: ‘Então nós vamos abordar todos os tipos de texto científico, como projetos de pesquisa, dissertação, teses e artigos científicos.’</li>
+<li>time: ‘01:08’
+text: ‘Nós também vamos partir desde a elaboração da pergunta, o objetivo do projeto, do artigo, e vamos passar por todas as sessões do texto, como a introdução, material método, discussão, resultados, etc.’</li>
+<li>time: ‘01:21’
+text: ‘Além disso, vamos estudar também como fazer textos que sejam fáceis de ler e também agradáveis, que envolve a estruturação do texto, escolha de palavras, construção de fáceis, etc.’</li>
+<li>time: ‘01:30’
+text: ‘E por último, mas não menos importante, vamos falar também de estratégias para conseguir escrever de verdade.’</li>
+<li>time: ‘01:35’
+text: ‘Isso é, conseguir sentar e conseguir colocar palavras na tela ou palavras no caderno de acordo com o meio que você escolher.’</li>
+<li>time: ‘01:43’
+text: ‘Isso envolve tanto um tanto de autodisciplina como também de saúde mental.’</li>
+<li>time: ‘01:49’
+text: ‘E a aula de hoje é dividida em três partes.’</li>
+<li>time: ‘01:51’
+text: ‘Na primeira parte, se comunicar é difícil, nós vamos explicar por que é tão difícil se comunicar e por que esta é uma habilidade que não é natural e, na verdade, ela precisa ser treinada.’</li>
+<li>time: ‘02:03’
+text: ‘Na segunda parte, uma brevíssima história do método científico, nós vamos traçar a forma de fazer ciência, de registrar ciência ao longo da história, desde a Grécia Antiga até os dias atuais, numa síntese bem rápida, mas que eu creio que é importante para que a gente entenda porque nós fazemos ciência do jeito que fazemos hoje e porque nós escrevemos a ciência do jeito que nós escrevemos hoje.’</li>
+<li>time: ‘02:24’
+text: ‘E por último, na terceira parte, nós vamos introduzir o Inred,’</li>
+<li>time: ‘02:27’
+text: ‘que é o esquema, a estrutura textual mais utilizada em texto científico, que é aquele texto que é dividido em introdução, material e métodos, resultados e discussão.’</li>
+<li>time: ‘02:36’
+text: ‘Claro que a depender do tipo de texto, pode ter algumas seções extras, como seção de objetivos, seção de abstract, de resumo.’</li>
+<li>time: ‘02:46’
+text: ‘de conclusão, mas nós vamos abordar todas elas ao longo do curso, também no contexto de projeto científico, de dissertação, também de artigo científico, mas nesse primeiro momento vamos apresentar apenas de maneira geral para a gente começar a se familiarizar com essa estrutura, especialmente ao ler os artigos.’</li>
+<li>time: ‘03:07’
+text: ‘e se comunicar é muito difícil.’</li>
+<li>time: ‘03:09’
+text: ‘Quando eu penso na minha formação, ela me deu três habilidades que me deixam muito confiante na minha capacidade profissional.’</li>
+<li>time: ‘03:15’
+text: ‘Então, eu sou formado em tomologia, focado em ecologia de comunidades, mas eu considero que durante a minha formação eu aprendi três coisas que me fazem me sentir muito capacitado, inclusive não só na área da pesquisa, não só na minha área, mas a me sentir um profissional capacitado, porque são habilidades que se aplicam qualquer campo.’</li>
+<li>time: ‘03:37’
+text: ‘A primeira delas é aprender como aprender.’</li>
+<li>time: ‘03:40’
+text: ‘Ou seja, se você sabe como aprender e está sempre aprendendo, essa habilidade você não perde, pelo contrário desenvolve.’</li>
+<li>time: ‘03:49’
+text: ‘Então não importa o que você vai fazer, você consegue aprender aquela função.’</li>
+<li>time: ‘03:52’
+text: ‘A segunda é saber analisar e resolver problemas ao longo dessas aulas.’</li>
+<li>time: ‘03:56’
+text: ‘Acho que vai ficar claro o porquê.’</li>
+<li>time: ‘04:00’
+text: ‘Também essa não é uma habilidade de lendo natural, então é uma habilidade que a gente tem que treinar.’</li>
+<li>time: ‘04:04’
+text: ‘E por último, a habilidade de me comunicar, que no final é a que permite que todas as outras habilidades sejam aplicadas.’</li>
+<li>time: ‘04:11’
+text: ‘E além disso, você saber se comunicar com colegas, com chefes, com qualquer um, seja com quem for, faz você ser uma pessoa muito valiosa, porque encontrar pessoas que tem uma comunicação clara é muito raro.’</li>
+<li>time: ‘04:25’
+text: ‘Eu gosto muito dessa frase do diretor de cinema chileno, Alejandro Jodorowsky, que eu acho que sintetiza muito bem essa dificuldade que é de comunicar.’</li>
+<li>time: ‘04:37’
+text: ‘Entre o que eu penso, o que eu quero dizer, o que eu digo, o que você ouve, o que você quer ouvir e o que você acha que entendeu, é um abismo.’</li>
+<li>time: ‘04:45’
+text: ‘Na verdade, acho que é até mais do que apenas esse abismo, entre o que você quer dizer e o que a pessoa acha que quer ouvir, o que consegue ouvir.’</li>
+<li>time: ‘04:56’
+text: ‘Mas, na verdade, até mesmo há um abismo entre o nosso pensamento verdadeiro, que não é o pensamento que vem elaborado em palavras.’</li>
+<li>time: ‘05:04’
+text: ‘Se você parar para pensar, o nosso pensamento mais cru é muito inconsciente.’</li>
+<li>time: ‘05:09’
+text: ‘Ele é inconsciente, ele é sensações, ele é imagens.’</li>
+<li>time: ‘05:14’
+text: ‘E de alguma forma nós temos que trabalhar e transformar isso em um pensamento que seja formado em palavras.’</li>
+<li>time: ‘05:22’
+text: ‘E já é um abismo então entre esse pensamento real e isso que a gente elabora em nossa cabeça.’</li>
+<li>time: ‘05:28’
+text: ‘E ainda é um abismo entre isso que a gente conseguiu elaborar em palavras em nossa cabeça com que a gente consegue de fato falar.’</li>
+<li>time: ‘05:37’
+text: ‘Isso é só de quem está emitindo.’</li>
+<li>time: ‘05:39’
+text: ‘Então entra também a parte de quem ouve.’</li>
+<li>time: ‘05:44’
+text: ‘ouvir o que ela tem a capacidade, o que ela quer ouvir, o que ela consegue ouvir.’</li>
+<li>time: ‘05:50’
+text: ‘E também tem esse caminho das palavras que ela escutou, se transformar em uma voz mental, e a partir daí também se transformar nesse aspecto mais abstrato do pensamento, que é mais profundo.’</li>
+<li>time: ‘06:05’
+text: ‘Então, a nossa dificuldade de se comunicar, especialmente comunicação escrita, fica evidente quando nós consideramos a história evolutiva da nossa espécie.’</li>
+<li>time: ‘06:14’
+text: ‘Então, a espécie homo sapiens tem cerca de 300 mil anos de idade.’</li>
+<li>time: ‘06:18’
+text: ‘Os idiomas complexos vocais surgem a cerca de 50 mil anos atrás.’</li>
+<li>time: ‘06:26’
+text: ‘E quando falamos de escrita, ela vai surgir pela primeira vez há 5 mil anos atrás, sendo que ela teve apenas 4 origens independentes ao longo da história.’</li>
+<li>time: ‘06:37’
+text: ‘Ou seja, a escrita é uma tecnologia muito recente, e até por isso que escrever é uma habilidade natural.’</li>
+<li>time: ‘06:43’
+text: ‘Ela precisa ser desenvolvida, ela precisa ser treinada, assim como qualquer outra habilidade.’</li>
+<li>time: ‘06:48’
+text: ‘E um outro aspecto dessa tecnologia tão inovadora e recente na história da humanidade’</li>
+<li>time: ‘06:54’
+text: ‘é que escrever é quase mágico.’</li>
+<li>time: ‘06:56’
+text: ‘Stephen King, o autor, ele define escrever como telepatia.’</li>
+<li>time: ‘07:01’
+text: ‘E a escrita vai funcionar como uma ponte telepática que liga autor e leitor sem limites do tempo ou do espaço.’</li>
+<li>time: ‘07:08’
+text: ‘Ou seja, quando você lê um diário ou uma carta ou um texto de alguém de… Não importa se ela está a 200 km de distância ou 200 anos de distância ao longo do tempo.’</li>
+<li>time: ‘07:19’
+text: ‘Naquele momento é como se aquele autor’</li>
+<li>time: ‘07:23’
+text: ‘comunicar seus pensamentos e sentimentos para você através desse meio que é a escrita.’</li>
+<li>time: ‘07:28’
+text: ‘Então perceba como é poderosa essa habilidade, perceba como é poderoso a escrita.’</li>
+<li>time: ‘07:34’
+text: ‘E é por isso que como telepatas vocês precisam aprender a passar informação da maneira mais clara e fácil possível.’</li>
+<li>time: ‘07:43’
+text: ‘Então com essa imagem mental do escritor como telepata, eu quero que vocês entendam a importância de vocês comunicar de forma clara e limpa.’</li>
+<li>time: ‘07:52’
+text: ‘Acho que um ótimo exemplo de um telepata na ficção científica é o professor Xavier do X-Men.’</li>
+<li>time: ‘07:57’
+text: ‘E se você lembrar deles comunicando, ele vai sempre falar a mensagem clara e direta do que precisa ser feito.’</li>
+<li>time: ‘08:05’
+text: ‘Imagine, por exemplo, professor Xavier tentando explicar para o Henk, para a Fera, sobre algum procedimento metodológico e ele começa falando sobre os produtos da PCR foram destinados, tanto à sequenciação direta em ambas as direções, mediante o consumitante dos primes, externos e internos, a conformidade e a complexidade’</li>
+<li>time: ‘08:24’
+text: ‘Ou seja, quando o professor Xavier é terminado de falar, o fera já não entendeu mais nada.’</li>
+<li>time: ‘08:29’
+text: ‘Então, quando você escreve, é lógico que você pode sempre voltar no texto se você não entender.’</li>
+<li>time: ‘08:36’
+text: ‘Mas quanto mais você obriga o seu leitor a ficar indo e voltando, a ficar tentando entender seu texto,’</li>
+<li>time: ‘08:43’
+text: ‘Então você está falhando na parte muito essencial da comunicação.’</li>
+<li>time: ‘08:46’
+text: ‘Isso é mais preocupante ainda porque nós, como pesquisadores, escrevemos sobre temas muito complexos.’</li>
+<li>time: ‘08:52’
+text: ‘Então os nossos temas já são complexos por si mesmos.’</li>
+<li>time: ‘08:55’
+text: ‘Então muitas vezes o que a gente escreve já é difícil de ser entendido.’</li>
+<li>time: ‘09:00’
+text: ‘Porque o TMC é difícil de ser entendido.’</li>
+<li>time: ‘09:02’
+text: ‘A linguagem, a escrita, ela não pode nunca ser uma barreira a mais para que a pessoa entenda o seu texto.’</li>
+<li>time: ‘09:09’
+text: ‘Pelo contrário, ela tem que ser um facilitador para que essa informação seja passada de você para o leitor.’</li>
+<li>time: ‘09:15’
+text: ‘Quanto mais de forma mágica, telepata, mais automática, melhor.’</li>
+<li>time: ‘09:21’
+text: ‘Quanto mais você conseguir fazer isso, você não só apoia o seu leitor, mas também a si mesmo, porque você vai ser mais lido, mais citado, mais respeitado.’</li>
+<li>time: ‘09:30’
+text: ‘Então, treinar a clareza da mensagem é muito importante.’</li>
+<li>time: ‘09:33’
+text: ‘Para essa oficina, esses são os nossos dois livros principais de referência.’</li>
+<li>time: ‘09:37’
+text: ‘O primeiro, do Joshua Skimmel, é o Writing Science, Escrevendo Ciência.’</li>
+<li>time: ‘09:42’
+text: ‘Como escrever artigos que são citados e projetos que são financiados.’</li>
+<li>time: ‘09:47’
+text: ‘E o segundo do Stephen Howard, que é o guia de escrita para cientistas.’</li>
+<li>time: ‘09:53’
+text: ‘Como escrever mais facilmente, de forma efetiva, ao longo da sua carreira científica.’</li>
+<li>time: ‘09:58’
+text: ‘E também, além dessa parte mais técnica de escrever,’</li>
+<li>time: ‘10:01’
+text: ‘Nós também vamos usar esse outro livro de referência, que é como criar e manter uma rotina saudável de escrita.’</li>
+<li>time: ‘10:07’
+text: ‘É esse livro que é Escrevendo pra Caramba, um guia prático para escrita acadêmica produtiva do Pulsiva, que ele é um psicólogo.’</li>
+<li>time: ‘10:17’
+text: ‘Ele ensina exatamente como você escreve, não do ponto de vista técnico, mas do ponto de vista da ação mesmo, no caso como você senta e consegue escrever o que você precisa escrever.’</li>
+<li>time: ‘10:27’
+text: ‘Então, nessa oficina, com os participantes da nossa oficina, nós vamos usar algumas delas, como teorar o agendado para escrever.’</li>
+<li>time: ‘10:35’
+text: ‘No caso, toda semana você tem um período definido de escrever e isso não ser negociável.’</li>
+<li>time: ‘10:42’
+text: ‘Participar de um grupo de escrita e também traçar objetivos claros.’</li>
+<li>time: ‘10:45’
+text: ‘Quando foi escrever, no caso, você’</li>
+<li>time: ‘10:48’
+text: ‘nunca foi para escrever, mas sim saber de antemão o que você precisa fazer.’</li>
+<li>time: ‘10:54’
+text: ‘Então, para quem está vendo essas aulas sozinha, não vai ter esse apoio do grupo, mas é possível fundar o novo grupo de escrita.’</li>
+<li>time: ‘11:02’
+text: ‘No caso, é possível utilizar essas aulas como guia.’</li>
+<li>time: ‘11:06’
+text: ‘Eu vou estar sempre referenciando quais são os capítulos’</li>
+<li>time: ‘11:10’
+text: ‘no material, nos detalhes do vídeo.’</li>
+<li>time: ‘11:12’
+text: ‘Você está sempre referenciando quais são os capítulos utilizados.’</li>
+<li>time: ‘11:15’
+text: ‘E eu recomendo que, se você juntar um grupo de amigos para ler um capítulo dos livros por semana e discutir e escrever, vai ser muito, muito útil na sua carreira acadêmica.’</li>
+<li>time: ‘11:29’
+text: ‘O livro principal de referência vai ser o Joshua Scheme, o Escrever no Ciência.’</li>
+<li>time: ‘11:33’
+text: ‘Ele vai ser a nossa referência principal nos exemplos de referência dos livros.’</li>
+<li>time: ‘11:39’
+text: ‘Mas o segundo livro também é muito bom, inclusive parte dessa primeira aula é inspirada no primeiro capítulo dele.’</li>
+<li>time: ‘11:48’
+text: ‘Então, para falar sobre como nós fazemos história hoje em dia e nos dias atuais e também como nós registramos a história nos dias atuais, ou seja, através da escrita,’</li>
+<li>time: ‘11:57’
+text: ‘É importante analisar como que historicamente a ciência foi feita e também registrada.’</li>
+<li>time: ‘12:04’
+text: ‘Os primeiros registros que a gente tem de pensadores, que a gente poderia pensar como cientistas, no termo de que eles buscavam causas naturais para fenômenos’</li>
+<li>time: ‘12:14’
+text: ‘que antes era atribuído apenas a forças sobrenaturais, nós temos os filósofos da Grécia Antiga, começando por nomes como Thales, Anaximenes e Anaximundro.’</li>
+<li>time: ‘12:24’
+text: ‘E ao longo dos séculos, na Grécia Antiga, mesmo essas filosofias e mesmo os filósofos mais materialistas’</li>
+<li>time: ‘12:31’
+text: ‘O pensamento deles, as explicações dele, ainda assim, estão muito atreladas ao que nos dias de hoje, uma pessoa moderna nessa época, consideraria que seria místico, extremamente místico, ou atrelado de alguma forma com o pensamento religioso.’</li>
+<li>time: ‘12:49’
+text: ‘Então desses filósofos antigos, um que se destaca bastante nesse aspecto científico é Aristóteles, que ele promoveu um método de investigação baseado na observação e na razão.’</li>
+<li>time: ‘13:00’
+text: ‘Alguns vão chamar ele de o primeiro cientista, que é de certa forma exagero, mas ele realmente foi um pioneiro em muitos aspectos.’</li>
+<li>time: ‘13:07’
+text: ‘Por exemplo, ele foi o primeiro biólogo’</li>
+<li>time: ‘13:09’
+text: ‘No sentido de que foi o primeiro pensador que se preocupou com a classificação dos seres vivos, com a categorização, como por exemplo, ele fez a categorização entre animais de sangue quente e animais, desculpa, animais de sangue e animais sem sangue.’</li>
+<li>time: ‘13:24’
+text: ‘Ele conseguiu deduzir o formato da Terra e isso através de algumas evidências como observar um eclipse lunar, no caso a sombra projetada sobre a Lua da Terra.’</li>
+<li>time: ‘13:38’
+text: ‘Então ele percebia que o formato da sombra da Terra era redondo e com isso ele deduziu a esfericidade da Terra.’</li>
+<li>time: ‘13:45’
+text: ‘e também pelo fato de que diferentes constelações são visíveis, mesmo as constelações mudam de posição de acordo com o local no globo que o observador está.’</li>
+<li>time: ‘13:56’
+text: ‘Ele também criou uma estrutura lógica para argumentação e raciocínio que influenciou durante muitos séculos a tradição científica.’</li>
+<li>time: ‘14:05’
+text: ‘No entanto, mesmo o pensador do quilate do Aristóteles, ele cometeu alguns equívocos bastante impressionantes.’</li>
+<li>time: ‘14:12’
+text: ‘Por exemplo, um erro dele que ficou bastante clássico é o que ele fala que os machos têm mais identidade do que as fêmeas nos humanos, nos carneiros, nas cabras e nos porcos.’</li>
+<li>time: ‘14:23’
+text: ‘e que em outras espécies essa observação ainda não foi feita.’</li>
+<li>time: ‘14:27’
+text: ‘Então, isso não é verdade.’</li>
+<li>time: ‘14:29’
+text: ‘O número de dentes em fêmeas, dos animais em geral, são iguais em machos e nas fêmeas, inclusive em humanos.’</li>
+<li>time: ‘14:39’
+text: ‘É interessante, como ele até fala, que em outras espécies essa observação ainda não foi feita, como se essa observação tivesse sido feita nesses outros grupos.’</li>
+<li>time: ‘14:47’
+text: ‘Isso é Aristóteles citando, um conhecimento que era coentido na época.’</li>
+<li>time: ‘14:51’
+text: ‘Isso mostra que uma falta de um mecanismo, um procedimento de verificação de formação, como os que a gente tem atualmente, faz com que alguns erros possam ser passados para frente.’</li>
+<li>time: ‘15:04’
+text: ‘Também, nem sempre a ciência foi para todos.’</li>
+<li>time: ‘15:07’
+text: ‘Então, hoje nós temos essa tradição de você fazer a pesquisa e você publicar e ganhar os créditos para isso.’</li>
+<li>time: ‘15:13’
+text: ‘E a ciência então, você até publica nesse sentido, né?’</li>
+<li>time: ‘15:17’
+text: ‘Porém, ao longo da história, na maioria dos períodos,’</li>
+<li>time: ‘15:23’
+text: ‘A ciência ou o conhecimento de forma geral sempre foi visto como algo que tornavam as pessoas distintas de outras e por isso elas eram mantidas em segredo e entre iniciados.’</li>
+<li>time: ‘15:33’
+text: ‘Então tem essa frase atribuída a Alexandre o Grande, não sei se é dele mesmo, mas que ele não gostou quando Aristóteles publicou seus trabalhos.’</li>
+<li>time: ‘15:42’
+text: ‘Então ele fala, Você não faz bem publicar suas doutrinas secretas, pois em que se operarei outros homens se essas doutrinas na qual eu fui treinado se tornar conhecimento comum de todos.’</li>
+<li>time: ‘15:52’
+text: ‘Então, avançando um pouco na história, alguns séculos, nós temos que os romanos conquistam a Grécia e eles absorvem a cultura grega.’</li>
+<li>time: ‘15:59’
+text: ‘E quando falamos de conhecimento científico em relação aos romanos, nós vemos que eles fizeram vários avanços, mas eles eram mais voltados para uso prático e de ciência aplicada, como engenharia, arquitetura, infraestrutura, agricultura.’</li>
+<li>time: ‘16:12’
+text: ‘E depois da queda do Império Romano, nós temos então a chegada da Edade Média.’</li>
+<li>time: ‘16:16’
+text: ‘e alguns também se referem com uma idade das trevas, que é um termo bastante injusto, por isso que até ele caiu em desuso, pois não foi uma era de trevas no sentido do conhecimento, mas sim de que houve muito pouco avanço de conhecimento nessa época.’</li>
+<li>time: ‘16:32’
+text: ‘Por outro lado, houve muita conservação do conhecimento antigo.’</li>
+<li>time: ‘16:37’
+text: ‘Nós vemos aqui que nos primeiros séculos teve uma circulação muito baixa de livros,’</li>
+<li>time: ‘16:44’
+text: ‘e que foi progressivamente aumentando, e isso até mesmo, se não me engano, antes da invenção da prensa.’</li>
+<li>time: ‘16:51’
+text: ‘Ou seja, o ambiente já favorecia um aumento do número de circulação de escritos.’</li>
+<li>time: ‘16:59’
+text: ‘E nessa época não existia uma figura de um cientista, mas existia a figura dos alquimistas, que atualmente é classificado como PC do ciência.’</li>
+<li>time: ‘17:09’
+text: ‘Mas também não faz sentido chamar de pensado ciência, porque a ciência não existia na época, então não estava na cosmovisão dessas pessoas.’</li>
+<li>time: ‘17:17’
+text: ‘Mas é um fato de que esses alquimistas faziam investigações em relação ao mundo, sempre muito em volta de um conhecimento também esotérico.’</li>
+<li>time: ‘17:29’
+text: ‘Então eles eram bastante esotéricos.’</li>
+<li>time: ‘17:33’
+text: ‘E também eles não tinham a tendência de olhar para frente, de fazer novas descobertas.’</li>
+<li>time: ‘17:38’
+text: ‘Pelo contrário, eles olhavam para o passado, pois eles acreditavam que as civilizações antigas, os sábios antigos, eles possuíam conhecimentos fantásticos que, em algum momento, foram perdidos na história da humanidade e que eles tentam então recuperar.’</li>
+<li>time: ‘17:52’
+text: ‘Então, são alguns dos objetivos dos alquimistas, por exemplo, é transformar metais como zinôreo e prata,’</li>
+<li>time: ‘17:57’
+text: ‘tirar o elixir da mortalidade, tirar a pedra filosofal, fórmulas para curar todo tipo de doença.’</li>
+<li>time: ‘18:04’
+text: ‘E uma coisa muito distinta também desse período é de que, novamente, o conhecimento é para os iniciados.’</li>
+<li>time: ‘18:11’
+text: ‘Então, eles escrevem com segredos e códigos.’</li>
+<li>time: ‘18:15’
+text: ‘Então, se você ver ilustrações de textos, você não vai entender nada, assim como essas ilustrações têm muitos códigos nela.’</li>
+<li>time: ‘18:23’
+text: ‘mais que o iniciado naquela tradição conseguirem então decifrar qual é aquele conhecimento que está detido ali.’</li>
+<li>time: ‘18:30’
+text: ‘E sucedendo na Idade Média tem então o início da Idade Moderna, ali no século XV.’</li>
+<li>time: ‘18:35’
+text: ‘Então esse é um período que a Europa enriqueceu muito, especialmente com o colonialismo.’</li>
+<li>time: ‘18:40’
+text: ‘E esse excedente’</li>
+<li>time: ‘18:41’
+text: ‘ele permite uma nova era de revolução, tanto cultural quanto artística e também científica, que foi conhecida como o Renascimento.’</li>
+<li>time: ‘18:49’
+text: ‘E aqui vale ressaltar que esse breve histórico que eu estou fazendo, ele é bastante eurocêntrico, ou seja, ele é bastante restrito ao pensamento europeu, que é o que desenvolveu a ciência moderna, como a gente conhece hoje, do qual nós somos herdeiros.’</li>
+<li>time: ‘19:05’
+text: ‘É nesse período então da revolução científica que cientistas como Nicolau Copernico, Galileu Galilei, Isaac Newton, entre outros, desenvolvem teorias que conflitam com a visão clássica do mundo.’</li>
+<li>time: ‘19:17’
+text: ‘Existe essa ilustração de 1888 que mostra muito bem essa transição.’</li>
+<li>time: ‘19:23’
+text: ‘Você tem um investigador aqui, uma pessoa, que está saindo aqui da bóbada do céu, que é essa visão clássica do mundo, e ele vê então as engrenagens por trás dessa visão clássica do mundo.’</li>
+<li>time: ‘19:38’
+text: ‘Ou seja, ele começa a ver os mecanismos do mundo.’</li>
+<li>time: ‘19:44’
+text: ‘Então essa ilustração mostra essa transição entre você ter uma visão clássica do mundo para uma visão mecanicista do mundo.’</li>
+<li>time: ‘19:54’
+text: ‘E no início da revolução científica, o nome muito importante é o de Francis Bacon.’</li>
+<li>time: ‘19:59’
+text: ‘Ele é político e filósofo.’</li>
+<li>time: ‘20:01’
+text: ‘Ele não é um cientista no sentido clássico, no sentido de quais experimentos, mas sim ele é um filósofo da ciência.’</li>
+<li>time: ‘20:06’
+text: ‘Ele pensou muito sobre a ciência.’</li>
+<li>time: ‘20:08’
+text: ‘Ele defendia então uma ciência que era feita baseada na experimentação, criticando assim os aristotélicos.’</li>
+<li>time: ‘20:14’
+text: ‘E, ao mesmo tempo, ele também defendia que a ciência precisava ser colaborativa.’</li>
+<li>time: ‘20:19’
+text: ‘Ele fala’</li>
+<li>time: ‘20:20’
+text: ‘O aperfeiçoamento das ciências deve ser procurado não numa esperteza ou habilidade de único pesquisador, mas através de uma sucessão.’</li>
+<li>time: ‘20:27’
+text: ‘Então isso pode parecer óbvio pra gente, mas vocês têm que lembrar que a gente está aqui na transição dos alquimistas para cientistas.’</li>
+<li>time: ‘20:36’
+text: ‘Então a tradição dos pensadores e dos pesquisadores da época’</li>
+<li>time: ‘20:40’
+text: ‘era do obscurecimento e do segredo, e não dessa sucessão de conhecimento.’</li>
+<li>time: ‘20:47’
+text: ‘Em um ano após a sua morte, é publicado então um conto de suatoria, que é a Casa do Salomão, e nele o Francis Bacon descreve uma instituição de uma sociedade utópica, que é a Casa do Salomão, cujo propósito é o conhecimento de todas as causas e o avanço da sociedade humana.’</li>
+<li>time: ‘21:04’
+text: ‘E nesse texto, ele descreve como que imagina que uma sociedade científica deveria funcionar.’</li>
+<li>time: ‘21:09’
+text: ‘Então, essas pessoas que são residentes, não diria trabalhadoras, mas são residentes da casa de Salomão,’</li>
+<li>time: ‘21:18’
+text: ‘elas possuem funções que são análogas à de um cientista moderno.’</li>
+<li>time: ‘21:22’
+text: ‘Então, nós temos, por exemplo, os mercadores da luz, que são pessoas que viajam para os países estrangeiros e trazem livros, resumos e resultados dos experimentos.’</li>
+<li>time: ‘21:32’
+text: ‘Tem os predadores, que são aqueles que são responsáveis por coletar os experimentos que estão nos livros.’</li>
+<li>time: ‘21:38’
+text: ‘Tem os misteriosos, que eles vão coletar os experimentos que não são das ciências, mas são de outras coisas, como da cultura e da arte.’</li>
+<li>time: ‘21:46’
+text: ‘Tem os pioneiros, que são responsáveis pelos novos experimentos.’</li>
+<li>time: ‘21:49’
+text: ‘Tem os compiladores, que vão fazer figuras e tabelas dos resultados dos anteriores.’</li>
+<li>time: ‘21:54’
+text: ‘E tem os intérpretes da natureza, que fazem as observações maiores, leis, teorias, a partir do que os outros fizeram.’</li>
+<li>time: ‘22:03’
+text: ‘Então, vocês podem ver que o cientista não tem todas essas especializações que o Francis Bacon imaginou nesse conto.’</li>
+<li>time: ‘22:16’
+text: ‘Porém, um cientista moderno faz tudo isso que ele previu que esses pensadores da Casa do Salomão fariam.’</li>
+<li>time: ‘22:28’
+text: ‘Essa obra, inclusive, vai inspirar a criação da Academia Francesa de Ciências e da Sociedade Real Inglesa.’</li>
+<li>time: ‘22:37’
+text: ‘Nesse período, então, você tem a transformação dos alquimistas em químicos.’</li>
+<li>time: ‘22:42’
+text: ‘Um nome muito importante para isso vai ser do Robert Boyle.’</li>
+<li>time: ‘22:46’
+text: ‘Ele vai ser o primeiro a escrever relatórios científicos muito meticulosos.’</li>
+<li>time: ‘22:53’
+text: ‘Essa é uma das ilustrações de uma bomba de vácuo.’</li>
+<li>time: ‘22:57’
+text: ‘que ele utilizava, e ele achava muito importante descrever todas as particularidades mínimas dos equipamentos utilizados, das condições do experimento, temperatura, humidade, pressão, porque ele acreditava que um pensamento científico só poderia ser separado, ser confirmado, depois de um grande número de evidências experimentais, confirmando, ao repetir, confirmando que aquilo ocorre todas as vezes,’</li>
+<li>time: ‘23:27’
+text: ‘como também em que condições aquilo ocorre ao ser testado de todas as formas possíveis.’</li>
+<li>time: ‘23:33’
+text: ‘Então Boyle vai conseguir executar na prática o que o Bacon, o Francis Bacon, propôs apenas de maneira utópica.’</li>
+<li>time: ‘23:43’
+text: ‘E a comunicação entre esses primeiros cientistas tinha como regra a clareza.’</li>
+<li>time: ‘23:53’
+text: ‘Então você tem o Thomas Hobbes,’</li>
+<li>time: ‘23:55’
+text: ‘que ele revoluciona ao escrever seus argumentos com clareza e precisão.’</li>
+<li>time: ‘23:59’
+text: ‘Então ele diz, eu defino as noções mais comuns de uma maneira precisa para evitar confusão e obscureidade.’</li>
+<li>time: ‘24:07’
+text: ‘Então, hoje em dia, você definir muito bem os termos que você utiliza é algo básico da nossa ciência, mas na época não.’</li>
+<li>time: ‘24:15’
+text: ‘A gente tem que pensar que a gente está nessa transição, né?’</li>
+<li>time: ‘24:18’
+text: ‘Antes que o obscurecimento era regra,’</li>
+<li>time: ‘24:21’
+text: ‘E algo muito interessante é como Thomas Spratt vai descrever, 12 anos depois que a Fundação Royal Society já existia, como que era a forma deles de se comunicar.’</li>
+<li>time: ‘24:34’
+text: ‘Então ele fala que eles tinham uma resolução constante de rejeitar todas as amplificações, digressões e enchamento de estilo.’</li>
+<li>time: ‘24:42’
+text: ‘Então eles preferiam uma maneira clara, natural, sem rodeios, com sentido claro.’</li>
+<li>time: ‘24:47’
+text: ‘Trazer tudo com uma simplicidade matemática.’</li>
+<li>time: ‘24:51’
+text: ‘e preferir a linguagem dos artesãos, das pessoas do interior, dos mercadores, ao invés da linguagem dos estudados, dos acadêmicos.’</li>
+<li>time: ‘24:59’
+text: ‘Então se lembra, né?’</li>
+<li>time: ‘25:01’
+text: ‘Nós escrevemos temas complexos, mas a nossa linguagem é sempre simples, porque a linguagem deve facilitar a comunicação e, no contrário, esse obscurecimento da linguagem muitas vezes ela foi utilizada na sociedade justamente para fazer uma distinção de classe, de uma maneira mesmo de separar pessoas.’</li>
+<li>time: ‘25:27’
+text: ‘enquanto que o nosso papel é tentar comunicar com o máximo de pessoas possível.’</li>
+<li>time: ‘25:34’
+text: ‘Em 1665 são publicadas as primeiras revistas científicas na França e na Inglaterra e a Filosófica Transactions, ela existe até hoje, que disponibiliza o seu acervo histórico no site.’</li>
+<li>time: ‘25:45’
+text: ‘Aqui uma foto do volume 1, da primeira edição.’</li>
+<li>time: ‘25:49’
+text: ‘e uma captura de tela do site atual da mesma revista que não interrompeu suas publicações desde seu surgimento.’</li>
+<li>time: ‘26:03’
+text: ‘Nesse processo, os cientistas procuram a melhor forma de transmitir suas ideias.’</li>
+<li>time: ‘26:08’
+text: ‘E nesse aspecto, o Louis Pasteur, ele é o primeiro a descrever seus experimentos na estrutura que a gente conhece hoje como INRED, que é Introdução, Métodos, Resultado e Discussão.’</li>
+<li>time: ‘26:19’
+text: ‘E até então, os artigos científicos, eles eram escritos de maneira bastante pessoal, e era basicamente uma narrativa’</li>
+<li>time: ‘26:28’
+text: ‘o indivíduo parecia um diário, muitas vezes em ordem cronológica da sequência, e que era muito difícil de você entender a mensagem principal do experimento.’</li>
+<li>time: ‘26:39’
+text: ‘Às vezes você tinha que ler com muita atenção, textos muito longos, para entender o que se tratava aquilo.’</li>
+<li>time: ‘26:46’
+text: ‘E esse estilo do Luis Paste, ele não foi imediatamente adotado.’</li>
+<li>time: ‘26:50’
+text: ‘E esse é um dos experimentos clássicos do Paste, que um líquido nutritivo esterilizado não forma colônia de bactérias.’</li>
+<li>time: ‘26:58’
+text: ‘E isso provou que a vida não é gerada de maneira instantânea.’</li>
+<li>time: ‘27:02’
+text: ‘Então, como foi feito esse experimento?’</li>
+<li>time: ‘27:04’
+text: ‘Você tinha um caldo nutritivo, onde ele foi esterilizado através do calor, então o frasco foi deixado por um tempo e não houve aparecimento de coluna de bactérias, ou seja, não houve contaminação.’</li>
+<li>time: ‘27:20’
+text: ‘Por outro lado, quando você aquecia esse líquido, matando as bactérias que já estavam no líquido,’</li>
+<li>time: ‘27:27’
+text: ‘removia o pescoço do vidro e entrava bactérias, então você percebia que havia uma contaminação de bactérias nesse líquido nutritivo.’</li>
+<li>time: ‘27:41’
+text: ‘E também se você aquecia esse líquido nutritivo e fazia um contato com o desterno desse líquido, havia também a contaminação de bactérias.’</li>
+<li>time: ‘27:51’
+text: ‘Então isso provou que a vida não acontecia espontaneamente através do líquido nutritivo que permitia ela ocorrer.’</li>
+<li>time: ‘28:01’
+text: ‘Pelo contrário, ela tinha que vir necessariamente de alguma fonte externa.’</li>
+<li>time: ‘28:07’
+text: ‘Ou seja, isso foi uma evidência de que a vida não era gerada de maneira espontânea.’</li>
+<li>time: ‘28:13’
+text: ‘E esse modelo aristotélico de geração espontânea da vida’</li>
+<li>time: ‘28:18’
+text: ‘Ela durou mais de dois mil anos esse modelo.’</li>
+<li>time: ‘28:23’
+text: ‘Então, foi só esses experimentos do Reddy e do Pasteur que as testes foram derrubadas.’</li>
+<li>time: ‘28:29’
+text: ‘Então, a do Pasteur já foi demonstrada.’</li>
+<li>time: ‘28:32’
+text: ‘E o do Reddy é aquele clássico em que um pedaço de carne’</li>
+<li>time: ‘28:36’
+text: ‘ele é mantido no frasco aberto e outro pedaço é mantido fechado e o outro frasco é mantido com gás e você vê que o frasco aberto ocorre então a ovoposição’</li>
+<li>time: ‘28:50’
+text: ‘e depois do aparecimento de larvas, e no frasco fechado com gás, você vê então que houve a oposição, houve o surgimento de larvas, mostrando então que a vida não era gerada de maneira espontânea, não era a partir do lixo, não era a partir da carne podre que aparecia os vermes e depois as músicas, mas sim, era um fenômeno natural.’</li>
+<li>time: ‘29:14’
+text: ‘Então veja quanto tempo demorou até essa terra ser derrubada.’</li>
+<li>time: ‘29:19’
+text: ‘Então é bastante importante que a gente tenha em mente que a maior parte do nosso conhecimento científico é muito recente.’</li>
+<li>time: ‘29:27’
+text: ‘É coisa de 200, 300 anos atrás.’</li>
+<li>time: ‘29:31’
+text: ‘Mas então de forma mais recente, na era atual, a partir da década de 50, a maioria das boas revistas científicas começou a adotar normas mais rígidas e essa estrutura do INRED era setorna obrigatória.’</li>
+<li>time: ‘29:43’
+text: ‘Isso se deve principalmente ao enorme volume de informação.’</li>
+<li>time: ‘29:46’
+text: ‘Então, por causa disso, o estilo mais eficiente prevaleceu sobre os outros.’</li>
+<li>time: ‘29:50’
+text: ‘Então aqui a gente pode ver, por exemplo, o total de publicações ao longo do tempo.’</li>
+<li>time: ‘29:56’
+text: ‘A gente percebe que, a partir de um certo momento,’</li>
+<li>time: ‘30:00’
+text: ‘o número de publicações começa a aumentar de maneira exponencial.’</li>
+<li>time: ‘30:05’
+text: ‘Aqui você tem o número de artigos no total, em laranja o número de artigos com mais de cinco citações.’</li>
+<li>time: ‘30:12’
+text: ‘Então vejo que vai ficando cada vez mais difícil de acompanhar o ritmo de publicações.’</li>
+<li>time: ‘30:19’
+text: ‘Então dependendo da área que a pessoa trabalha, ela nem mesmo consegue acompanhar todos os artigos que saem da área dela.’</li>
+<li>time: ‘30:26’
+text: ‘E a gente também tem uma outra tendência, que é o maior número de publicações de países, de outros países, que não tinham tradição na ciência, em especial a China.’</li>
+<li>time: ‘30:39’
+text: ‘Então a gente vê o crescimento de artigos ao longo do tempo.’</li>
+<li>time: ‘30:42’
+text: ‘Os Estados Unidos é uma crescente estável.’</li>
+<li>time: ‘30:45’
+text: ‘O Japão, o Alemã, eles mantêm um número mais ou menos constante.’</li>
+<li>time: ‘30:49’
+text: ‘Mas a China está no crescimento muito grande ainda.’</li>
+<li>time: ‘30:53’
+text: ‘Então veja o volume de informação que nós cientistas geramos atualmente.’</li>
+<li>time: ‘31:02’
+text: ‘Se você conhece essa estrutura do Inred, é possível entender a mensagem do artigo e os principais resultados em poucos minutos.’</li>
+<li>time: ‘31:10’
+text: ‘Então existem pontos-chave no texto que eles carregam muita informação.’</li>
+<li>time: ‘31:15’
+text: ‘E se você escrever fora da expectativa, você quebra a comunicação.’</li>
+<li>time: ‘31:19’
+text: ‘Por quê?’</li>
+<li>time: ‘31:19’
+text: ‘Porque o leitor vai estar procurando em determinados locais as informações chaves do seu artigo e se ele não encontrar, ou ele não vai entender e vai quebrar a comunicação e ele vai desistir se não for um trabalho muito importante para ele.’</li>
+<li>time: ‘31:37’
+text: ‘Ou então, você vai obrigar a pessoa a ter que se dedicar muito mais ao seu texto para entender e, nesse aspecto, quem escreve melhor tem mais leitores.’</li>
+<li>time: ‘31:47’
+text: ‘Por isso que é tão importante você escrever bem.’</li>
+<li>time: ‘31:49’
+text: ‘Por que esse método de estruturar o texto é tão eficiente?’</li>
+<li>time: ‘31:55’
+text: ‘Ele funciona’</li>
+<li>time: ‘31:56’
+text: ‘Desta forma que você tem o abstract e o resumo.’</li>
+<li>time: ‘32:02’
+text: ‘Ele funciona como um texto separado do restante.’</li>
+<li>time: ‘32:07’
+text: ‘Até por isso que ele não entra no in-red.’</li>
+<li>time: ‘32:10’
+text: ‘Não tem um A aqui antes do in-red.’</li>
+<li>time: ‘32:13’
+text: ‘Realmente o resumo é um outro texto.’</li>
+<li>time: ‘32:18’
+text: ‘Mas quando a gente parte para o enred, você tem a introdução, os métodos, os resultados e a discussão.’</li>
+<li>time: ‘32:26’
+text: ‘E esse texto ele segue nesse formato de ampulheta, em que você começa a informação, a introdução de maneira muito geral, vai funilando para seus objetivos específicos, depois para os métodos, que foi o que você fez, para então os resultados, que é o que você conseguiu, com o que você fez,’</li>
+<li>time: ‘32:47’
+text: ‘E por último a discussão que é que você vai discutir os seus resultados e significa no contexto mais amplo até chegar numa conclusão que é mais geral.’</li>
+<li>time: ‘32:59’
+text: ‘Então veja que a introdução ela se afunila para o seu trabalho específico e a discussão ela se amplia os seus resultados para o que ele significa no contexto mais amplo.’</li>
+<li>time: ‘33:14’
+text: ‘Então indo por partes né.’</li>
+<li>time: ‘33:16’
+text: ‘O resumo, então, ele não está dentro dessa estrutura, mas eu vou abordar ele rapidamente aqui.’</li>
+<li>time: ‘33:24’
+text: ‘Ele funciona como um mini-artigo.’</li>
+<li>time: ‘33:26’
+text: ‘Ele contém uma introdução, os métodos, resultados e a conclusão.’</li>
+<li>time: ‘33:32’
+text: ‘Esse é um resumo fictício.’</li>
+<li>time: ‘33:34’
+text: ‘Essas palavras não têm um significado, elas só estão utilizadas para preencher um texto.’</li>
+<li>time: ‘33:39’
+text: ‘E se você começar a observar, você vai ver que os resumos ele é estruturado mais ou menos assim.’</li>
+<li>time: ‘33:46’
+text: ‘As primeiras frases vai servir ali como introdução, no contexto daquele artigo.’</li>
+<li>time: ‘33:52’
+text: ‘Depois você tem o material e métodos, ou seja, o que os autores fizeram naquele trabalho.’</li>
+<li>time: ‘33:58’
+text: ‘Você vai ter então um resultado e por fim uma conclusão, que no caso seria parte da discussão, mas não apenas’</li>
+<li>time: ‘34:08’
+text: ‘A discussão em si, que não cabe no abstract, que é uma sessão tão pequena, mas sim a conclusão daquele estudo, que é como aqueles resultados se voltam para a introdução.’</li>
+<li>time: ‘34:19’
+text: ‘Como que se liga, então, aqueles resultados vão ser ligados no contexto mais amplo que foi apresentado.’</li>
+<li>time: ‘34:25’
+text: ‘E a introdução vai ser a sessão que vai apresentar os personagens e a problemática.’</li>
+<li>time: ‘34:31’
+text: ‘Qual é o gap do trabalho, qual é o problema a ser resolvido.’</li>
+<li>time: ‘34:35’
+text: ‘e ela vai se afunilar então do tema geral do trabalho até chegar às perguntas específicas do seu trabalho.’</li>
+<li>time: ‘34:43’
+text: ‘E quando a gente for analisar o texto assim da forma estrutural, no caso você entendeu a mensagem de um artigo em poucos minutos, você vai ver que a abertura e a conclusão são posições chaves.’</li>
+<li>time: ‘34:59’
+text: ‘caso, uma abertura de um artigo muito bem escrito, ele vai dizer exatamente qual que é a importância geral daquele trabalho, qual tema está sendo abordado, qual é a crença atual que você está contestando.’</li>
+<li>time: ‘35:16’
+text: ‘e da tônica do trabalho.’</li>
+<li>time: ‘35:18’
+text: ‘Então, nesse primeiro parágrafo, você vê qual é o contexto geral em que aquele artigo se encaixa.’</li>
+<li>time: ‘35:27’
+text: ‘Já nos parágrafos subsequentes, é muito importante você analisar a abertura do parágrafo e a conclusão do parágrafo, desses parágrafos que são intermediários.’</li>
+<li>time: ‘35:40’
+text: ‘E por quê?’</li>
+<li>time: ‘35:42’
+text: ‘Porque num texto bem escrito, cada parágrafo vai desenvolver um raciocínio, uma ideia.’</li>
+<li>time: ‘35:48’
+text: ‘Ele vai começar o raciocínio, desenvolver e terminar como um gancho para esse tema ser continuado no parágrafo seguinte.’</li>
+<li>time: ‘35:58’
+text: ‘Então, se você ler o começo e o final de cada parágrafo, você vai entender mais ou menos qual foi a discussão que foi feita naquele texto.’</li>
+<li>time: ‘36:10’
+text: ‘Aí, obviamente, se você precisar de detalhes, você vai ler o restante.’</li>
+<li>time: ‘36:14’
+text: ‘E, por fim, muito importante é que nos artigos científicos, nos periódicos científicos, não existe a sessão de objetivos com esse nome.’</li>
+<li>time: ‘36:26’
+text: ‘Não existe a sessão objetivos.’</li>
+<li>time: ‘36:28’
+text: ‘Você tem a introdução, o material métodos, resultados e a discussão.’</li>
+<li>time: ‘36:32’
+text: ‘Então, onde estão os objetivos?’</li>
+<li>time: ‘36:34’
+text: ‘Ele vai estar no parágrafo final da introdução.’</li>
+<li>time: ‘36:39’
+text: ‘Então, aqui vai estar os objetivos e alguns autores vão colocar inclusive, até às vezes, um spoiler.’</li>
+<li>time: ‘36:48’
+text: ‘Um resultado do trabalho aqui no final da introdução.’</li>
+<li>time: ‘36:52’
+text: ‘Então, se você quer entender o que foi feito no trabalho, ler o final da introdução é muito importante.’</li>
+<li>time: ‘36:59’
+text: ‘Já o material e métodos dos resultados são sessões bem simples, na verdade.’</li>
+<li>time: ‘37:04’
+text: ‘O método é o que você fez e o resultado é o que você encontrou.’</li>
+<li>time: ‘37:08’
+text: ‘e elas são as sessões mais curtas e a que tem a menor possibilidade de variação.’</li>
+<li>time: ‘37:13’
+text: ‘Por exemplo, se um artigo tem 5 autores e cada autor foi escrever uma introdução e uma discussão, você vai ter introduções e discussões que podem ser bastante diferentes entre si.’</li>
+<li>time: ‘37:29’
+text: ‘Porém, as sessões de material e métodos e resultados, os cinco escreveriam textos bastante semelhantes.’</li>
+<li>time: ‘37:37’
+text: ‘Isso se dá pela natureza desse texto.’</li>
+<li>time: ‘37:43’
+text: ‘Eles têm uma função muito mais parecida com o relatório, em que você está relatando o que você fez’</li>
+<li>time: ‘37:51’
+text: ‘e você está relatando os resultados imediatos que foram obtidos da aplicação dos métodos.’</li>
+<li>time: ‘37:59’
+text: ‘Então, qualquer interpretação que você for fazer sobre os resultados tem que ser feita na seção da discussão.’</li>
+<li>time: ‘38:08’
+text: ‘Os resultados é a maneira mais crua que você vai apresentar os dados.’</li>
+<li>time: ‘38:13’
+text: ‘A interpretação você dá na discussão.’</li>
+<li>time: ‘38:17’
+text: ‘E é bom lembrar que as figuras e as tabelas devem ser independentes do texto.’</li>
+<li>time: ‘38:22’
+text: ‘Ou seja, as legendas das figuras e tabelas devem conter todas as informações básicas para o leitor entender aquela imagem e aquela tabela.’</li>
+<li>time: ‘38:32’
+text: ‘Você tem que consultar o texto no momento que ela foi chamada para entender o que isso significa.’</li>
+<li>time: ‘38:41’
+text: ‘E por fim tem a discussão e a conclusão.’</li>
+<li>time: ‘38:44’
+text: ‘que é o que os resultados significa.’</li>
+<li>time: ‘38:47’
+text: ‘Você obteve, você fez algo, você obteve o resultado, e você agora vai explicar o que significa, o que você aprendeu com esses dados.’</li>
+<li>time: ‘38:59’
+text: ‘E novamente, como ele vai se ligar com aquela problemática que você apresentou.’</li>
+<li>time: ‘39:04’
+text: ‘Era o que você esperava?’</li>
+<li>time: ‘39:06’
+text: ‘Sua hipótese foi aceita?’</li>
+<li>time: ‘39:11’
+text: ‘ou você foi surpreendido e o resultado foi diferente do que você esperava.’</li>
+<li>time: ‘39:15’
+text: ‘Se foi diferente, por que você acha que foi diferente?’</li>
+<li>time: ‘39:20’
+text: ‘Essa é a sessão que vai dar mais liberdade ao autor de escrever suas próprias ideias.’</li>
+<li>time: ‘39:26’
+text: ‘E também, geralmente, os periódicos científicos não têm a sessão de conclusão.’</li>
+<li>time: ‘39:33’
+text: ‘Alguns poucos têm, mas a maioria não tem.’</li>
+<li>time: ‘39:37’
+text: ‘Porém, o último parágrafo da discussão vai servir como uma conclusão.’</li>
+<li>time: ‘39:44’
+text: ‘Resumindo, o objetivo mais importante para escritores científicos é escrever de maneira clara.’</li>
+<li>time: ‘39:51’
+text: ‘Uma escrita que não é clara, com o risco de não ser publicada, lida ou citada,’</li>
+<li>time: ‘39:57’
+text: ‘E por fim, essa habilidade de escrita, desenvolvida para escrever ciência, ela aplicava a quase qualquer carreira.’</li>
+<li>time: ‘40:04’
+text: ‘Então, essa primeira aula se encerra aqui.’</li>
+<li>time: ‘40:07’
+text: ‘Então, a partir da próxima aula, a gente vai ser o tema de encontrando e contando a sua história.’</li>
+<li>time: ‘40:13’
+text: ‘O primeiro passo de qualquer artigo científico é responder a uma simples pergunta.’</li>
+<li>time: ‘40:17’
+text: ‘Sobre o que exatamente ele será?’</li>
+<li>time: ‘40:19’
+text: ‘Isso é, qual é a história daquele artigo científico?’</li>
+<li>time: ‘40:21’
+text: ‘Qual o objetivo principal dele?’</li>
+<li>time: ‘40:24’
+text: ‘e muitas vezes sintetizado de uma maneira que muitas vezes frustra o aluno, que é qual a pergunta do seu trabalho.’</li>
+<li>time: ‘40:31’
+text: ‘Então nessa próxima aula a gente vai aprender a responder essa tão temível pergunta.’</li>
+</ul>
+<hr/>
+
+
+
+
+<div class="video-player-container" id="video-player-wrapper" data-astro-cid-hbhdmhem> <div class="video-wrapper" data-astro-cid-hbhdmhem> <div id="youtube-player" data-astro-cid-hbhdmhem></div> </div>    </div>  <script>(function(){const videoId = undefined;
+
+  let player;
+  let timeUpdater = null; // Variável para controlar o setInterval
+
+  function timeToSeconds(timeStr) {
+    const parts = timeStr.split(':').map(Number);
+    return parts.length === 3
+      ? parts[0] * 3600 + parts[1] * 60 + parts[2]
+      : parts[0] * 60 + parts[1];
+  }
+
+  // --- LÓGICA DO PLAYER DO YOUTUBE ---
+  window.onYouTubeIframeAPIReady = function() {
+    if (!videoId) return;
+    player = new YT.Player('youtube-player', {
+      height: '100%', width: '100%', videoId: videoId,
+      playerVars: { 'playsinline': 1, 'rel': 0 },
+      events: {
+        'onStateChange': onPlayerStateChange // Adiciona um "vigia" para o estado do player
+      }
+    });
+  }
+  
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // --- LÓGICA DAS ABAS E DESTAQUES ---
+  document.addEventListener('DOMContentLoaded', () => {
+    const mainContainer = document.getElementById('video-player-wrapper');
+    const panelContainer = document.getElementById('interactive-panel');
+    const tabNav = panelContainer.querySelector('.tab-nav');
+
+    mainContainer.addEventListener('click', (e) => {
+      const timestampLink = e.target.closest('.timestamp-link');
+      if (timestampLink) {
+        e.preventDefault();
+        const timeStr = timestampLink.dataset.time;
+        if (timeStr && player && typeof player.seekTo === 'function') {
+          player.seekTo(timeToSeconds(timeStr), true);
+        }
+        return;
+      }
+
+      const clickedTab = e.target.closest('.tab-button');
+      if (clickedTab) {
+        const tabToActivate = clickedTab.dataset.tab;
+        const isAlreadyActive = clickedTab.classList.contains('active');
+        if (isAlreadyActive) {
+          panelContainer.classList.toggle('panel-open');
+        } else {
+          panelContainer.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+          panelContainer.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+          clickedTab.classList.add('active');
+          panelContainer.querySelector(`#panel-${tabToActivate}`).classList.add('active');
+          panelContainer.classList.add('panel-open');
+        }
+      }
+    });
+  });
+
+  // --- NOVA LÓGICA DE MONITORAMENTO ---
+  function onPlayerStateChange(event) {
+    // Se o vídeo está tocando, inicia o monitoramento
+    if (event.data == YT.PlayerState.PLAYING) {
+      // Limpa qualquer monitoramento anterior para segurança
+      if (timeUpdater) clearInterval(timeUpdater);
+      // Inicia um novo monitoramento a cada 250ms
+      timeUpdater = setInterval(updateActiveItem, 250);
+    } else {
+      // Se o vídeo for pausado, finalizado, etc., para o monitoramento
+      clearInterval(timeUpdater);
+    }
+  }
+
+  // Substitua a função updateActiveItem inteira por esta versão
+function updateActiveItem() {
+  if (!player || typeof player.getCurrentTime !== 'function') return;
+
+  const currentTime = player.getCurrentTime();
+  const activePane = document.querySelector('.tab-pane.active');
+  if (!activePane) return;
+
+  const listItems = activePane.querySelectorAll('.list-item');
+  const scrollContainer = activePane.querySelector('.content-list'); // O nosso container com a rolagem
+  let currentActiveIndex = -1;
+
+  listItems.forEach((item, index) => {
+    const itemTime = timeToSeconds(item.querySelector('.timestamp-link').dataset.time);
+    if (currentTime >= itemTime) {
+      currentActiveIndex = index;
+    }
+  });
+
+  listItems.forEach((item, index) => {
+    if (index === currentActiveIndex) {
+      // Se este item se tornou o ativo AGORA
+      if (!item.classList.contains('current')) {
+        item.classList.add('current');
+        
+        // --- AQUI ESTÁ A MUDANÇA ---
+        // Em vez de scrollIntoView, calculamos e executamos a rolagem local.
+        
+        // Posição do topo do item em relação ao topo do container de rolagem
+        const itemOffsetTop = item.offsetTop;
+        
+        // Altura visível do container de rolagem
+        const containerHeight = scrollContainer.clientHeight;
+        
+        // Posição de rolagem desejada para centralizar o item
+        const desiredScrollTop = itemOffsetTop - (containerHeight / 2) + (item.clientHeight / 2);
+
+        // Executa a rolagem suave APENAS no container
+        scrollContainer.scroll({
+          top: desiredScrollTop,
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      // Garante que todos os outros itens não tenham o destaque
+      item.classList.remove('current');
+    }
+  });
+}
+})();</script>
+<hr/>
+<h2 class="titulo-aula"> Notas da Aula </h2>
+<aside class="pull-out-box align-right" data-astro-cid-qt2unnqb> <p><strong>Definição Rápida:</strong> O “esqueleto” de um artigo refere-se à sua estrutura macro, geralmente seguindo o padrão IMRaD (Introdução, Métodos, Resultados e Discussão).</p> </aside> 
+<p class="paragrafo-capitular">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et est sed felis aliquet sollicitudin. Proin et magna eu nisl sollicitudin tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer eu ante non felis tincidunt consectetur. Praesent id elit eu ligula facilisis dictum. Donec id elit non mi porta gravida at eget metus.</p>
+<p>Vivamus in erat ut urna cursus vestibulum. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.</p>
+<div class="info-box info-box-dica" data-astro-cid-5nfkzq7w> <h4 class="info-box-titulo" data-astro-cid-5nfkzq7w> <i class="fas fa-solid fa-lightbulb" data-astro-cid-5nfkzq7w></i> Dica </h4> <div class="info-box-conteudo" data-astro-cid-5nfkzq7w> <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p> </div> </div> 
+<div class="info-box info-box-atencao" data-astro-cid-5nfkzq7w> <h4 class="info-box-titulo" data-astro-cid-5nfkzq7w> <i class="fas fa-solid fa-triangle-exclamation" data-astro-cid-5nfkzq7w></i> Ponto de Atenção </h4> <div class="info-box-conteudo" data-astro-cid-5nfkzq7w> <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p> </div> </div> 
+<div class="info-box info-box-saiba-mais" data-astro-cid-5nfkzq7w> <h4 class="info-box-titulo" data-astro-cid-5nfkzq7w> <i class="fas fa-solid fa-book-reader" data-astro-cid-5nfkzq7w></i> Saiba mais </h4> <div class="info-box-conteudo" data-astro-cid-5nfkzq7w> <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p> </div> </div> 
+<div class="info-box info-box-chave" data-astro-cid-5nfkzq7w> <h4 class="info-box-titulo" data-astro-cid-5nfkzq7w> <i class="fas fa-solid fa-key" data-astro-cid-5nfkzq7w></i> Conceito-Chave </h4> <div class="info-box-conteudo" data-astro-cid-5nfkzq7w> <p>Este é um conceito fundamental que será usado ao longo de todo o curso.</p> </div> </div> 
+<aside class="pull-out-box align-left" data-astro-cid-qt2unnqb> <img src="/oficinadecientistas/_astro/gatocard2.aaS8kNaa.png" alt="Gato analisando um texto"/><em>Uma charge para ilustrar a importância da revisão por pares.</em> </aside> 
+<p>Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.</p>
+<p>Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.</p>
+<div class="box-artigo-editorial theme-neutro" data-astro-cid-lo3wbj2t> <h4 class="box-artigo-titulo" data-astro-cid-lo3wbj2t>Estrutura IMRaD na Prática</h4> <figure class="box-artigo-figura" data-astro-cid-lo3wbj2t> <img src="/oficinadecientistas/_astro/gatocard2-mobile.TWuoZ16_.png" alt="Estrutura IMRaD na Prática" data-astro-cid-lo3wbj2t> <figcaption data-astro-cid-lo3wbj2t> <span><p>Um diagrama simplificado da estrutura IMRaD, o padrão-ouro para artigos científicos.</p></span> </figcaption> </figure> <div class="box-artigo-conteudo" data-astro-cid-lo3wbj2t> <div class="coluna" data-astro-cid-lo3wbj2t> <div><p><strong>Introdução:</strong> Apresenta o “porquê” da pesquisa. Qual é o problema e por que ele é importante?</p><p><strong>Métodos:</strong> Descreve o “como”. Os materiais e procedimentos usados devem ser claros o suficiente para que outros possam replicar o estudo.</p></div> </div> <div class="coluna" data-astro-cid-lo3wbj2t> <div><p><strong>Resultados:</strong> Mostra “o quê” foi encontrado. Apresenta os dados de forma objetiva, geralmente com tabelas e gráficos, sem interpretação.</p><p><strong>Discussão:</strong> Explica “o que significa”. Aqui você interpreta os resultados, os compara com outros estudos e discute as implicações.</p></div> </div> </div> </div> 
+<div class="box-artigo-editorial theme-vermelho" data-astro-cid-lo3wbj2t> <h4 class="box-artigo-titulo" data-astro-cid-lo3wbj2t>Estudo de Caso: O Paradoxo de Simpson</h4>  <div class="box-artigo-conteudo" data-astro-cid-lo3wbj2t> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> </div> </div> 
+<div class="box-artigo-editorial theme-roxo" data-astro-cid-lo3wbj2t> <h4 class="box-artigo-titulo" data-astro-cid-lo3wbj2t>Metodologia: Análise de Componentes Principais</h4>  <div class="box-artigo-conteudo" data-astro-cid-lo3wbj2t> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> </div> </div>   </div> </main>  <footer class="bg-gray-800 text-gray-300 py-10"> <div class="container mx-auto px-6 text-center"> <p>&copy; <span id="currentYear"></span> Oficina de Cientistas. Todos os direitos reservados.</p> </div> </footer> </div> <script type="module">const e=document.getElementById("currentYear");e&&(e.textContent=new Date().getFullYear());</script> </body> </html>  <script type="module">(function(){const t=document.getElementById("toggle-leitura");if(!t)return;const i=document.body;function a(e){t.setAttribute("aria-pressed",e?"true":"false"),t.setAttribute("aria-label",e?"Desativar modo leitura":"Ativar modo leitura")}t.addEventListener("click",()=>{const e=i.classList.toggle("modo-leitura-ativo");a(e)}),a(!1)})();</script>

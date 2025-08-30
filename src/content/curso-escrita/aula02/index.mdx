@@ -853,6 +853,7 @@ import BoxArtigo from '~/components/BoxArtigo.astro';
 import gatoCard2 from '~/../public/imagens/gatocard2.png';
 import gatoCard2Mobile from '~/../public/imagens/gatocard2-mobile.png';
 import VideoPlayer from '~/components/VideoPlayer.astro';
+import NotaDeMargem from '~/components/NotaDeMargem.astro';
 
 {/*
   Agora, o componente VideoPlayer pode acessar as variáveis
@@ -874,8 +875,13 @@ import VideoPlayer from '~/components/VideoPlayer.astro';
 
 <p class="paragrafo-capitular">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et est sed felis aliquet sollicitudin. Proin et magna eu nisl sollicitudin tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer eu ante non felis tincidunt consectetur. Praesent id elit eu ligula facilisis dictum. Donec id elit non mi porta gravida at eget metus.</p>
 
-
+    {/* Exemplo 3: Customização completa */}
+    <NotaDeMargem
+      resumo="Isso é chamado de 'Bring Your Own Framework' (BYOF)."
+      lado="esquerda"
+      cor="#22375aff"      largura="22ch"       offset="2rem"        icone="💡"          >
 Vivamus in erat ut urna cursus vestibulum. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.
+</NotaDeMargem>
 
 <InfoBox type="dica" title="Dica">
     <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p>
@@ -924,3 +930,43 @@ Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis
     <div slot="coluna-esquerda">...</div>
     <div slot="coluna-direita">...</div>
 </BoxArtigo>
+
+{/* Exemplo 1: Uso Básico (obrigatório apenas o 'resumo') */}
+    <NotaDeMargem resumo="Astro foi criado por Fred K. Schott e a equipe da Skypack.">
+      <p>
+        A filosofia por trás do Astro é simples: entregar o mínimo de código possível.
+        Isso resulta em tempos de carregamento mais rápidos e uma melhor experiência
+        para o usuário, especialmente em conexões de internet mais lentas.
+      </p>
+    </NotaDeMargem>
+
+    <hr />
+
+    {/* Exemplo 2: Nota à esquerda e com cor 'vinho' */}
+    <NotaDeMargem
+      resumo="Componentes podem ser escritos em React, Svelte, Vue e mais!"
+      lado="esquerda"
+      cor="vinho"
+    >
+      <p>
+        Uma das grandes vantagens do Astro é a sua flexibilidade. Você não está preso a
+        uma única biblioteca de UI. É possível usar seus componentes favoritos
+        de diferentes frameworks na mesma página, e o Astro se encarrega de otimizar
+        tudo.
+      </p>
+    </NotaDeMargem>
+
+    <hr />
+
+    {/* Exemplo 3: Customização completa */}
+    <NotaDeMargem
+      resumo="Isso é chamado de 'Bring Your Own Framework' (BYOF)."
+      lado="direita"
+      cor="#22375aff"      largura="22ch"       offset="2rem"        icone="💡"          >
+      <p>
+        Essa abordagem permite que equipes com diferentes especialidades colaborem
+        de forma mais eficaz. Um desenvolvedor pode criar uma ilha interativa em React,
+        enquanto outro cria um widget simples em Svelte, tudo coexistindo
+        harmoniosamente.
+      </p>
+    </NotaDeMargem>
