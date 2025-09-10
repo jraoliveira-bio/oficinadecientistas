@@ -1,9 +1,35 @@
-<!DOCTYPE html><html lang="pt-br"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Aula 02 - Encontrando a Sua História - Oficina de Cientistas</title><link rel="stylesheet" href="/oficinadecientistas/estilos.css"><link rel="icon" type="image/png" href="/oficinadecientistas/favicon-96x96.png" sizes="96x96"><link rel="apple-touch-icon" href="/oficinadecientistas/apple-touch-icon.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet"><style>:root{--t: .5s;--easing: ease-in-out;--gap-sala: 1.5rem;--menu-largura: 320px}.container-sala-de-aula[data-astro-cid-35myrs3q]{display:grid;grid-template-columns:var(--menu-largura) 1fr;gap:var(--gap-sala);transition:grid-template-columns var(--t) var(--easing)}.menu-aulas[data-astro-cid-35myrs3q]{position:relative;transform:translate(0);opacity:1;transition:transform var(--t) var(--easing),opacity var(--t) var(--easing);will-change:transform;z-index:2}.conteudo-aula[data-astro-cid-35myrs3q]{min-width:0;transition:padding var(--t) var(--easing)}.toggle-leitura[data-astro-cid-35myrs3q]{position:absolute;top:.5rem;right:.5rem;display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .6rem;border:1px solid currentColor;border-radius:.5rem;background:transparent;cursor:pointer;font:500 .9rem/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{display:inline-block;transform-origin:center;transition:transform var(--t) var(--easing)}body.modo-leitura-ativo .toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{transform:rotate(180deg)}.conteudo-aula .nota-de-margem .nota{opacity:0;pointer-events:none;transition:opacity var(--t) var(--easing)}body.modo-leitura-ativo .container-sala-de-aula[data-astro-cid-35myrs3q]{grid-template-columns:0px 1fr}body.modo-leitura-ativo .menu-aulas[data-astro-cid-35myrs3q]{transform:translate(-100%);opacity:0;pointer-events:none}body.modo-leitura-ativo .conteudo-aula .nota-de-margem .nota{opacity:1;pointer-events:auto}@media (prefers-reduced-motion: reduce){.container-sala-de-aula[data-astro-cid-35myrs3q],.menu-aulas[data-astro-cid-35myrs3q],.conteudo-aula[data-astro-cid-35myrs3q],.conteudo-aula .nota-de-margem .nota,.toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{transition:none!important}}
+<!DOCTYPE html><!-- Prepara o 1º paint e estado inicial coerente em <html> e <body> --><script>
+  (function () {
+    try {
+      // Desliga qualquer transição no 1º paint
+      document.body.classList.add('ml-preload');
+
+      // Se estava em modo leitura, já começa assim e com o handle pronto
+      if (localStorage.getItem('oficina.modoLeitura') === '1') {
+        document.documentElement.classList.add('modo-leitura-ativo', 'modo-leitura-handle-pronto');
+        document.body.classList.add('modo-leitura-ativo', 'modo-leitura-handle-pronto');
+      }
+    } catch (e) {}
+  })();
+</script> <html lang="pt-br"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Aula 02 - Encontrando a Sua História - Oficina de Cientistas</title><script>
+  (function () {
+    try {
+      const root = document.documentElement; // <html>
+      root.classList.add('ml-preload'); // evita flicker/transições no 1º paint
+
+      // aceita '1' ou 'true' (legado)
+      const v = localStorage.getItem('oficina.modoLeitura');
+      const on = v === '1' || v === 'true';
+      if (on) root.classList.add('modo-leitura-ativo', 'modo-leitura-handle-pronto');
+    } catch (e) {}
+  })();
+</script><link rel="stylesheet" href="/oficinadecientistas/estilos.css"><link rel="icon" type="image/png" href="/oficinadecientistas/favicon-96x96.png" sizes="96x96"><link rel="apple-touch-icon" href="/oficinadecientistas/apple-touch-icon.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet"><!-- Pré-paint: decide o estado do modo leitura o mais cedo possível --><!-- Pré-paint: aplica estado no <html> antes do primeiro paint --><style>:root{--t: .5s;--easing: ease-in-out;--gap-sala: 1.5rem;--menu-largura: 320px;--conteudo-max-padrao: 70ch;--conteudo-max: 65ch;--conteudo-pad: clamp(1rem, 2vw, 2rem);--handle-top: .5rem;--handle-left: .5rem}.container-sala-de-aula[data-astro-cid-35myrs3q]{display:grid;grid-template-columns:var(--menu-largura) 1fr;gap:var(--gap-sala);transition:grid-template-columns var(--t) var(--easing)}.menu-aulas[data-astro-cid-35myrs3q]{position:sticky;top:var(--menu-stick-top, .5rem);align-self:start;height:max-content;transform:translate(0);transition:transform var(--t) var(--easing);will-change:transform;overflow:hidden;z-index:2}.conteudo-aula[data-astro-cid-35myrs3q]{min-width:0;transition:padding var(--t) var(--easing),margin var(--t) var(--easing)}.texto-aula[data-astro-cid-35myrs3q]{margin-inline:auto;max-width:var(--conteudo-max-padrao);transition:max-width var(--t) var(--easing)}.texto-aula[data-astro-cid-35myrs3q] :is(img,video,canvas,iframe,table)[data-astro-cid-35myrs3q]{max-width:100%}.texto-aula[data-astro-cid-35myrs3q] pre[data-astro-cid-35myrs3q]{overflow-x:auto}.texto-aula{text-align:justify;text-align-last:start}.texto-aula p{hyphens:auto;-webkit-hyphens:auto;-ms-hyphens:auto;overflow-wrap:break-word;word-break:normal}.texto-aula :is(h1,h2,h3,h4,h5,h6,li,pre,code,blockquote,figcaption){text-align:start;hyphens:manual}.toggle-leitura[data-astro-cid-35myrs3q]{position:absolute;top:.5rem;right:.5rem;display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .6rem;border:1px solid currentColor;border-radius:.5rem;background:transparent;cursor:pointer;font:500 .9rem/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{transition:transform var(--t) var(--easing)}.handle-leitura[data-astro-cid-35myrs3q]{display:none;position:fixed;top:var(--handle-top);left:var(--handle-left);z-index:9999;padding:.4rem .55rem;border:1px solid currentColor;border-radius:.5rem;background:color-mix(in srgb,Canvas 85%,CanvasText 15%);cursor:pointer;font:600 .95rem/1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;box-shadow:0 2px 10px #00000014}.conteudo-aula .nota-de-margem .nota{opacity:0;pointer-events:none;transition:opacity var(--t) var(--easing)}body.modo-leitura-ativo .container-sala-de-aula[data-astro-cid-35myrs3q]{grid-template-columns:0 1fr}body.modo-leitura-ativo .menu-aulas[data-astro-cid-35myrs3q]{transform:translate(-100%);pointer-events:none}body.modo-leitura-ativo .handle-leitura[data-astro-cid-35myrs3q]{display:inline-flex;opacity:0;visibility:hidden;pointer-events:none;transform:translate(-4px);transition:opacity var(--t) var(--easing),transform var(--t) var(--easing),visibility 0s linear var(--t)}body.modo-leitura-ativo.modo-leitura-handle-pronto .handle-leitura[data-astro-cid-35myrs3q]{opacity:1;visibility:visible;pointer-events:auto;transform:translate(0);transition-delay:0s,0s,0s}body.modo-leitura-ativo .conteudo-aula .nota-de-margem .nota{opacity:1;pointer-events:auto}body.modo-leitura-ativo .texto-aula[data-astro-cid-35myrs3q]{max-width:var(--conteudo-max, 70ch)}body.ml-preload .container-sala-de-aula[data-astro-cid-35myrs3q],body.ml-preload .menu-aulas[data-astro-cid-35myrs3q],body.ml-preload .conteudo-aula[data-astro-cid-35myrs3q],body.ml-preload .handle-leitura[data-astro-cid-35myrs3q],body.ml-preload .conteudo-aula .nota-de-margem .nota{transition:none!important}body.ml-preload .handle-leitura[data-astro-cid-35myrs3q]{visibility:hidden}.toggle-leitura[data-astro-cid-35myrs3q]:focus-visible,.handle-leitura[data-astro-cid-35myrs3q]:focus-visible{outline:3px solid Highlight;outline-offset:2px}@media (prefers-reduced-motion: reduce){.container-sala-de-aula[data-astro-cid-35myrs3q],.menu-aulas[data-astro-cid-35myrs3q],.conteudo-aula[data-astro-cid-35myrs3q],.conteudo-aula .nota-de-margem .nota,.toggle-leitura[data-astro-cid-35myrs3q],.handle-leitura[data-astro-cid-35myrs3q],.toggle-leitura[data-astro-cid-35myrs3q] .icone[data-astro-cid-35myrs3q]{transition:none!important}}
 </style><style>.box-artigo-editorial[data-astro-cid-lo3wbj2t]{margin:40px 0;padding:25px 30px;border-radius:4px;border-left:3px solid;border-right:3px solid;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;box-shadow:0 4px 16px #0000000d}.box-artigo-titulo[data-astro-cid-lo3wbj2t]{margin-top:0;margin-bottom:20px;font-size:20px;font-weight:600}.box-artigo-figura[data-astro-cid-lo3wbj2t]{margin:0 0 20px;text-align:center}.box-artigo-figura[data-astro-cid-lo3wbj2t] img[data-astro-cid-lo3wbj2t]{max-width:100%;height:auto;border-radius:4px;margin-bottom:10px}.box-artigo-figura[data-astro-cid-lo3wbj2t] figcaption[data-astro-cid-lo3wbj2t]{font-size:15px;font-style:italic;color:#5a6a7a}.box-artigo-conteudo[data-astro-cid-lo3wbj2t]{display:grid;grid-template-columns:1fr 1fr;gap:25px}.coluna[data-astro-cid-lo3wbj2t] p{margin-top:0;line-height:1.7}.theme-vermelho[data-astro-cid-lo3wbj2t]{border-color:#d4a237;background-color:#fffaf0}.theme-vermelho[data-astro-cid-lo3wbj2t] .box-artigo-titulo[data-astro-cid-lo3wbj2t]{color:#b95c50}.theme-roxo[data-astro-cid-lo3wbj2t]{border-color:#a39cc4;background-color:#f5f3f7}.theme-roxo[data-astro-cid-lo3wbj2t] .box-artigo-titulo[data-astro-cid-lo3wbj2t]{color:#6d5b87}.theme-neutro[data-astro-cid-lo3wbj2t]{border-color:#d1d5db;background-color:#fafafa}.theme-neutro[data-astro-cid-lo3wbj2t] .box-artigo-titulo[data-astro-cid-lo3wbj2t]{color:#6b7280}@media (max-width: 768px){.box-artigo-conteudo[data-astro-cid-lo3wbj2t]{grid-template-columns:1fr}}
 </style><style>.info-box[data-astro-cid-5nfkzq7w]{margin:30px 0;padding:20px 25px;border-radius:8px;border:1px solid #c4bbbb;border-left-width:4px;border-left-style:solid;box-shadow:0 4px 16px #0000000d;transition:all .3s ease-out}.info-box[data-astro-cid-5nfkzq7w]:hover{transform:translateY(-3px);box-shadow:0 8px 24px #00000012}.info-box-titulo[data-astro-cid-5nfkzq7w]{margin-top:0;margin-bottom:15px;font-size:18px;display:flex;align-items:center;gap:10px;font-weight:600}.info-box-conteudo[data-astro-cid-5nfkzq7w] p{margin-bottom:0;font-family:Bitter,serif;line-height:1.7;color:#34495e}.info-box-conteudo[data-astro-cid-5nfkzq7w] p:not(:last-child){margin-bottom:1rem}.info-box-dica[data-astro-cid-5nfkzq7w]{background-color:#eef6ff;border-left-color:#4a698b}.info-box-dica[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#4a698b}.info-box-atencao[data-astro-cid-5nfkzq7w]{background-color:#fcf2f2;border-left-color:#8c4b4b}.info-box-atencao[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#8c4b4b}.info-box-saiba-mais[data-astro-cid-5nfkzq7w]{background-color:#fafafad5;border-left-color:#6b7280}.info-box-saiba-mais[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#6b7280}.info-box-chave[data-astro-cid-5nfkzq7w]{background-color:#f0f7f2;border-left-color:#348455}.info-box-chave[data-astro-cid-5nfkzq7w] .info-box-titulo[data-astro-cid-5nfkzq7w]{color:#348455}
+</style><style>@import"https://fonts.googleapis.com/css2?family=Inter:wght@300;500&display=swap";.nota-de-margem[data-astro-cid-6udrhd4c]{position:relative;overflow:visible}.conteudo[data-astro-cid-6udrhd4c]{position:relative;z-index:0;display:flow-root}.nota[data-astro-cid-6udrhd4c]{position:absolute;top:1.5rem;width:var(--nota-largura);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica Neue,Noto Sans,sans-serif;font-weight:500;font-size:.85rem;line-height:1.1;color:var(--nota-cor);z-index:1;user-select:text;filter:saturate(1.05);text-wrap:balance}.nota[data-astro-cid-6udrhd4c] .icone[data-astro-cid-6udrhd4c]{display:inline-block;margin-right:.25rem;transform:translateY(-.05em)}.nota-de-margem[data-astro-cid-6udrhd4c][data-lado=direita] .nota[data-astro-cid-6udrhd4c]{left:100%;margin-left:var(--nota-offset);transform:rotate(1deg);text-align:left}.nota-de-margem[data-astro-cid-6udrhd4c][data-lado=esquerda] .nota[data-astro-cid-6udrhd4c]{right:100%;margin-right:var(--nota-offset);transform:rotate(-1deg);text-align:right}@media (prefers-contrast: more){.nota[data-astro-cid-6udrhd4c]{text-decoration-thickness:.08em}}@media (max-width: 768px){.nota[data-astro-cid-6udrhd4c]{position:static;width:auto;margin:0 0 .6rem;padding:.5rem .75rem;border-left:.28rem solid var(--nota-cor);background:var(--nota-bg-mobile);border-radius:.5rem;display:flex;align-items:baseline;gap:.35rem;transform:none}.nota[data-astro-cid-6udrhd4c] .texto[data-astro-cid-6udrhd4c]{font-size:1rem;font-weight:600}.nota[data-astro-cid-6udrhd4c] .icone[data-astro-cid-6udrhd4c]{flex:0 0 auto}.nota-de-margem[data-astro-cid-6udrhd4c][data-lado=direita] .nota[data-astro-cid-6udrhd4c],.nota-de-margem[data-astro-cid-6udrhd4c][data-lado=esquerda] .nota[data-astro-cid-6udrhd4c]{text-align:left}}
 </style><style>.pull-out-box[data-astro-cid-qt2unnqb]{width:45%;padding:15px 20px;margin-bottom:1rem;background-color:#f5f5f5;border:1px solid #f5edde;border-radius:20px;font-size:16px;font-style:italic;color:#273543}.align-left[data-astro-cid-qt2unnqb]{float:left;margin-right:25px}.align-right[data-astro-cid-qt2unnqb]{float:right;margin-left:25px}.pull-out-box[data-astro-cid-qt2unnqb] p{margin-top:0}.pull-out-box[data-astro-cid-qt2unnqb] img{width:100%;height:auto;border-radius:4px}
 </style><style>.video-player-container[data-astro-cid-hbhdmhem]{max-width:800px;margin:2rem auto;border:1px solid #0000001b;border-radius:8px;background-color:#dee1e4;overflow:hidden;box-shadow:5px 10px 10px #0000001a}.video-wrapper[data-astro-cid-hbhdmhem]{position:relative;aspect-ratio:16 / 9;width:100%;background-color:#000}.video-wrapper[data-astro-cid-hbhdmhem] iframe[data-astro-cid-hbhdmhem]{position:absolute;inset:0;width:100%;height:100%;border:none}.interactive-panel[data-astro-cid-hbhdmhem]{border-top:1px solid #e0e0e0;padding:0 1.5rem}.tab-nav[data-astro-cid-hbhdmhem]{display:flex;gap:2rem;border-bottom:1px solid #f0f0f0}.tab-button[data-astro-cid-hbhdmhem]{border:none;background:none;padding:1rem .25rem;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:1rem;font-weight:600;color:#666;position:relative;transition:color .3s ease}.tab-button[data-astro-cid-hbhdmhem]:hover{color:#000}.tab-button[data-astro-cid-hbhdmhem]:after{content:"";position:absolute;bottom:-1px;left:0;width:100%;height:3px;background-color:#0056b3;transform:scaleX(0);transform-origin:center;transition:transform .3s cubic-bezier(.175,.885,.32,1.275)}.tab-button[data-astro-cid-hbhdmhem].active{color:#000}.tab-button[data-astro-cid-hbhdmhem].active:after{transform:scaleX(1)}.arrow-icon[data-astro-cid-hbhdmhem]{display:inline-block;margin-left:.5rem;font-size:.7em;color:#999;transition:transform .3s ease}.tab-button[data-astro-cid-hbhdmhem] .arrow-icon[data-astro-cid-hbhdmhem]:before{content:"▼";opacity:0;transition:opacity .2s ease}.tab-button[data-astro-cid-hbhdmhem].active .arrow-icon[data-astro-cid-hbhdmhem]:before{opacity:1}.interactive-panel[data-astro-cid-hbhdmhem].panel-open .tab-button[data-astro-cid-hbhdmhem].active .arrow-icon[data-astro-cid-hbhdmhem]{transform:rotate(180deg)}.tab-content-panel[data-astro-cid-hbhdmhem]{max-height:0;overflow:hidden;transition:max-height .5s ease-in-out}.interactive-panel[data-astro-cid-hbhdmhem].panel-open .tab-content-panel[data-astro-cid-hbhdmhem]{max-height:400px}.tab-pane[data-astro-cid-hbhdmhem]{display:none}.tab-pane[data-astro-cid-hbhdmhem].active{display:block}.content-list[data-astro-cid-hbhdmhem]{padding:1.5rem .5rem 1.5rem 0;margin:0;list-style:none;display:flex;flex-direction:column;gap:1rem;max-height:350px;overflow-y:auto;position:relative}.list-item[data-astro-cid-hbhdmhem]{display:flex;align-items:baseline;gap:1.5rem;margin:0;padding:.5rem;border-radius:6px;transition:background-color .3s ease}.list-item[data-astro-cid-hbhdmhem] .timestamp-link[data-astro-cid-hbhdmhem]{flex-shrink:0;width:70px;font-family:Courier New,monospace;font-weight:700;font-size:.95em;color:#0056b3;text-decoration:none;background-color:#f2f2f2;padding:4px 8px;border-radius:4px;text-align:center;transition:background-color .2s ease}.list-item[data-astro-cid-hbhdmhem] .timestamp-link[data-astro-cid-hbhdmhem]:hover{background-color:#e0eaf6}.list-item[data-astro-cid-hbhdmhem] .text-content[data-astro-cid-hbhdmhem]{line-height:1.6;color:#333}.list-item[data-astro-cid-hbhdmhem].current{background-color:#e7f1ff}.list-item[data-astro-cid-hbhdmhem].current .text-content[data-astro-cid-hbhdmhem]{font-weight:500}
-</style></head> <body> <div class="pagina-container"> <header class="topo"> <div class="topo-conteudo"> <div class="logo-titulo-wrapper"> <img src="/oficinadecientistas/logo2.png" alt="Logo da Oficina de Cientistas" class="logo-header"> <h1>Oficina de Cientistas</h1> </div> <input type="checkbox" id="menu-toggle" class="menu-toggle"> <label for="menu-toggle" class="menu-hamburger"> <span></span><span></span><span></span> </label> <nav class="menu-principal"> <ul> <li><a href="/oficinadecientistas/">Home</a></li> <li><a href="/oficinadecientistas/cursos/">Cursos</a></li> <li><a href="/oficinadecientistas/aulas-especiais/">Aulas Especiais</a></li> <li><a href="/oficinadecientistas/sobre/">Sobre</a></li> <li><a href="/oficinadecientistas/links/">Links</a></li> </ul> </nav> </div> </header>  <main class="container-sala-de-aula" data-astro-cid-35myrs3q> <aside class="menu-aulas" data-astro-cid-35myrs3q> <button id="toggle-leitura" class="toggle-leitura" aria-pressed="false" aria-label="Ativar modo leitura" title="Modo leitura" type="button" data-astro-cid-35myrs3q> <span class="icone" aria-hidden="true" data-astro-cid-35myrs3q>⫷</span> <span class="texto" data-astro-cid-35myrs3q>Modo leitura</span> </button> <h3 data-astro-cid-35myrs3q>Escrita Científica</h3> <ol data-astro-cid-35myrs3q> <li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula01" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 01: Se Comunicar Bem é Muito difícil </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/prototype" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 01: Se Comunicar Bem é Muito difícil </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/precisao" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Exatidão e Precisão - A Primeira Virtude da Ciência </a> </li><li class="aula-ativa" data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula02" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 02 - Encontrando a Sua História </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula03" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 03 -  </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula04" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 04 -  </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula05" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 05 -  </a> </li> </ol> </aside> <div class="conteudo-aula" data-astro-cid-35myrs3q>  
+</style></head> <body> <div class="pagina-container"> <header class="topo"> <div class="topo-conteudo"> <div class="logo-titulo-wrapper"> <img src="/oficinadecientistas/logo2.png" alt="Logo da Oficina de Cientistas" class="logo-header"> <h1>Oficina de Cientistas</h1> </div> <input type="checkbox" id="menu-toggle" class="menu-toggle"> <label for="menu-toggle" class="menu-hamburger"> <span></span><span></span><span></span> </label> <nav class="menu-principal"> <ul> <li><a href="/oficinadecientistas/">Home</a></li> <li><a href="/oficinadecientistas/cursos/">Cursos</a></li> <li><a href="/oficinadecientistas/aulas-especiais/">Aulas Especiais</a></li> <li><a href="/oficinadecientistas/sobre/">Sobre</a></li> <li><a href="/oficinadecientistas/links/">Links</a></li> </ul> </nav> </div> </header>  <main class="container-sala-de-aula" data-astro-cid-35myrs3q> <aside class="menu-aulas" data-astro-cid-35myrs3q> <button id="toggle-leitura" class="toggle-leitura" data-leitura-toggle aria-pressed="false" aria-label="Ativar modo leitura" title="Modo leitura" type="button" data-astro-cid-35myrs3q> <span class="icone" aria-hidden="true" data-astro-cid-35myrs3q>⫷</span> <span class="texto" data-astro-cid-35myrs3q>Modo leitura</span> </button> <h3 data-astro-cid-35myrs3q>Escrita Científica</h3> <ol data-astro-cid-35myrs3q> <li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula01" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 01: Se Comunicar Bem é Muito difícil </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/prototype" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 01: Se Comunicar Bem é Muito difícil </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula06" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 01: Se Comunicar Bem é Muito difícil </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/precisao" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Exatidão e Precisão - A Primeira Virtude da Ciência </a> </li><li class="aula-ativa" data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula02" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 02 - Encontrando a Sua História </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula03" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 03 -  </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula04" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 04 -  </a> </li><li data-astro-cid-35myrs3q> <a href="/oficinadecientistas/cursos/curso-escrita/aula05" data-astro-cid-35myrs3q> <i class="fas fa-video" data-astro-cid-35myrs3q></i> Aula 05 -  </a> </li> </ol> </aside> <button class="handle-leitura" data-leitura-toggle aria-label="Reabrir menu" title="Reabrir menu" type="button" data-astro-cid-35myrs3q> <span class="icone" aria-hidden="true" data-astro-cid-35myrs3q>⫸</span> </button> <div class="conteudo-aula" data-astro-cid-35myrs3q> <!-- Wrapper que recebe o limite de largura em caracteres --> <article class="texto-aula" data-astro-cid-35myrs3q>  
 
 
 
@@ -142,7 +168,13 @@ function updateActiveItem() {
 <h2 class="titulo-aula"> Notas da Aula </h2>
 <aside class="pull-out-box align-right" data-astro-cid-qt2unnqb> <p><strong>Definição Rápida:</strong> O “esqueleto” de um artigo refere-se à sua estrutura macro, geralmente seguindo o padrão IMRaD (Introdução, Métodos, Resultados e Discussão).</p> </aside> 
 <p class="paragrafo-capitular">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et est sed felis aliquet sollicitudin. Proin et magna eu nisl sollicitudin tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer eu ante non felis tincidunt consectetur. Praesent id elit eu ligula facilisis dictum. Donec id elit non mi porta gravida at eget metus.</p>
-<p>Vivamus in erat ut urna cursus vestibulum. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.</p>
+
+<!--
+  Estrutura:
+  - wrapper: posicionamento relativo
+  - .nota   : posição absoluta que "sangra" para fora da coluna no desktop
+  - .conteudo: mantém fluxo normal do parágrafo/slot
+--><div class="nota-de-margem" data-lado="esquerda" style="--nota-largura:22ch; --nota-cor:#22375aff; --nota-offset:2rem; --nota-bg-mobile:#f7f9f8;" data-astro-cid-6udrhd4c> <aside class="nota" role="note" aria-label="Nota de margem" data-astro-cid-6udrhd4c> <span class="icone" aria-hidden="true" data-astro-cid-6udrhd4c>💡</span> <span class="texto" data-astro-cid-6udrhd4c>Isso é chamado de &#39;Bring Your Own Framework&#39; (BYOF).</span> </aside> <div class="conteudo" data-astro-cid-6udrhd4c> <p>Vivamus in erat ut urna cursus vestibulum. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.</p> </div> </div> 
 <div class="info-box info-box-dica" data-astro-cid-5nfkzq7w> <h4 class="info-box-titulo" data-astro-cid-5nfkzq7w> <i class="fas fa-solid fa-lightbulb" data-astro-cid-5nfkzq7w></i> Dica </h4> <div class="info-box-conteudo" data-astro-cid-5nfkzq7w> <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p> </div> </div> 
 <div class="info-box info-box-atencao" data-astro-cid-5nfkzq7w> <h4 class="info-box-titulo" data-astro-cid-5nfkzq7w> <i class="fas fa-solid fa-triangle-exclamation" data-astro-cid-5nfkzq7w></i> Ponto de Atenção </h4> <div class="info-box-conteudo" data-astro-cid-5nfkzq7w> <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p> </div> </div> 
 <div class="info-box info-box-saiba-mais" data-astro-cid-5nfkzq7w> <h4 class="info-box-titulo" data-astro-cid-5nfkzq7w> <i class="fas fa-solid fa-book-reader" data-astro-cid-5nfkzq7w></i> Saiba mais </h4> <div class="info-box-conteudo" data-astro-cid-5nfkzq7w> <p>Evite usar jargões excessivos que não sejam absolutamente essenciais para o seu campo de estudo. Clareza é mais importante que complexidade.</p> </div> </div> 
@@ -152,4 +184,139 @@ function updateActiveItem() {
 <p>Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.</p>
 <div class="box-artigo-editorial theme-neutro" data-astro-cid-lo3wbj2t> <h4 class="box-artigo-titulo" data-astro-cid-lo3wbj2t>Estrutura IMRaD na Prática</h4> <figure class="box-artigo-figura" data-astro-cid-lo3wbj2t> <img src="/oficinadecientistas/_astro/gatocard2-mobile.TWuoZ16_.png" alt="Estrutura IMRaD na Prática" data-astro-cid-lo3wbj2t> <figcaption data-astro-cid-lo3wbj2t> <span><p>Um diagrama simplificado da estrutura IMRaD, o padrão-ouro para artigos científicos.</p></span> </figcaption> </figure> <div class="box-artigo-conteudo" data-astro-cid-lo3wbj2t> <div class="coluna" data-astro-cid-lo3wbj2t> <div><p><strong>Introdução:</strong> Apresenta o “porquê” da pesquisa. Qual é o problema e por que ele é importante?</p><p><strong>Métodos:</strong> Descreve o “como”. Os materiais e procedimentos usados devem ser claros o suficiente para que outros possam replicar o estudo.</p></div> </div> <div class="coluna" data-astro-cid-lo3wbj2t> <div><p><strong>Resultados:</strong> Mostra “o quê” foi encontrado. Apresenta os dados de forma objetiva, geralmente com tabelas e gráficos, sem interpretação.</p><p><strong>Discussão:</strong> Explica “o que significa”. Aqui você interpreta os resultados, os compara com outros estudos e discute as implicações.</p></div> </div> </div> </div> 
 <div class="box-artigo-editorial theme-vermelho" data-astro-cid-lo3wbj2t> <h4 class="box-artigo-titulo" data-astro-cid-lo3wbj2t>Estudo de Caso: O Paradoxo de Simpson</h4>  <div class="box-artigo-conteudo" data-astro-cid-lo3wbj2t> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> </div> </div> 
-<div class="box-artigo-editorial theme-roxo" data-astro-cid-lo3wbj2t> <h4 class="box-artigo-titulo" data-astro-cid-lo3wbj2t>Metodologia: Análise de Componentes Principais</h4>  <div class="box-artigo-conteudo" data-astro-cid-lo3wbj2t> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> </div> </div>   </div> </main>  <footer class="bg-gray-800 text-gray-300 py-10"> <div class="container mx-auto px-6 text-center"> <p>&copy; <span id="currentYear"></span> Oficina de Cientistas. Todos os direitos reservados.</p> </div> </footer> </div> <script type="module">const e=document.getElementById("currentYear");e&&(e.textContent=new Date().getFullYear());</script> </body> </html>  <script type="module">(function(){const t=document.getElementById("toggle-leitura");if(!t)return;const i=document.body;function a(e){t.setAttribute("aria-pressed",e?"true":"false"),t.setAttribute("aria-label",e?"Desativar modo leitura":"Ativar modo leitura")}t.addEventListener("click",()=>{const e=i.classList.toggle("modo-leitura-ativo");a(e)}),a(!1)})();</script>
+<div class="box-artigo-editorial theme-roxo" data-astro-cid-lo3wbj2t> <h4 class="box-artigo-titulo" data-astro-cid-lo3wbj2t>Metodologia: Análise de Componentes Principais</h4>  <div class="box-artigo-conteudo" data-astro-cid-lo3wbj2t> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> <div class="coluna" data-astro-cid-lo3wbj2t> <div>…</div> </div> </div> </div> 
+
+<!--
+  Estrutura:
+  - wrapper: posicionamento relativo
+  - .nota   : posição absoluta que "sangra" para fora da coluna no desktop
+  - .conteudo: mantém fluxo normal do parágrafo/slot
+--><div class="nota-de-margem" data-lado="direita" style="--nota-largura:18ch; --nota-cor:#00695C; --nota-offset:1.5rem; --nota-bg-mobile:#e6f2f0;" data-astro-cid-6udrhd4c> <aside class="nota" role="note" aria-label="Nota de margem" data-astro-cid-6udrhd4c> <span class="icone" aria-hidden="true" data-astro-cid-6udrhd4c>✎</span> <span class="texto" data-astro-cid-6udrhd4c>Astro foi criado por Fred K. Schott e a equipe da Skypack.</span> </aside> <div class="conteudo" data-astro-cid-6udrhd4c> <p><p>A filosofia por trás do Astro é simples: entregar o mínimo de código possível.
+Isso resulta em tempos de carregamento mais rápidos e uma melhor experiência
+para o usuário, especialmente em conexões de internet mais lentas.</p></p> </div> </div> 
+<hr/>
+
+<!--
+  Estrutura:
+  - wrapper: posicionamento relativo
+  - .nota   : posição absoluta que "sangra" para fora da coluna no desktop
+  - .conteudo: mantém fluxo normal do parágrafo/slot
+--><div class="nota-de-margem" data-lado="esquerda" style="--nota-largura:18ch; --nota-cor:#8c4b4b; --nota-offset:1.5rem; --nota-bg-mobile:#f5ecec;" data-astro-cid-6udrhd4c> <aside class="nota" role="note" aria-label="Nota de margem" data-astro-cid-6udrhd4c> <span class="icone" aria-hidden="true" data-astro-cid-6udrhd4c>✎</span> <span class="texto" data-astro-cid-6udrhd4c>Componentes podem ser escritos em React, Svelte, Vue e mais!</span> </aside> <div class="conteudo" data-astro-cid-6udrhd4c> <p><p>Uma das grandes vantagens do Astro é a sua flexibilidade. Você não está preso a
+uma única biblioteca de UI. É possível usar seus componentes favoritos
+de diferentes frameworks na mesma página, e o Astro se encarrega de otimizar
+tudo.</p></p> </div> </div> 
+<hr/>
+
+<!--
+  Estrutura:
+  - wrapper: posicionamento relativo
+  - .nota   : posição absoluta que "sangra" para fora da coluna no desktop
+  - .conteudo: mantém fluxo normal do parágrafo/slot
+--><div class="nota-de-margem" data-lado="direita" style="--nota-largura:22ch; --nota-cor:#22375aff; --nota-offset:2rem; --nota-bg-mobile:#f7f9f8;" data-astro-cid-6udrhd4c> <aside class="nota" role="note" aria-label="Nota de margem" data-astro-cid-6udrhd4c> <span class="icone" aria-hidden="true" data-astro-cid-6udrhd4c>💡</span> <span class="texto" data-astro-cid-6udrhd4c>Isso é chamado de &#39;Bring Your Own Framework&#39; (BYOF).</span> </aside> <div class="conteudo" data-astro-cid-6udrhd4c> <p><p>Essa abordagem permite que equipes com diferentes especialidades colaborem
+de forma mais eficaz. Um desenvolvedor pode criar uma ilha interativa em React,
+enquanto outro cria um widget simples em Svelte, tudo coexistindo
+harmoniosamente.</p></p> </div> </div>   </article> </div> </main>  <footer class="bg-gray-800 text-gray-300 py-10"> <div class="container mx-auto px-6 text-center"> <p>&copy; <span id="currentYear"></span> Oficina de Cientistas. Todos os direitos reservados.</p> </div> </footer> </div> <script type="module">const e=document.getElementById("currentYear");e&&(e.textContent=new Date().getFullYear());</script> </body> </html>  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const LS_KEY   = 'oficina.modoLeitura';
+    const ROOT     = document.documentElement; // <html>
+    const BODY     = document.body;
+
+    const container = document.querySelector('.container-sala-de-aula');
+    const menu      = document.querySelector('.menu-aulas');
+    const menuBtn   = document.querySelector('.menu-aulas .toggle-leitura');
+    const toggles   = Array.from(document.querySelectorAll('[data-leitura-toggle], #toggle-leitura, .toggle-leitura, .handle-leitura'));
+
+    if (!container || !menu || !toggles.length) {
+      BODY.classList.remove('ml-preload'); // corrigido: remove do body
+      return;
+    }
+
+    function setPressed(active) {
+      for (const btn of toggles) {
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        const isHandle = btn.classList.contains('handle-leitura');
+        const label = active ? 'Sair do modo leitura' : (isHandle ? 'Reabrir menu' : 'Ativar modo leitura');
+        btn.setAttribute('aria-label', label);
+        btn.title = label;
+      }
+    }
+
+    function placeHandleAnchored() {
+      if (menuBtn) {
+        const rTop = menuBtn.getBoundingClientRect();
+        ROOT.style.setProperty('--handle-top', `${Math.max(8, Math.round(rTop.top))}px`);
+      }
+      const rLeft = container.getBoundingClientRect();
+      ROOT.style.setProperty('--handle-left', `${Math.max(8, Math.round(rLeft.left))}px`);
+    }
+
+    function revealHandleAfterMenuSlidesOut() {
+      const fallback = setTimeout(() => {
+        ROOT.classList.add('modo-leitura-handle-pronto');
+        BODY.classList.add('modo-leitura-handle-pronto');
+      }, 550);
+      function onEnd(e) {
+        if (e.propertyName !== 'transform') return;
+        clearTimeout(fallback);
+        menu.removeEventListener('transitionend', onEnd);
+        ROOT.classList.add('modo-leitura-handle-pronto');
+        BODY.classList.add('modo-leitura-handle-pronto');
+      }
+      menu.addEventListener('transitionend', onEnd, { once: true });
+    }
+
+    function syncClasses(active) {
+      [ROOT, BODY].forEach(el => {
+        el.classList.toggle('modo-leitura-ativo', active);
+        if (!active) el.classList.remove('modo-leitura-handle-pronto');
+      });
+    }
+
+    // Estado inicial: agora o script do head já setou também em <html>, então funciona
+    const startActive = ROOT.classList.contains('modo-leitura-ativo');
+    if (startActive) {
+      placeHandleAnchored();
+      setPressed(true);
+    } else {
+      setPressed(false);
+    }
+
+    // Libera transições após o primeiro paint estável
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        BODY.classList.remove('ml-preload'); // corrigido: remove do body
+      });
+    });
+
+    toggles.forEach(btn => btn.addEventListener('click', () => {
+      const next = !ROOT.classList.contains('modo-leitura-ativo');
+      syncClasses(next);
+      setPressed(next);
+      localStorage.setItem(LS_KEY, next ? '1' : '0');
+
+      if (next) {
+        // usuário ativou agora: posiciona handle e revela após o slide do menu
+        placeHandleAnchored();
+        revealHandleAfterMenuSlidesOut();
+      }
+    }));
+
+    // Reancora handle em resize
+    window.addEventListener('resize', () => {
+      if (ROOT.classList.contains('modo-leitura-ativo')) placeHandleAnchored();
+    }, { passive: true });
+
+    // Motion reduzido: revela handle sem esperar transição
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) {
+      toggles.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (ROOT.classList.contains('modo-leitura-ativo')) {
+            ROOT.classList.add('modo-leitura-handle-pronto');
+            BODY.classList.add('modo-leitura-handle-pronto');
+          }
+        });
+      });
+    }
+  });
+</script>
