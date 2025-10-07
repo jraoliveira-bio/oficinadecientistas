@@ -1,0 +1,7 @@
+---
+// src/components/Cite.astro
+
+const { key } = Astro.props as { key: string };
+if (!key) throw new Error("<Cite /> requer a prop 'key'.");
+---
+<cite class="oc-cite" data-key={key}></cite>
