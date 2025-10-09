@@ -10,24 +10,77 @@
         "description": {
           "type": "string"
         },
-        "menu": {
-          "type": "boolean"
-        },
-        "ordem": {
-          "type": "number"
-        },
         "shortTitle": {
           "type": "string"
+        },
+        "menu": {
+          "type": "boolean",
+          "default": false
+        },
+        "ordem": {
+          "type": "integer"
+        },
+        "draft": {
+          "type": "boolean",
+          "default": false
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "year": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "doi": {
+                "type": "string",
+                "format": "uri"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "scholar_query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "title",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
         },
         "$schema": {
           "type": "string"
         }
       },
       "required": [
-        "title",
-        "description",
-        "menu",
-        "ordem"
+        "title"
       ],
       "additionalProperties": false
     }

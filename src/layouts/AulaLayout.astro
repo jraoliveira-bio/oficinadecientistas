@@ -3,17 +3,24 @@
 import { getCollection } from 'astro:content';
 import Layout from '~/layouts/Layout.astro'; // Importa o layout principal
 
+// (Opcional) garante o CSS das citações nesta página
+import hydrateUrl from '../scripts/citations-hydrate.js?url';
+import "../styles/citations.css";
+
 // Recebe a 'aulaAtual' que foi passada pelo [slug].astro
 const { aulaAtual } = Astro.props;
+const referencias = aulaAtual?.data?.references ?? [];
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+// 🔧 Serializa as referências sem <script>, para evitar o bug do compilador
+const refsAttr = encodeURIComponent(JSON.stringify(referencias));
 
 // Busca todas as aulas da coleção para montar o menu
 const todasAsAulas = (await getCollection('curso-escrita'))
-  .filter(aula => aula.data.menu === true) // Adiciona o filtro aqui
+  .filter(aula => aula.data.menu === true)
   .sort((a, b) => a.data.ordem - b.data.ordem);
 ---
 
-<!-- Prepara o 1º paint e estado inicial coerente em <html> e <body> -->
 <script is:inline>
   (function () {
     try {
@@ -35,7 +42,7 @@ const todasAsAulas = (await getCollection('curso-escrita'))
       <button
         id="toggle-leitura"
         class="toggle-leitura"
-        data-leitura-toggle 
+        data-leitura-toggle
         aria-pressed="false"
         aria-label="Ativar modo leitura"
         title="Modo leitura"
@@ -72,9 +79,13 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     </button>
 
     <div class="conteudo-aula">
-      <!-- Wrapper que recebe o limite de largura em caracteres -->
       <article class="texto-aula">
         <slot />
+
+        <!-- 🔧 Dados das referências sem <script>; o hydrator lê daqui -->
+        <meta id="oc-refs" data-refs={refsAttr} />
+<script type="module" src={hydrateUrl}></script>
+
       </article>
     </div>
   </main>
@@ -86,79 +97,59 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     --easing: ease-in-out;
     --gap-sala: 1.5rem;
     --menu-largura: 320px;
-
-    /* Larguras máximas por caractere */
-    --conteudo-max-padrao: 70ch;  /* navegação (menu visível) */
-    --conteudo-max: 65ch;         /* modo leitura (menu oculto) */
-
+    --conteudo-max-padrao: 70ch;
+    --conteudo-max: 65ch;
     --conteudo-pad: clamp(1rem, 2vw, 2rem);
-    --handle-top: .5rem;    /* mesma altura do botão do menu */
-    --handle-left: .5rem;   /* margem esquerda do puxador */
+    --handle-top: .5rem;
+    --handle-left: .5rem;
   }
-
   .container-sala-de-aula {
     display: grid;
     grid-template-columns: var(--menu-largura) 1fr;
     gap: var(--gap-sala);
     transition: grid-template-columns var(--t) var(--easing);
   }
-
   .menu-aulas {
-    /* Torna o menu "grudado" no topo ao rolar */
     position: sticky;
     top: var(--menu-stick-top, 0.5rem);
-    align-self: start;     /* necessário em grid para o sticky funcionar bem */
-    height: max-content;   /* evita esticar além do conteúdo */
-
+    align-self: start;
+    height: max-content;
     transform: translateX(0);
     transition: transform var(--t) var(--easing);
     will-change: transform;
-    overflow: hidden;      /* evita conteúdo “vazar” ao sair */
+    overflow: hidden;
     z-index: 2;
   }
-
   .conteudo-aula {
     min-width: 0;
     transition: padding var(--t) var(--easing), margin var(--t) var(--easing);
   }
-
-  /* === Largura/centralização do conteúdo (modo padrão) === */
   .texto-aula {
     margin-inline: auto;
     max-width: var(--conteudo-max-padrao);
     transition: max-width var(--t) var(--easing);
   }
-
-  /* Evitar estouro de mídia dentro da coluna */
   .texto-aula :is(img, video, canvas, iframe, table) {
     max-width: 100%;
   }
   .texto-aula pre {
     overflow-x: auto;
   }
-/* Alcança o conteúdo slottado pelo Astro */
-:global(.texto-aula) {
-  /* aplica por herança */
-  text-align: justify;
-  text-align-last: start;      /* última linha não forçada */
-}
-
-/* Ajustes específicos de parágrafo */
-:global(.texto-aula p) {
-  hyphens: auto;               /* precisa de <html lang="pt-br"> */
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  overflow-wrap: break-word;
-  word-break: normal;
-}
-
-/* Não justificar onde costuma ficar ruim */
-:global(.texto-aula :is(h1,h2,h3,h4,h5,h6,li,pre,code,blockquote,figcaption)) {
-  text-align: start;
-  hyphens: manual;
-}
-
-  /* Botão do menu (estado normal) */
+  :global(.texto-aula) {
+    text-align: justify;
+    text-align-last: start;
+  }
+  :global(.texto-aula p) {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+  :global(.texto-aula :is(h1,h2,h3,h4,h5,h6,li,pre,code,blockquote,figcaption)) {
+    text-align: start;
+    hyphens: manual;
+  }
   .toggle-leitura {
     position: absolute;
     top: .5rem;
@@ -174,8 +165,6 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     font: 500 0.9rem/1.1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   }
   .toggle-leitura .icone { transition: transform var(--t) var(--easing); }
-
-  /* Handle (puxador) — oculto por padrão */
   .handle-leitura {
     display: none;
     position: fixed;
@@ -190,25 +179,18 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     font: 600 0.95rem/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     box-shadow: 0 2px 10px rgb(0 0 0 / .08);
   }
-
-  /* Notas de margem invisíveis no modo navegação */
   :global(.conteudo-aula .nota-de-margem .nota) {
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--t) var(--easing);
   }
-
-  /* ===== MODO LEITURA ATIVO ===== */
   body.modo-leitura-ativo .container-sala-de-aula {
-    grid-template-columns: 0 1fr; /* menu some da grid */
+    grid-template-columns: 0 1fr;
   }
   body.modo-leitura-ativo .menu-aulas {
-    transform: translateX(-100%); /* off-canvas real */
+    transform: translateX(-100%);
     pointer-events: none;
   }
-
-  /* Enquanto o menu está animando para fora:
-     - handle já está no DOM, mas INVISÍVEL e sem clique */
   body.modo-leitura-ativo .handle-leitura {
     display: inline-flex;
     opacity: 0;
@@ -218,11 +200,8 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     transition:
       opacity var(--t) var(--easing),
       transform var(--t) var(--easing),
-      visibility 0s linear var(--t); /* visibilidade só troca depois da duração */
+      visibility 0s linear var(--t);
   }
-
-  /* Quando a animação do menu termina, JS adiciona esta classe:
-     - handle faz fade-in suave e fica clicável */
   body.modo-leitura-ativo.modo-leitura-handle-pronto .handle-leitura {
     opacity: 1;
     visibility: visible;
@@ -230,19 +209,13 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     transform: translateX(0);
     transition-delay: 0s, 0s, 0s;
   }
-
-  /* Notas de margem visíveis apenas no modo leitura */
   body.modo-leitura-ativo :global(.conteudo-aula .nota-de-margem .nota) {
     opacity: 1;
     pointer-events: auto;
   }
-
-  /* Largura do texto no modo leitura (usa a variável correta) */
   body.modo-leitura-ativo .texto-aula {
     max-width: var(--conteudo-max, 70ch);
   }
-
-  /* Desliga transições no 1º paint e evita "flash" do handle */
   body.ml-preload .container-sala-de-aula,
   body.ml-preload .menu-aulas,
   body.ml-preload .conteudo-aula,
@@ -251,16 +224,13 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     transition: none !important;
   }
   body.ml-preload .handle-leitura {
-    visibility: hidden; /* some até medirmos posição */
+    visibility: hidden;
   }
-
-  /* Acessibilidade */
   .toggle-leitura:focus-visible,
   .handle-leitura:focus-visible {
     outline: 3px solid Highlight;
     outline-offset: 2px;
   }
-
   @media (prefers-reduced-motion: reduce) {
     .container-sala-de-aula,
     .menu-aulas,
@@ -277,16 +247,15 @@ const todasAsAulas = (await getCollection('curso-escrita'))
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     const LS_KEY   = 'oficina.modoLeitura';
-    const ROOT     = document.documentElement; // <html>
+    const ROOT     = document.documentElement;
     const BODY     = document.body;
-
     const container = document.querySelector('.container-sala-de-aula');
     const menu      = document.querySelector('.menu-aulas');
     const menuBtn   = document.querySelector('.menu-aulas .toggle-leitura');
     const toggles   = Array.from(document.querySelectorAll('[data-leitura-toggle], #toggle-leitura, .toggle-leitura, .handle-leitura'));
 
     if (!container || !menu || !toggles.length) {
-      BODY.classList.remove('ml-preload'); // corrigido: remove do body
+      BODY.classList.remove('ml-preload');
       return;
     }
 
@@ -331,7 +300,6 @@ const todasAsAulas = (await getCollection('curso-escrita'))
       });
     }
 
-    // Estado inicial: agora o script do head já setou também em <html>, então funciona
     const startActive = ROOT.classList.contains('modo-leitura-ativo');
     if (startActive) {
       placeHandleAnchored();
@@ -340,10 +308,9 @@ const todasAsAulas = (await getCollection('curso-escrita'))
       setPressed(false);
     }
 
-    // Libera transições após o primeiro paint estável
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        BODY.classList.remove('ml-preload'); // corrigido: remove do body
+        BODY.classList.remove('ml-preload');
       });
     });
 
@@ -354,18 +321,15 @@ const todasAsAulas = (await getCollection('curso-escrita'))
       localStorage.setItem(LS_KEY, next ? '1' : '0');
 
       if (next) {
-        // usuário ativou agora: posiciona handle e revela após o slide do menu
         placeHandleAnchored();
         revealHandleAfterMenuSlidesOut();
       }
     }));
 
-    // Reancora handle em resize
     window.addEventListener('resize', () => {
       if (ROOT.classList.contains('modo-leitura-ativo')) placeHandleAnchored();
     }, { passive: true });
 
-    // Motion reduzido: revela handle sem esperar transição
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mq.matches) {
       toggles.forEach(btn => {

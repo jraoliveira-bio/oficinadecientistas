@@ -1,7 +1,6 @@
 ---
-// src/components/Cite.astro
-
-const { key } = Astro.props as { key: string };
-if (!key) throw new Error("<Cite /> requer a prop 'key'.");
+const { refKey } = Astro.props as { refKey: string };
+if (!refKey) throw new Error("<Cite /> requer a prop 'refKey'.");
 ---
-<cite class="oc-cite" data-key={key}></cite>
+<!-- Placeholder que o plugin substituirá por um botão numerado + popover -->
+<cite class="oc-cite" data-key={refKey}></cite>

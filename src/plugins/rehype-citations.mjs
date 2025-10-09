@@ -1,4 +1,4 @@
-// src/plugins/rehype-citations.js
+// src/plugins/rehype-citations.mjs
 
 /** @typedef {import('hast').Root} Root */
 /** @typedef {import('hast').Element} Element */

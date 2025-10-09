@@ -12,5 +12,9 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.1",
     "astro": "^5.11.0"
+  },
+  "devDependencies": {
+    "rehype-raw": "^7.0.0",
+    "unist-util-visit": "^5.0.0"
   }
 }
