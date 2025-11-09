@@ -1,4 +1,3 @@
-// src/content/config.ts
 import { defineCollection, z } from "astro:content";
 
 /**
@@ -7,11 +6,11 @@ import { defineCollection, z } from "astro:content";
  * - Campos atômicos (author/year/title/doi/url) permitem evoluir no futuro (ex.: ABNT/APA).
  */
 export const referenceSchema = z.object({
-  key: z.string(),                // identificador único (ex.: "mayr1942")
+  key: z.string(),                  // identificador único (ex.: "mayr1942")
   author: z.string().optional(),
   year: z.string().optional(),
   title: z.string(),
-  text: z.string(),               // citação formatada pronta
+  text: z.string(),                 // citação formatada pronta
   doi: z.string().url().optional(),
   url: z.string().url().optional(),
   scholar_query: z.string().optional(),
@@ -27,14 +26,14 @@ const cursoEscritaCollection = defineCollection({
     // Campos básicos
     title: z.string(),
     description: z.string().optional(),
-    shortTitle: z.string().optional(),       // título curto para menu (se quiser)
-    menu: z.boolean().default(false),        // aparece no menu? (default: false)
-    ordem: z.number().int().optional(),      // ordem no menu (se aplicável)
+    shortTitle: z.string().optional(),      // título curto para menu (se quiser)
+    menu: z.boolean().default(false),       // aparece no menu? (default: false)
+    ordem: z.number().int().optional(),     // ordem no menu (se aplicável)
 
     // Metadados úteis (opcionais)
-    draft: z.boolean().default(false),       // marcar aula como rascunho
-    tags: z.array(z.string()).default([]),   // taxonomias simples
-    updatedAt: z.string().optional(),        // ou z.date().optional() se preferir datas como Date
+    draft: z.boolean().default(false),      // marcar aula como rascunho
+    tags: z.array(z.string()).default([]),  // taxonomias simples
+    updatedAt: z.string().optional(),       // ou z.date().optional() se preferir datas como Date
 
     // Referências bibliográficas da aula
     references: z.array(referenceSchema).default([]),

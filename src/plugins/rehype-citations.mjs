@@ -1,5 +1,3 @@
-// src/plugins/rehype-citations.mjs
-
 /** @typedef {import('hast').Root} Root */
 /** @typedef {import('hast').Element} Element */
 import { visit } from 'unist-util-visit';

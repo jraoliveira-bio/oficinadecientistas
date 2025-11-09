@@ -1,6 +1,9 @@
 ---
-const { refKey } = Astro.props as { refKey: string };
-if (!refKey) throw new Error("<Cite /> requer a prop 'refKey'.");
+/** Aceita refKey (recomendado) e mantém fallback para key/id */
+const { refKey, key: k1, id: k2 } = Astro.props as {
+  refKey?: string; key?: string; id?: string;
+};
+const k = refKey ?? k1 ?? k2;
+if (!k) throw new Error("<Cite /> requer a prop 'refKey' (ou 'key'/'id' como fallback).");
 ---
-<!-- Placeholder que o plugin substituirá por um botão numerado + popover -->
-<cite class="oc-cite" data-key={refKey}></cite>
+<cite class="oc-cite" data-key={k}></cite>

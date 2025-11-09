@@ -1,25 +1,24 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-
-import remarkCiteToHtml from './src/plugins/remark-cite-to-html.mjs';
-import rehypeRaw from 'rehype-raw';
 import rehypeCitations from './src/plugins/rehype-citations.mjs';
 
+// https://astro.build/config
 export default defineConfig({
+  // Configurações do seu site, mantidas do arquivo original.
   site: 'https://jraoliveira-bio.github.io',
   base: '/oficinadecientistas',
 
-  // → Aplica aos .md (Markdown “puro” das Content Collections)
+  // Aplica o plugin de citações aos arquivos .md (Markdown das Content Collections)
   markdown: {
-    remarkPlugins: [remarkCiteToHtml],          // <Cite/> / <ReferenceList/> → HTML
-    rehypePlugins: [rehypeRaw] // parseia HTML bruto → transforma em [n] + lista
+    // rehype-citations é o único plugin necessário para processar as citações.
+    // Ele encontra as tags <cite> e constrói os popovers e a lista final.
+    rehypePlugins: [rehypeCitations],
   },
 
-  // → Aplica aos .mdx (como a sua precisao2.mdx)
+  // Aplica a mesma configuração para arquivos .mdx, garantindo consistência.
   integrations: [
     mdx({
-      remarkPlugins: [remarkCiteToHtml],
-      rehypePlugins: [rehypeRaw]
-    })
+      rehypePlugins: [rehypeCitations],
+    }),
   ],
 });
