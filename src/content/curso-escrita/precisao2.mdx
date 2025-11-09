@@ -1,0 +1,37 @@
+---
+title: 'Exatidão e Precisão - A Primeira Virtude da Ciência'
+references:
+  - key: mayr1942
+    author: "Mayr, E."
+    year: "1942"
+    title: "Systematics and the Origin of Species"
+    text: "Mayr, E. (1942). Systematics and the Origin of Species. Columbia University Press."
+    doi: "https://doi.org/10.1234/example-doi"
+    url: "https://cup.columbia.edu/systematics"
+    scholar_query: "Mayr Systematics and the Origin of Species 1942"
+  - key: dobzh1937
+    author: "Dobzhansky, T."
+    year: "1937"
+    title: "Genetics and the Origin of Species"
+    text: "Dobzhansky, T. (1937). Genetics and the Origin of Species. Columbia University Press."
+    url: "https://example.com/dobzhansky-1937"
+description: 'Uma aula sobre a importância da exatidão e precisão na linguagem científica, usando o conceito de espécie como estudo de caso.'
+ordem: 2
+menu: true
+---
+import Cite from "../../components/Cite.astro";
+import ReferenceList from "../../components/ReferenceList.astro";
+import LaboratorioMental from '~/components/LaboratorioMental.astro';
+import PullOutBox from '~/components/PullOutBox.astro';
+import Table from '~/components/Table.astro';
+import Sintese from '~/components/Sintese.astro';
+import Figure from '~/components/Figure.astro';
+import conceitosData from '~/data/conceitos.json';
+
+<h2 class="titulo-aula">Exatidão e Precisão - A Primeira Virtude da Ciência</h2>
+
+<p class="paragrafo-capitular">Uma das palavras mais utilizadas por biólogos de todas as áreas é <strong>espécie</strong>. Mas... Você sabe o que é uma espécie? Como você explicaria o que é uma espécie para alguém?</p>
+
+A macro-estrutura dos argumentos científicos mudou profundamente no século XX, em parte por avanços em sistemática e genética <Cite refKey="mayr1942" />. Esses avanços foram consolidados pela Síntese Moderna <Cite refKey="dobzh1937" />. Reutilizando uma citação qualquer <Cite refKey="mayr1942" />.
+
+<ReferenceList />

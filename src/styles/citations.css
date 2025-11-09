@@ -1,0 +1,54 @@
+/* src/styles/citations.css */
+
+/* Número da citação */
+.oc-cite-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0.15em;
+  cursor: pointer;
+  line-height: 1;
+}
+.oc-cite-button .oc-cite-sup {
+  font-size: 0.8em;
+}
+.oc-cite-button:focus-visible {
+  outline: 2px solid var(--oc-focus, #0ea5e9);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Popover */
+.oc-popover[hidden] { display: none !important; }
+.oc-popover {
+  position: fixed; /* Posicionado via JS perto do botão */
+  z-index: 9999;
+  max-width: min(32rem, 92vw);
+  background: var(--oc-pop-bg, #fff);
+  color: var(--oc-pop-fg, inherit);
+  border: 1px solid color-mix(in oklab, currentColor 20%, transparent);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.25);
+  padding: 12px 16px 10px 16px;
+}
+.oc-pop-close {
+  position: absolute;
+  top: 6px; right: 8px;
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; line-height: 1;
+}
+.oc-pop-body { padding-right: 18px; }
+.oc-pop-text { margin: 0 0 6px 0; }
+.oc-pop-links a { text-decoration: underline; }
+
+/* Lista de referências */
+.oc-ref-title { margin-block: 2rem 0.75rem; }
+.oc-ref-ol { padding-left: 1.25rem; }
+.oc-ref-item { margin-bottom: .5rem; }
+.oc-ref-links { opacity: .9; }
+
+/* Impressão */
+@media print {
+  .oc-popover { display: none !important; }
+  .oc-cite-button { color: inherit; }
+}
