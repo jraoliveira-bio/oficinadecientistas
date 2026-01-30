@@ -1,0 +1,64 @@
+/* Supondo: tokens mínimos, estética “zine”. Mantém contraste AA. */
+:root {
+  /* --- Cores de Fundo --- */
+  /* Fundo alinhado ao site principal */
+  --oc-bg: #EAEAEA;
+  --oc-bg-image: linear-gradient(to right, #E2DFDC, #EAEAEA);
+  --oc-card: #ffffff;
+  --oc-border: #e5e2dc;
+
+  /* --- Cores de Texto (Foreground) --- */
+  /* Cor principal (alterada conforme solicitado - cinza azulado escuro) */
+  --oc-fg: #34495E; 
+  
+  /* ✅ NOVA LINHA: Cor de texto secundária/destaque (Aquele vermelho punk/máquina de escrever) */
+  --oc-fg-highlight: #380a0a;
+
+  /* Cor para texto suavizado (datas, legendas) */
+  --oc-muted: #6b6a68;
+
+  /* --- Cores de Ação/Detalhes --- */
+  --oc-accent: #7a3cff;
+  --oc-accent-2: #ff3c7a;
+
+    /* --- Cores de postagem --- */
+  --oc-pfblack: #240101;
+  
+  /* --- Tipografia --- */
+  /* Tipografia básica alinhada ao site */
+  --oc-font-sans: 'Lato', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --oc-font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
+  /* Adicionei 'Special Elite' aqui para você poder usar var(--oc-font-display) */
+  --oc-font-display: "Special Elite", "Courier New", monospace; 
+  --oc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* --- Tamanhos de Fonte --- */
+  --oc-fs-xxs: 0.75rem;
+  --oc-fs-xs: 0.875rem;
+  --oc-fs-sm: 0.95rem;
+  --oc-fs-md: 1rem;
+  --oc-fs-lg: 1.125rem;
+  --oc-fs-xl: 1.25rem;
+  --oc-fs-1-5xl: 1.375rem;
+  --oc-fs-2xl: 1.5rem;
+  --oc-fs-3xl: 1.875rem;
+
+  /* --- Espaçamento --- */
+  --oc-space-1: 0.25rem;
+  --oc-space-2: 0.5rem;
+  --oc-space-3: 0.75rem;
+  --oc-space-4: 1rem;
+  --oc-space-6: 1.5rem;
+  --oc-space-8: 2rem;
+  --oc-space-12: 3rem;
+
+  /* --- Raio e sombra --- */
+  --oc-radius: 12px;
+  --oc-shadow-1: 0 1px 2px rgba(0,0,0,0.04), 0 6px 16px rgba(0,0,0,0.06);
+  --oc-shadow-2: 0 2px 4px rgba(0,0,0,0.06), 0 12px 28px rgba(0,0,0,0.08);
+
+  /* --- Layout --- */
+  --oc-maxw: 72rem;
+  --oc-colw-main: 1fr;
+  --oc-colw-aside: 320px;
+}

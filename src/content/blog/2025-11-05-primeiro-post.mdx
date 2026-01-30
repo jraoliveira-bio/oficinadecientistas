@@ -1,0 +1,18 @@
+---
+title: "Primeiro post dos Bastidores"
+dataPublicacao: 2025-11-05
+tags: ["astro", "arquitetura"]
+summary: "Decidimos separar o blog do layout principal para preservar a identidade visual zine."
+---
+
+## Por que um blog separado?
+
+Queremos um espaço de *caderno de laboratório* onde experimentos, decisões e rabiscos vivam sem afetar a “Sala de Aula”.
+Esse isolamento também facilita o versionamento de tokens de estilo.
+
+- **Layout independente:** não herda `Layout.astro` do site-mãe.
+- **Content Collections:** esquema mínimo e claro.
+- **MDX:** porque documentação viva pede exemplos inline.
+
+```ts
+// Exemplo: tipagem de frontmatter via schema Zod em content/config.ts

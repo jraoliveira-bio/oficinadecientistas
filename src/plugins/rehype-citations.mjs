@@ -1,194 +1,93 @@
-/** @typedef {import('hast').Root} Root */
-/** @typedef {import('hast').Element} Element */
-import { visit } from 'unist-util-visit';
+// src/plugins/rehype-citations.mjs
+// MDX-safe: não substitui o root; só muta 'tree'. Nunca retorna 'string'.
+// Mantém o conteúdo mesmo se nada for resolvido.
+// Se quiser resolver chaves -> texto/HTML, passe uma função 'resolve(key)' via opções.
+export default function rehypeCitations(options = {}) {
+  const { resolve } = options; // opcional: (key) => { text?: string, html?: string }
 
-/**
- * Rehype plugin que:
- * - coleta <cite class="oc-cite" data-key="..."> na ordem de aparição
- * - numera por primeira aparição e substitui por <button><sup>[n]</sup></button> + popover adjacente
- * - preenche <div data-ref-list> com a lista ordenada final
- */
-export default function rehypeCitations() {
-  return /** @param {Root} tree @param {any} file */ (tree, file) => {
-    const fm = file?.data?.astro?.frontmatter ?? {};
-    const refs = Array.isArray(fm.references) ? fm.references : [];
-    /** @type {Map<string, any>} */
-    const refByKey = new Map(refs.map((r) => [r.key, r]));
+  return function transformer(tree, file) {
+    if (!tree || !Array.isArray(tree.children)) return;
 
     /** @type {Map<string, number>} */
-    const numByKey = new Map();
+    const seen = new Map();
     /** @type {string[]} */
     const order = [];
 
-    // 1) Substituir cada <cite> por botão numerado + popover
-    visit(tree, 'element', (node, index, parent) => {
-      if (!parent || typeof index !== 'number') return;
-      if (node.tagName !== 'cite') return;
+    // visita elementos <cite ...>
+    visitElement(tree, (node, index, parent) => {
+      const tag = (node.tagName || "").toLowerCase();
+      if (tag !== "cite") return;
 
-      const cls = toArray(node.properties?.className).map(String);
-      if (!cls.includes('oc-cite')) return;
-
-      const key = String(node.properties?.['data-key'] ?? '');
+      const props = node.properties || {};
+      const key = String(props["data-key"] ?? props.key ?? "").trim();
       if (!key) return;
 
-      if (!numByKey.has(key)) {
-        numByKey.set(key, order.length + 1);
+      let num = seen.get(key);
+      if (!num) {
+        num = order.length + 1;
+        seen.set(key, num);
         order.push(key);
       }
-      const n = numByKey.get(key);
 
-      // Construir botão [n]
-      /** @type {Element} */
-      const btn = {
-        type: 'element',
-        tagName: 'button',
-        properties: {
-          className: ['oc-cite-button'],
-          'data-key': key,
-          'data-cite-num': String(n),
-          'aria-label': `Ver referência [${n}]`,
-          type: 'button',
-        },
-        children: [
-          {
-            type: 'element',
-            tagName: 'sup',
-            properties: { className: ['oc-cite-sup'] },
-            children: [{ type: 'text', value: `[${n}]` }],
-          },
-        ],
-      };
-
-      const ref = refByKey.get(key);
-      const popChildren = ref
-        ? buildPopoverChildren(ref, n)
-        : [
-            { type: 'element', tagName: 'strong', properties: {}, children: [{ type: 'text', value: 'Referência não encontrada: ' }] },
-            { type: 'text', value: key },
-          ];
-
-      /** @type {Element} */
-      const pop = {
-        type: 'element',
-        tagName: 'div',
-        properties: {
-          className: ['oc-popover'],
-          hidden: true,
-          role: 'dialog',
-          'aria-modal': 'false',
-          'data-cite-popover': String(n),
-        },
-        children: popChildren,
-      };
-
-      // Substitui <cite> por [botão, popover]
-      parent.children.splice(index, 1, btn, pop);
+      // Substitui <cite> por um marcador [n] com âncora
+      if (parent && typeof index === "number") {
+        parent.children[index] = el("sup", { class: "oc-cite-ref" }, [
+          el("a", { href: `#ref-${num}`, id: `ref-note-${num}` }, [text(`[${num}]`)]),
+        ]);
+      }
     });
 
-    // 2) Preencher <div data-ref-list> com a lista ordenada
-    visit(tree, 'element', (node) => {
-      if (node.tagName !== 'div') return;
-      if (node.properties?.['data-ref-list'] === undefined) return;
+    if (!order.length) return; // sem citações, não adiciona lista
 
-      /** @type {Element[]} */
-      const items = order.map((key, i) => {
-        const num = i + 1;
-        const ref = refByKey.get(key);
-        return {
-          type: 'element',
-          tagName: 'li',
-          properties: { id: `ref-${num}`, className: ['oc-ref-item'] },
-          children: ref ? buildRefListItemChildren(ref, num) : [
-            { type: 'text', value: `[${num}] ` },
-            { type: 'element', tagName: 'strong', properties: {}, children: [{ type: 'text', value: 'Referência não encontrada: ' }] },
-            { type: 'text', value: key },
-          ],
-        };
-      });
+    // constrói lista de referências
+    const items = order.map((key, i) => {
+      const num = i + 1;
+      const anchor = el("a", { href: `#ref-note-${num}` }, [text(`[${num}] `)]);
 
-      node.children = [
-        { type: 'element', tagName: 'h2', properties: { className: ['oc-ref-title'] }, children: [{ type: 'text', value: 'Referências' }] },
-        { type: 'element', tagName: 'ol', properties: { className: ['oc-ref-ol'] }, children: items },
-      ];
+      let contentNodes = null;
+      if (typeof resolve === "function") {
+        try {
+          const r = resolve(key) || {};
+          if (r.html) {
+            // nó "raw" é seguro no build estático do Astro (sem hidratação)
+            contentNodes = [{ type: "raw", value: String(r.html) }];
+          } else {
+            contentNodes = [text(String(r.text ?? key))];
+          }
+        } catch {
+          contentNodes = [text(key)];
+        }
+      } else {
+        contentNodes = [text(key)];
+      }
+
+      return el("li", { id: `ref-${num}` }, [anchor, ...contentNodes]);
     });
 
-    // 3) Warnings de build: chaves citadas inexistentes e refs não usadas
-    const used = new Set(order);
-    for (const key of used) {
-      if (!refByKey.has(key)) file.message(`Citação com key desconhecida: ${key}`);
-    }
-    for (const key of refByKey.keys()) {
-      if (!used.has(key)) file.message(`Referência no frontmatter não utilizada: ${key}`);
-    }
+    // acrescenta <hr> + seção de referências no final
+    tree.children.push(
+      el("hr", {}, []),
+      el("section", { id: "referencias", class: "oc-refs" }, [
+        el("h2", {}, [text("Referências")]),
+        el("ol", {}, items),
+      ]),
+    );
   };
 }
 
-// Helpers
-function toArray(v) {
-  if (Array.isArray(v)) return v;
-  if (v == null) return [];
-  return [v];
+/** helpers sem dependência externa */
+function el(tagName, properties = {}, children = []) {
+  return { type: "element", tagName, properties, children };
 }
-
-/** @param {any} ref @param {number} n */
-function buildPopoverChildren(ref, n) {
-  const scholar = scholarURL(ref);
-  const links = [];
-  if (ref.doi) links.push(linkNode(ref.doi, 'DOI'));
-  if (ref.url) links.push(linkNode(ref.url, 'Link'));
-  if (scholar) links.push(linkNode(scholar, 'Google Scholar'));
-
-  return [
-    { type: 'element', tagName: 'button', properties: { className: ['oc-pop-close'], 'aria-label': 'Fechar', type: 'button' }, children: [{ type: 'text', value: '×' }] },
-    { type: 'element', tagName: 'div', properties: { className: ['oc-pop-body'] }, children: [
-      { type: 'element', tagName: 'p', properties: { className: ['oc-pop-text'] }, children: [{ type: 'text', value: String(ref.text || fallbackText(ref)) }] },
-      links.length ? { type: 'element', tagName: 'p', properties: { className: ['oc-pop-links'] }, children: intersperse(links, sepNode()) } : null,
-    ].filter(Boolean) },
-  ];
+function text(value) {
+  return { type: "text", value };
 }
-
-/** @param {any} ref @param {number} num */
-function buildRefListItemChildren(ref, num) {
-  const scholar = scholarURL(ref);
-  const children = [ { type: 'text', value: '' } ];
-  // Conteúdo principal
-  children.push({ type: 'text', value: ref.text ? ref.text : fallbackText(ref) });
-
-  // Links
-  const links = [];
-  if (ref.doi) links.push(linkNode(ref.doi, 'DOI'));
-  if (ref.url) links.push(linkNode(ref.url, 'Link'));
-  if (scholar) links.push(linkNode(scholar, 'Google Scholar'));
-
-  if (links.length) {
-    children.push({ type: 'text', value: ' ' });
-    children.push({ type: 'element', tagName: 'span', properties: { className: ['oc-ref-links'] }, children: intersperse(links, sepNode()) });
-  }
-
-  return children;
+function visitElement(tree, cb) {
+  walk(tree, null, null, cb);
 }
-
-function fallbackText(ref) {
-  const bits = [ref.author, ref.year, ref.title].filter(Boolean);
-  return bits.join(' — ');
-}
-
-function linkNode(href, label) {
-  return { type: 'element', tagName: 'a', properties: { href, target: '_blank', rel: 'noopener noreferrer' }, children: [{ type: 'text', value: label }] };
-}
-
-function sepNode() {
-  return { type: 'text', value: ' · ' };
-}
-
-function intersperse(arr, sep) {
-  const out = [];
-  arr.forEach((item, i) => { if (i) out.push(sep); out.push(item); });
-  return out;
-}
-
-function scholarURL(ref) {
-  const q = ref.scholar_query || [ref.author, ref.title, ref.year].filter(Boolean).join(' ');
-  if (!q) return null;
-  return `https://scholar.google.com/scholar?q=${encodeURIComponent(q)}`;
+function walk(node, parent, index, cb) {
+  if (!node) return;
+  if (node.type === "element") cb(node, index, parent);
+  const kids = node.children || [];
+  for (let i = 0; i < kids.length; i++) walk(kids[i], node, i, cb);
 }

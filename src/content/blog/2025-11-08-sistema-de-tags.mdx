@@ -1,0 +1,14 @@
+---
+title: "Sistema de tags client-side"
+dataPublicacao: 2025-11-08
+tags: ["tags", "ux", "client-side"]
+summary: "Filtro sem recarregar a página; comportamento 'OU' entre múltiplas tags ativas."
+---
+
+Implementamos um filtro de tags **client-side**:
+
+1. Cada card tem `data-tags="tag1,tag2"`.
+2. Sidebar renderiza botões com contagem.
+3. Script adiciona/ remove `is-active` e oculta/mostra cards.
+
+> Assumimos comportamento **OU** entre múltiplas tags: se qualquer tag ativa existir no card, ele permanece visível.

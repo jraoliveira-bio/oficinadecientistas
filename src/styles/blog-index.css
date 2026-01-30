@@ -1,0 +1,68 @@
+/* Container unificado do post (chamada + expandido) */
+.post-item {
+  /* Fallback sólido leve (entra em browsers sem color-mix/backdrop) */
+  background: rgba(255, 255, 255, 0.78);
+  /* GLASS SUAVE quando suportado (esta linha sobrescreve a de cima em browsers modernos) */
+  background: color-mix(in oklab, white 75%, transparent);
+
+  /* Fallback de borda simples */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  /* Quando suportado, borda mais sutil via mix */
+  border: 1px solid color-mix(in oklab, var(--oc-border) 70%, transparent);
+
+  border-radius: var(--oc-radius);
+  box-shadow: var(--oc-shadow-1);
+
+  /* “Une” cabeçalho + painel (sem gap visual) */
+  overflow: hidden;
+  margin-bottom: var(--oc-space-4);
+
+  /* Vidro (quando suportado) */
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* Encosta o painel no cabeçalho do item */
+.post-card.inline { padding-bottom: 0; color: var(--oc-fg-highlight);}
+
+/* Painel expandido: começa colapsado para animar */
+.post-expand {
+  box-sizing: border-box;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 220ms ease, opacity 180ms ease;
+  will-change: height, opacity;
+
+  /* Fallback de borda-top */
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  /* Versão com mix quando suportado */
+  border-top: 1px solid color-mix(in oklab, var(--oc-border) 70%, transparent);
+}
+
+.post-expand[hidden] {
+  /* Mantém no fluxo para medir altura via JS */
+  display: block;
+  height: 0;
+  opacity: 0;
+}
+
+.post-expand.is-open {
+  /* estado final após animação: o JS troca para height:auto */
+  opacity: 1;
+}
+
+.post-expand__inner { padding: var(--oc-space-4);color: var(--oc-pfblack); }
+
+.expand-actions { margin-top: var(--oc-space-4); text-align: right; }
+.expand-actions a { text-decoration: underline; }
+
+/* Esconde o bloco inteiro quando filtrado */
+.post-item.hidden { display: none !important; }
+
+/* Acessibilidade: reduz/evita animação se o usuário preferir menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .post-expand {
+    transition: none;
+  }
+}

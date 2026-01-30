@@ -1,0 +1,76 @@
+---
+/* Supondo: bio vem por slot; se não houver, usa fallback curto. Tags e arquivos por mês baseados em getCollection('blog'). */
+import { getCollection } from "astro:content";
+import { countTags, groupByMonth } from "@/lib/blog-utils";
+
+const entries = (await getCollection("blog")).sort(
+  (a, b) => b.data.dataPublicacao.getTime() - a.data.dataPublicacao.getTime()
+);
+
+const tagsMap = countTags(entries);
+const months = groupByMonth(entries);
+---
+<style>
+  .box {
+    padding: var(--oc-space-4);
+    border: 1px solid var(--oc-border);
+    border-radius: var(--oc-radius);
+    background: var(--oc-card);
+    box-shadow: var(--oc-shadow-1);
+  }
+  .title {
+    font-size: var(--oc-fs-lg);
+    font-family: var(--oc-font-serif);
+    margin-bottom: var(--oc-space-3);
+  }
+  .bio { color: var(--oc-muted); font-size: var(--oc-fs-sm); }
+  .section { margin-top: var(--oc-space-6); }
+  .taglist, .monthlist {
+    display: flex; flex-wrap: wrap; gap: var(--oc-space-2);
+  }
+  .tag {
+    border: 1px dashed var(--oc-border);
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    font-size: var(--oc-fs-xs);
+    background: #fff;
+    cursor: pointer;
+    user-select: none;
+  }
+  .tag.is-active {
+    border-style: solid;
+    background: #f6edff;
+    box-shadow: inset 0 0 0 1px var(--oc-accent);
+  }
+  .monthlist a {
+    font-size: var(--oc-fs-xs);
+    border-bottom: 1px dotted var(--oc-border);
+    padding-bottom: 1px;
+  }
+  .counts { color: var(--oc-muted); font-size: var(--oc-fs-xs); }
+</style>
+
+<div class="box">
+  <div class="title">Sobre</div>
+  <div class="bio">
+    <slot>Notas de bastidores da <strong>Oficina de Cientistas</strong>: decisões de design, arquitetura, componentes e diários de desenvolvimento.</slot>
+  </div>
+
+  <div class="section">
+    <div class="title">Tags</div>
+    <div class="taglist" id="oc-taglist">
+      {Array.from(tagsMap.entries()).sort((a,b)=>a[0].localeCompare(b[0],'pt-BR')).map(([tag, n]) => (
+        <button class="tag" data-tag={tag} aria-pressed="false">{tag} <span class="counts">({n})</span></button>
+      ))}
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="title">Arquivo</div>
+    <div class="monthlist">
+      {months.map(m => (
+        <a href={`#m-${m.ym}`} title={`${m.label} (${m.count})`}>{m.label} <span class="counts">({m.count})</span></a>
+      ))}
+    </div>
+  </div>
+</div>

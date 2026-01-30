@@ -1,40 +1,76 @@
 ---
-import Layout from '../layouts/Layout.astro';
-const base = import.meta.env.BASE_URL.endsWith('/')
-? import.meta.env.BASE_URL
-: import.meta.env.BASE_URL + '/';
+import Layout from "../layouts/Layout.astro";
 
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + "/";
 ---
+
 <Layout title="Home">
-    <main>
-        <section class="secao-apresentacao">
-            <img src={`${base}logo1.png`} alt="Logo Oficina de Cientistas" class="logo-apresentacao">
-            <h2>OFICINA DE CIENTISTAS</h2>
-            <p>Propagando conhecimento. Difundindo redes.</p>
-        </section>
+  <main>
+    <section class="secao-apresentacao">
+      <img
+        src={`${base}logo1.png`}
+        alt="Logo Oficina de Cientistas"
+        class="logo-apresentacao"
+      />
+      <h2>Oficina de Cientistas</h2>
+      <p class="texto-slogan">DIFUNDINDO CONHECIMENTO E PROPAGANDO REDES</p>
+    </section>
 
-        <section class="chamada-principal">
-            <div class="chamada-conteudo">
-                <h2>Nossa Proposta</h2>
-                <p>Bem vindos à *Oficina de Cientistas*. Nossa proposta é fornecer material educativo na forma de aulas e cursos para alunos e profissionais da pesquisa. Para entender mais, acesse a página SOBRE ou acesse diretamente nossos Cursos e Aulas.</p>
-            </div>
-        </section>
+    <section class="chamada-principal">
+      <div class="chamada-conteudo">
+        <h2>Nossa Proposta</h2>
+        <p>
+          Fornecer um ciclo básico de formação para alunos da pós-graduação e fazer análises científicas de temas importantes.
+        </p>
+      </div>
+    </section>
 
-        <section class="secao-destaque-curso">
-            <div class="texto-destaque">
-                <h2>Curso em Destaque</h2>
-                <h3>Escrita Científica: Da Estrutura ao Impacto</h3>
-                <p>Este curso completo de 10 aulas foi desenhado para transformar sua relação com a escrita acadêmica.</p>
-                <a href={`${base}cursos/curso-escrita/`} class="botao-principal">Ver Conteúdo do Curso</a>
-            </div>
-            <a href={`${base}cursos/curso-escrita/`}
-            class="card-destaque">
-                <img src={`${base}imagens/gatocard2.png`} alt="Ilustração para o curso de escrita científica">
-                <div class="card-destaque-conteudo">
-                    <h4>Escrita Científica</h4>
-                    <p>10 Aulas • 8h de conteúdo</p>
-                </div>
-            </a>
-        </section>
-    </main>
+    <section class="secao-destaque-curso">
+      <div class="texto-destaque">
+        <h2>Curso em Destaque</h2>
+        <h3>Escrita Científica: Da Estrutura ao Impacto</h3>
+        <p>
+          Este curso completo de 10 aulas foi desenhado para transformar sua
+          relação com a escrita acadêmica.
+        </p>
+        <a href={`${base}cursos/curso-escrita/`} class="botao-principal"
+          >Ver Conteúdo do Curso</a
+        >
+      </div>
+
+      <a href={`${base}cursos/curso-escrita/`} class="card-destaque">
+        <img
+          src={`${base}imagens/gatocard2.png`}
+          alt="Ilustração para o curso de escrita científica"
+        />
+        <div class="card-destaque-conteudo">
+          <h4>Escrita Científica</h4>
+          <p>10 Aulas • 8h de conteúdo</p>
+        </div>
+      </a>
+    </section>
+  </main>
 </Layout>
+
+<style>
+  /* Centraliza o conteúdo da seção e remove espaços excessivos */
+  .secao-apresentacao {
+    text-align: center;
+    padding: 2rem 0; /* Ajuste conforme necessário */
+  }
+
+  .secao-apresentacao h2 {
+    margin-bottom: 0.3rem; /* Reduz o espaço abaixo do título */
+  }
+
+  .texto-slogan {
+    font-family: "Montserrat", sans-serif;
+    margin-top: 0; /* Remove o espaço acima do slogan */
+    color: #202020; /* Opcional: uma cor levemente mais suave */
+    font-size:medium;
+    font-weight: 300;
+    letter-spacing:4px
+  }
+</style>

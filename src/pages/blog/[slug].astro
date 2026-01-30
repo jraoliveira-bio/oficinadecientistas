@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import BlogHeader from "@/components/BlogHeader.astro";
+import BlogSidebar from "@/components/BlogSidebar.astro";
+import { formatDate } from "@/lib/blog-utils";
+import { withBase } from "@/lib/url";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// Render defensivo: evita tela vazia se houver problema no pipeline do MDX/rehype
+let Render: any = null;
+let headings: any[] = [];
+try {
+  const r = await post.render();
+  Render = r?.Content ?? null;
+  headings = r?.headings ?? [];
+} catch (e) {
+  console.error("[blog post render] falhou:", e);
+}
+
+const title = post.data.title ?? post.slug;
+const description = post.data.summary ?? `Notas de desenvolvimento: ${title}`;
+const dateLabel = formatDate(post.data.dataPublicacao);
+const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
+---
+
+<BlogLayout title={title} description={description}>
+  <Fragment slot="header">
+    <BlogHeader backHref={withBase("blog")} />
+  </Fragment>
+
+  <article class="oc-card" style="padding: var(--oc-space-4);">
+    <header style="margin-bottom: var(--oc-space-4);">
+      <h1 style="margin: 0 0 var(--oc-space-2);">{title}</h1>
+      <div style="color: var(--oc-muted); font-size: var(--oc-fs-xs); display:flex; gap:.5rem; flex-wrap:wrap;">
+        <span>{dateLabel}</span>
+        {tagList.length > 0 && <>
+          <span>•</span>
+          <span>{tagList.join(", ")}</span>
+        </>}
+      </div>
+    </header>
+
+    <!-- SANITY CHECK: remova estas duas linhas depois de validar -->
+    <p style="opacity:.6">[pré-conteúdo]</p>
+
+    <div class="content">
+      {
+        Render
+          ? <Render />
+          : <p style="color: var(--oc-muted);">Não foi possível renderizar o conteúdo deste post. Veja o console do dev para detalhes.</p>
+      }
+    </div>
+
+    <!-- SANITY CHECK: remova estas duas linhas depois de validar -->
+    <p style="opacity:.6">[pós-conteúdo]</p>
+
+    <hr />
+    <p><a href={withBase("blog")}>← Voltar ao blog</a></p>
+
+    <section id="comments-root" data-post-uid={post.slug} style="margin-top: var(--oc-space-8);">
+      <!-- Futuro:
+      <script src="https://forum.seu-dominio/embedded/loader.js" defer></script>
+      -->
+    </section>
+  </article>
+
+  <Fragment slot="sidebar">
+    <BlogSidebar>
+      <p>“Os Bastidores”: registro das decisões e experimentos que não cabem na documentação formal.</p>
+    </BlogSidebar>
+  </Fragment>
+</BlogLayout>
