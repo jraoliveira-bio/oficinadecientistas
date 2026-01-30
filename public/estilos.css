@@ -179,43 +179,6 @@ footer {
   line-height: 1.6;
 }
 
-/* Card destaque */
-.card-destaque {
-  display: block;
-  flex-basis: 50%;
-  border-radius: var(--raio-card);
-  text-decoration: none;
-  overflow: hidden;
-  border: 1px solid var(--borda);
-  transition: all 0.3s ease;
-}
-
-.card-destaque:hover {
-  transform: translateY(-8px);
-  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
-}
-
-.card-destaque img {
-  width: 100%;
-  display: block;
-}
-
-.card-destaque-conteudo {
-  background-color: transparent;
-  padding: 20px 25px;
-}
-
-.card-destaque-conteudo h4 {
-  margin: 0 0 5px 0;
-  font-size: 20px;
-  color: var(--cor-titulo);
-}
-
-.card-destaque-conteudo p {
-  margin: 0;
-  font-size: 16px;
-  color: var(--cor-texto-sec);
-}
 
 /* Card curso completo */
 .card-curso-completo {
@@ -1064,6 +1027,14 @@ p.paragrafo-capitular,
   font-weight: 600;
 }
 
+.secao-destaques .destaques-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+
 /* ==========================================================================
    10. RESPONSIVIDADE (MOBILE-FIRST)
    ========================================================================== */
@@ -1083,10 +1054,6 @@ p.paragrafo-capitular,
     top: 40px;
   }
 
-  /* Homepage destaque */
-  .secao-destaque-curso {
-    flex-direction: row;
-  }
 
   /* grids */
   .grid-cursos {
@@ -1215,4 +1182,8 @@ p.paragrafo-capitular,
     margin-right: 8px;
     padding: 2px 10px;
   }
+    .secao-destaques .destaques-grid {
+    grid-template-columns: 1fr;
+  }
 }
+

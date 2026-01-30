@@ -1,0 +1,54 @@
+---
+import FeatureCard from "./FeatureCard.astro";
+
+interface Card {
+  href: string;
+  imgSrc: string;
+  imgAlt: string;
+  label?: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  cta?: string;
+}
+
+interface Props {
+  cards: Card[];
+  title?: string;
+}
+
+const { cards, title = "Em Destaque" } = Astro.props;
+---
+
+<section class="home-destaques" aria-labelledby="home-destaques-titulo">
+  <h2 id="home-destaques-titulo" class="home-destaques-titulo">{title}</h2>
+
+  <div class="home-destaques-grid">
+    {cards.map((c) => (
+      <FeatureCard {...c} />
+    ))}
+  </div>
+</section>
+
+<style>
+  .home-destaques {
+    padding: 2rem 0;
+  }
+
+  .home-destaques-titulo {
+    margin: 0 0 1rem 0;
+  }
+
+  .home-destaques-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 900px) {
+    .home-destaques-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

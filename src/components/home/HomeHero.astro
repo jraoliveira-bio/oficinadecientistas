@@ -1,0 +1,45 @@
+---
+interface Props {
+  base: string;
+}
+const { base } = Astro.props;
+---
+
+<section class="secao-apresentacao">
+  <img
+    src={`${base}logo1.png`}
+    alt="Logo Oficina de Cientistas"
+    class="logo-apresentacao"
+    loading="eager"
+    decoding="async"
+  />
+  <h2>Oficina de Cientistas</h2>
+  <p class="texto-slogan">DIFUNDINDO CONHECIMENTO E PROPAGANDO REDES</p>
+</section>
+
+<style>
+  .secao-apresentacao {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .logo-apresentacao {
+    width: min(220px, 70vw);
+    height: auto;
+    display: block;
+    margin: 0 auto 0.75rem auto;
+  }
+
+  .secao-apresentacao h2 {
+    margin-bottom: 0.3rem;
+  }
+
+  .texto-slogan {
+    font-family: "Montserrat", sans-serif;
+    margin-top: 0;
+    color: #202020;
+    font-size: medium;
+    font-weight: 300;
+    letter-spacing: 4px;
+  }
+</style>
