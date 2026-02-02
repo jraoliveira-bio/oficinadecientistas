@@ -1,0 +1,160 @@
+---
+/* Índice do Blog (“Os Bastidores”)
+   - Lista todos os posts (sem paginação)
+   - Expansão inline do conteúdo (pré-renderizado)
+   - Filtro client-side por tags (comportamento "OU")
+   - Âncoras por mês (YYYY-MM) para a sidebar
+*/
+
+import "@/styles/blog-index.css"; // estilos específicos do índice (glass + animação)
+
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import BlogHeader from "@/components/BlogHeader.astro";
+import BlogSidebar from "@/components/BlogSidebar.astro";
+import PostCard from "@/components/PostCard.astro";
+
+import { getCollection } from "astro:content";
+import { withBase } from "@/lib/url";
+
+// 1) Buscar posts e ordenar por data (desc), com pré-render do MDX
+const raw = await getCollection("blog");
+const all = await Promise.all(
+  raw
+    .sort(
+      (a, b) =>
+        (b.data.dataPublicacao?.valueOf?.() ?? 0) -
+        (a.data.dataPublicacao?.valueOf?.() ?? 0)
+    )
+    .map(async (post) => {
+      const { Content } = await post.render();
+      return { post, Content };
+    })
+);
+
+// 2) Âncoras por mês (primeira ocorrência YYYY-MM recebe id para navegação da sidebar)
+const seen = new Set<string>();
+function ym(d: Date) {
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+const items = all.map(({ post, Content }) => {
+  const key = ym(post.data.dataPublicacao);
+  const anchorId = seen.has(key) ? null : `m-${key}`;
+  if (!seen.has(key)) seen.add(key);
+  return { post, Content, anchorId };
+});
+
+const pageTitle = "Blog de Desenvolvimento — Oficina de Cientistas";
+const pageDesc =
+  "Bastidores do projeto: arquitetura, componentes e decisões de design.";
+---
+
+<BlogLayout title={pageTitle} description={pageDesc}>
+  <Fragment slot="header">
+    <BlogHeader backHref={withBase("")} />
+  </Fragment>
+
+  <section aria-live="polite" aria-atomic="true" style="margin-bottom: var(--oc-space-3);">
+    <strong id="oc-count">{items.length}</strong> posts
+  </section>
+
+  {items.map(({ post, Content, anchorId }) => (
+    <div class="post-item" id={`item-${post.slug}`}>
+      <!-- Cabeçalho do post (variante inline, sem borda própria) -->
+      <PostCard post={post} anchorId={anchorId} variant="inline" />
+
+      <!-- Painel expansível (conteúdo MDX pré-renderizado) -->
+      <section
+        class="post-expand"
+        id={`expand-${post.slug}`}
+        role="region"
+        aria-labelledby={`link-${post.slug}`}
+        hidden
+      >
+        <div class="post-expand__inner">
+          <Content />
+          <p class="expand-actions">
+            <a href={withBase(`blog/${post.slug}`)}>Abrir em página →</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  ))}
+
+  <Fragment slot="sidebar">
+    <BlogSidebar>
+      <p>“Os Bastidores”: registro das decisões e experimentos que não cabem na documentação formal.</p>
+    </BlogSidebar>
+  </Fragment>
+
+  <!-- Expansão inline (JS externo em public/js/) -->
+  <script src={withBase("js/blog-index-expand.js")} defer></script>
+
+  <!-- Filtro de tags (inline) com integração para fechar painel do item ocultado -->
+  <script is:inline>
+    (function () {
+      const tagButtons = /** @type {NodeListOf<HTMLButtonElement>} */ (
+        document.querySelectorAll('#oc-taglist .tag')
+      );
+      const cards = /** @type {NodeListOf<HTMLElement>} */ (
+        document.querySelectorAll('.post-card')
+      );
+      const counter = document.getElementById('oc-count');
+      const active = new Set();
+      const norm = (s) => (s || '').trim().toLowerCase();
+
+      function applyFilter() {
+        let visible = 0;
+        for (const card of cards) {
+          const wrapper = card.closest('.post-item');
+          if (!wrapper) continue;
+
+          const tagsAttr = norm(card.dataset.tags || '');
+          if (active.size === 0) {
+            wrapper.classList.remove('hidden');
+            visible++;
+            continue;
+          }
+
+          const cardTags = new Set(tagsAttr.split(',').map(norm).filter(Boolean));
+          let ok = false;
+          for (const t of active) { if (cardTags.has(t)) { ok = true; break; } }
+
+          if (ok) {
+            wrapper.classList.remove('hidden');
+            visible++;
+          } else {
+            // Esconde o bloco inteiro e fecha painel se estiver aberto
+            wrapper.classList.add('hidden');
+            const slug = card.dataset.slug;
+            const panel = slug ? document.getElementById('expand-' + slug) : null;
+            const link  = slug ? document.getElementById('link-' + slug)   : null;
+            if (panel && !panel.hasAttribute('hidden')) {
+              if (window.__ocCollapse) window.__ocCollapse(panel, link);
+              else { panel.setAttribute('hidden',''); if (link) link.setAttribute('aria-expanded','false'); }
+            }
+          }
+        }
+        if (counter) counter.textContent = String(visible);
+      }
+
+      for (const btn of tagButtons) {
+        btn.addEventListener('click', () => {
+          const t = norm(btn.dataset.tag || '');
+          if (!t) return;
+          if (active.has(t)) {
+            active.delete(t);
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-pressed', 'false');
+          } else {
+            active.add(t);
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-pressed', 'true');
+          }
+          applyFilter();
+        });
+      }
+
+      applyFilter();
+    })();
+  </script>
+</BlogLayout>

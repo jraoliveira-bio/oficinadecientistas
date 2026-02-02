@@ -1,24 +1,59 @@
 /* ==========================================================================
+   0. TOKENS (cores, fontes, bordas)
+   ========================================================================== */
+
+:root {
+  --cor-bg-1: #DCDFE2;
+  --cor-bg-2: #EAEAEA;
+
+  --cor-texto: #34495E;
+  --cor-texto-sec: #5a6a7a;
+  --cor-titulo: #4A698B;
+  --cor-vinho: #8c4b4b;
+
+  --borda: #EAEAEA;
+  --borda-escura: #e0e0e0;
+
+  --fonte-base: 'Lato', sans-serif;
+  --fonte-titulo: 'Lora', serif;
+  --fonte-ui: 'Source Sans Pro', sans-serif;
+
+  --raio-card: 12px;
+  --raio-botao: 8px;
+}
+
+/* ==========================================================================
    1. CONFIGURAÇÃO GERAL E FONTES
    ========================================================================== */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Lato', sans-serif;
-  background-image: linear-gradient(to right, #DCDFE2, #EAEAEA);
-  color: #34495E;
+  font-family: var(--fonte-base);
+  background-image: linear-gradient(to right, var(--cor-bg-1), var(--cor-bg-2));
+  color: var(--cor-texto);
   margin: 0;
   padding: 0;
-  font-size: 18px; /* Um pouco maior que o padrão, ideal para leitura */
-  line-height: 1.7; /* Aumenta o espaço entre as linhas, melhorando a fluidez */
+  font-size: 18px;
+  line-height: 1.7;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Lora', serif;
-  color: #4A698B;
+  font-family: var(--fonte-titulo);
+  color: var(--cor-titulo);
 }
 
-* {
-  box-sizing: border-box;
+p {
+  margin: 0 0 1.5em 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 /* ==========================================================================
@@ -33,8 +68,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* --- CABEÇALHO (Faixa de Largura Total) --- */
 .topo {
-  background-color: #34495E;
-  border-bottom: 1px solid #EAEAEA;
+  background-color: var(--cor-texto);
+  border-bottom: 1px solid var(--borda);
 }
 
 .topo-conteudo {
@@ -76,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 .menu-principal a {
   text-decoration: none;
   color: white;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--fonte-ui);
   font-size: 16px;
   font-weight: bold;
   padding: 5px 0;
@@ -89,11 +124,11 @@ h1, h2, h3, h4, h5, h6 {
 
 footer {
   padding: 30px 40px;
-  border-top: 1px solid #EAEAEA;
+  border-top: 1px solid var(--borda);
   margin-top: 60px;
   text-align: center;
   font-size: 14px;
-  color: #5a6a7a;
+  color: var(--cor-texto-sec);
 }
 
 /* ==========================================================================
@@ -103,16 +138,17 @@ footer {
 /* --- Botões --- */
 .botao-principal {
   display: inline-block;
-  background-color: #4A698B;
+  background-color: var(--cor-titulo);
   color: white;
   padding: 12px 30px;
-  border-radius: 8px;
+  border-radius: var(--raio-botao);
   text-decoration: none;
   font-weight: bold;
   transition: all 0.3s ease;
 }
+
 .botao-principal:hover {
-  background-color: #34495E;
+  background-color: var(--cor-texto);
   transform: translateY(-2px);
 }
 
@@ -121,70 +157,77 @@ footer {
   background-color: rgba(255, 255, 255, 0.7);
   padding: 25px;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
+  border-radius: var(--raio-card);
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
   text-decoration: none;
   transition: all 0.3s ease;
-  color: #34495E;
+  color: var(--cor-texto);
 }
+
 .card-curso:hover {
   transform: translateY(-8px);
   box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
   background-color: rgba(255, 255, 255, 0.9);
 }
-.card-curso h3 { margin-top: 0; color: #4A698B; }
-.card-curso p { line-height: 1.6; }
 
-.card-destaque {
-  display: block;
-  flex-basis: 50%;
-  border-radius: 12px;
-  text-decoration: none;
-  overflow: hidden;
-  border: 1px solid #EAEAEA;
-  transition: all 0.3s ease;
+.card-curso h3 {
+  margin-top: 0;
+  color: var(--cor-titulo);
 }
-.card-destaque:hover {
-  transform: translateY(-8px);
-  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.12);
-}
-.card-destaque img {
-  width: 100%;
-  display: block;
-}
-.card-destaque-conteudo {
-  background-color: transparent;
-  padding: 20px 25px;
-}
-.card-destaque-conteudo h4 { margin: 0 0 5px 0; font-size: 20px; color: #4A698B; }
-.card-destaque-conteudo p { margin: 0; font-size: 16px; color: #5a6a7a; }
 
+.card-curso p {
+  line-height: 1.6;
+}
+
+
+/* Card curso completo */
 .card-curso-completo {
   display: block;
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: var(--raio-card);
   overflow: hidden;
-  border: 1px solid #EAEAEA;
+  border: 1px solid var(--borda);
   background-color: rgb(244, 242, 240);
   transition: all 0.3s ease;
 }
+
 .card-curso-completo:hover {
   transform: translateY(-8px);
   box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.10);
 }
+
 .card-curso-completo img {
   width: 100%;
   display: block;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
+
 .card-curso-conteudo {
   padding: 20px 25px 25px 25px;
 }
-.card-curso-conteudo h3 { margin: 0 0 10px 0; color: #4A698B; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+
+.card-curso-conteudo h3 {
+  margin: 0 0 10px 0;
+  color: var(--cor-titulo);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .card-curso-conteudo h3 .fa-video,
-.card-curso-conteudo h3 .fa-book-open { color: #34495E; font-size: 18px; }
-.card-curso-descricao { font-size: 16px; color: #5a6a7a; line-height: 1.6; margin-bottom: 20px; }
+.card-curso-conteudo h3 .fa-book-open {
+  color: var(--cor-texto);
+  font-size: 18px;
+}
+
+.card-curso-descricao {
+  font-size: 16px;
+  color: var(--cor-texto-sec);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
 
 /* --- Tags --- */
 .card-curso-meta {
@@ -192,15 +235,17 @@ footer {
   gap: 8px;
   flex-wrap: wrap;
 }
+
 .tag-meta {
-  background-color: #EAEAEA;
-  color: #5a6a7a;
+  background-color: var(--cor-bg-2);
+  color: var(--cor-texto-sec);
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
+
 .tag-status-rec {
   color: #d9534f;
   font-weight: 600;
@@ -213,175 +258,347 @@ footer {
   margin: 30px 0;
   text-align: center;
 }
+
 .divider-container img {
   max-width: 100%;
   height: auto;
 }
 
 /* --- Acordeão --- */
-.acordeon-container { max-width: 800px; margin: 0 auto; }
-.acordeon-item { border-bottom: 1px solid #EAEAEA; }
-.acordeon-item:first-child { border-top: 1px solid #EAEAEA; }
-.acordeon-cabecalho { width: 100%; background: none; border: none; padding: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; text-align: left; font-family: 'Source Sans Pro', sans-serif; font-size: 18px; font-weight: 600; color: #34495E; }
-.acordeon-cabecalho:hover { background-color: #f7f7f7; }
-.acordeon-titulo { display: flex; align-items: center; gap: 12px; }
+.acordeon-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.acordeon-item {
+  border-bottom: 1px solid var(--borda);
+}
+
+.acordeon-item:first-child {
+  border-top: 1px solid var(--borda);
+}
+
+.acordeon-cabecalho {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--fonte-ui);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.acordeon-cabecalho:hover {
+  background-color: #f7f7f7;
+}
+
+.acordeon-titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .acordeon-titulo .fa-video,
-.acordeon-titulo .fa-book-open { color: #4A698B; width: 20px; }
-.icone-acordeon { transition: transform 0.3s ease; }
-.acordeon-item.aberto .icone-acordeon { transform: rotate(45deg); }
-.acordeon-conteudo { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; padding: 0 20px; }
-.acordeon-conteudo p { padding-bottom: 20px; line-height: 1.6; }
+.acordeon-titulo .fa-book-open {
+  color: var(--cor-titulo);
+  width: 20px;
+}
 
+.icone-acordeon {
+  transition: transform 0.3s ease;
+}
 
-/* --- Menu Hamburger --- */
-.menu-toggle,
+.acordeon-item.aberto .icone-acordeon {
+  transform: rotate(45deg);
+}
+
+.acordeon-conteudo {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  padding: 0 20px;
+}
+
+.acordeon-conteudo p {
+  padding-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* --- Menu Hamburger (estado padrão desktop) --- */
 .menu-hamburger {
   display: none;
 }
-.logo-header {
-  height: 40px;
-  width: auto;
-}
-.logo-titulo-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+
+/* Checkbox do hamburger: esconder visualmente (sem quebrar a interação) */
+.menu-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
 }
 
 /* ==========================================================================
    4. SEÇÕES DE PÁGINA ESPECÍFICAS
    ========================================================================== */
 
-/* --- Homepage --- */
-.secao-apresentacao {
-  padding: 45px 40px 60px 40px;
-  text-align: center;
-  border-bottom: 1px solid #EAEAEA;
+
+/* Destaque curso: base mobile-first (coluna); desktop vira linha via media query */
+
+
+/* Grid: base mobile (1 col), desktop ajusta nos media queries */
+.grid-cursos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-top: 40px;
+  text-align: left;
 }
-
-.logo-apresentacao {
-  display: block;
-  max-width: 150px;
-  height: auto;
-  margin: 0 auto 20px auto;
-}
-
-.secao-apresentacao h2 {
-  font-size: 36px;
-  margin-bottom: 0;
-}
-
-.secao-apresentacao p {
-  font-size: 18px;
-  color: #5a6a7a;
-  margin-top: 8px;
-}
-
-.chamada-principal {
-  background-color: rgba(74, 105, 139, 0.03);
-  padding: 60px 0;
-  border-top: 1px solid #EAEAEA;
-  border-bottom: 1px solid #EAEAEA;
-}
-.chamada-conteudo { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
-.chamada-conteudo h2 { margin-top: 0; margin-bottom: 15px; font-size: 24px; }
-.chamada-conteudo p { max-width: 800px; margin: 0; line-height: 1.7; font-size: 18px; color: #5a6a7a; }
-
-.secao-destaque-curso { display: flex; align-items: center; gap: 50px; max-width: 1280px; margin: 60px auto; padding: 0 40px; }
-.texto-destaque { flex-basis: 50%; }
-
-.secao-catalogo { padding: 45px 40px 60px 40px; text-align: center; }
-.grid-cursos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 40px; text-align: left; }
 
 /* --- Página de Apresentação de Curso --- */
-.secao-emblema { text-align: center; padding: 60px 40px 30px 40px; border-bottom: 1px solid #EAEAEA; }
-.logo-emblema { display: block; max-width: 70px; height: auto; margin: 0 auto 15px auto; }
-.secao-emblema h3 { font-size: 24px; font-weight: 600; margin: 0; color: #34495E; }
+.secao-emblema {
+  text-align: center;
+  padding: 60px 40px 30px 40px;
+  border-bottom: 1px solid var(--borda);
+}
 
-.secao-manifesto { padding: 60px 40px; background-color: rgba(74, 105, 139, 0.03); border-bottom: 1px solid #EAEAEA; text-align: center; }
-.manifesto-conteudo h2 { margin-top: 0; }
-.manifesto-conteudo p { font-size: 18px; line-height: 1.7; color: #5a6a7a; max-width: 800px; margin: 15px auto 0 auto; }
+.logo-emblema {
+  display: block;
+  max-width: 70px;
+  height: auto;
+  margin: 0 auto 15px auto;
+}
 
-.secao-vitrine-cursos { padding: 60px 40px; }
-.secao-vitrine-cursos h2 { text-align: center; margin-top: 0; margin-bottom: 40px; }
-.vitrine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+.secao-emblema h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--cor-texto);
+}
 
-.texto-introdutorio { max-width: 800px; margin: 50px auto; padding: 0 20px; font-size: 18px; line-height: 1.8; }
-.texto-introdutorio h4 { font-size: 22px; margin-top: 30px; margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px; }
-.pull-quote { border-left: 3px solid #4A698B; padding-left: 25px; margin: 40px 0; font-size: 19px; font-style: italic; color: #34495E; }
-.ciclos-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 30px 0; }
-.ciclo-item h5 { margin-top: 0; font-size: 18px; color: #34495E; }
-.ciclo-item p { font-size: 16px; line-height: 1.6; }
-.cta-container { text-align: center; padding: 0 0 60px 0;  }
+.secao-manifesto {
+  padding: 60px 40px;
+  background-color: rgba(74, 105, 139, 0.03);
+  border-bottom: 1px solid var(--borda);
+  text-align: center;
+}
 
-.secao-grade-curricular { padding: 60px 40px; }
-.secao-grade-curricular h2 { text-align: center; margin-top: 0; margin-bottom: 40px; }
+.manifesto-conteudo h2 {
+  margin-top: 0;
+}
 
-/* --- Layout da Sala de Aula --- */
-.menu-aulas h3 { margin-top: 0; padding-bottom: 10px; border-bottom: 1px solid #EAEAEA; font-size: 20px; }
-.menu-aulas ol { list-style: none; padding-left: 0; margin: 10px 0 0 0; }
-.menu-aulas li { border-radius: 8px; transition: background-color 0.2s ease; }
-.menu-aulas li:not(:last-child) { margin-bottom: 5px; }
-.menu-aulas li a { display: flex; justify-content: space-between;align-items: center; padding: 10px 15px; text-decoration: none; color: #0c4665; font-weight: 400; font-size: 16px; transition: background-color 0.2s ease, color 0.2s ease;}
-/* Adiciona o triângulo indicador na aula ativa */
+.manifesto-conteudo p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--cor-texto-sec);
+  max-width: 800px;
+  margin: 15px auto 0 auto;
+}
+
+.secao-vitrine-cursos {
+  padding: 60px 40px;
+}
+
+.secao-vitrine-cursos h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.vitrine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.texto-introdutorio {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.texto-introdutorio h4 {
+  font-size: 22px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 1px dotted #ccc;
+  padding-bottom: 10px;
+}
+
+.pull-quote {
+  border-left: 3px solid var(--cor-titulo);
+  padding-left: 25px;
+  margin: 40px 0;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--cor-texto);
+}
+
+/* Ciclos: base mobile 1 col, desktop via media query */
+.ciclos-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.ciclo-item h5 {
+  margin-top: 0;
+  font-size: 18px;
+  color: var(--cor-texto);
+}
+
+.ciclo-item p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.cta-container {
+  text-align: center;
+  padding: 0 0 60px 0;
+}
+
+.secao-grade-curricular {
+  padding: 60px 40px;
+}
+
+.secao-grade-curricular h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+/* ==========================================================================
+   5. SALA DE AULA (menu + conteúdo)
+   ========================================================================== */
+
+.menu-aulas h3 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--borda);
+  font-size: 20px;
+}
+
+.menu-aulas ol {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 0 0;
+}
+
+.menu-aulas li {
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-aulas li:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.menu-aulas li a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #0c4665;
+  font-weight: 400;
+  font-size: 16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* triângulo indicador na aula ativa */
 .menu-aulas li.aula-ativa a::after {
-  content: '◄'; /* O caractere do triângulo */
-  color: #8c4b4b; /* A cor vermelho-vinho de destaque */
-  font-size: 12px; /* Um tamanho sutil */
-  padding-left: 10px; /* Um respiro para não colar no texto */
+  content: '◄';
+  color: var(--cor-vinho);
+  font-size: 12px;
+  padding-left: 10px;
 }
-.menu-aulas li a:hover { background-color: #e9e9e9; color: #8c4b4b;}
-/* Estiliza o fundo do item da lista (o <li>) quando ele está ativo */
+
+.menu-aulas li a:hover {
+  background-color: #e9e9e9;
+  color: var(--cor-vinho);
+}
+
 aside.menu-aulas li.aula-ativa {
-  background-color: #f6f5ec7b; /* Um lilás/cinza bem claro para o fundo */
-  border-left: 4px solid #171d3d40; /* Uma borda roxa para destaque */
-  border-radius: 4px; /* Cantos levemente arredondados */
+  background-color: #f6f5ec7b;
+  border-left: 4px solid #171d3d40;
+  border-radius: 4px;
 }
 
-/* Estiliza o link (o <a>) DENTRO do item da lista ativo */
+/* CORRIGIDO: era ##34495e */
 aside.menu-aulas li.aula-ativa a {
-  color: ##34495e; /* Cor do texto roxa, para combinar com a borda */
-  font-weight: bold; /* Deixa o texto em negrito */
+  color: #34495E;
+  font-weight: bold;
 }
-.menu-aulas li a .fas { margin-right: 8px; width: 20px; text-align: center; color: #214f82; }
 
-/* --- Conteúdo Principal da Aula --- */
+.menu-aulas li a .fas {
+  margin-right: 8px;
+  width: 20px;
+  text-align: center;
+  color: #214f82;
+}
+
+/* Conteúdo principal */
 .conteudo-aula h1 {
   margin-top: 0;
-  font-size: 32px;   /* Reduzido de 36px para um visual mais refinado */
-  text-align: center; /* Centraliza o título */
+  font-size: 32px;
+  text-align: center;
   margin-bottom: 30px;
 }
-.video-responsivo { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 30px; border-radius: 12px; background-color: #000; }
-.video-responsivo iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+.titulo-aula {
+  margin-bottom: 40px;
+}
+
+.video-responsivo {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 30px;
+  border-radius: var(--raio-card);
+  background-color: #000;
+}
+
+.video-responsivo iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .texto-aula {
   font-size: 18px;
   line-height: 1.8;
   margin-top: 40px;
-  display: flow-root; /* Mantém a correção para os PullOutBox */
+  display: flow-root; /* mantém sua correção para PullOutBox */
+  text-align: justify;
+  text-align-last: start;
 }
 
-/* Estilo para links dentro do conteúdo da aula e links externos */
-.texto-aula a,
-.link-externo {
-  color: #4A698B; /* Cor azul dos títulos, para destaque */
-  font-weight: 600;
-  text-decoration: none;
-
-}  
-
-.titulo-aula {
-  margin-bottom: 40px; /* Espaçamento entre titulo da aula e primeiro parágrafo */
+/* Espaçamento padrão entre parágrafos nos containers principais */
+.texto-aula p,
+p.paragrafo-capitular,
+.texto-introdutorio p,
+.manifesto-conteudo p {
+  margin-bottom: 2em;
 }
-/* ==========================================================================
-   Efeito de Letra Capitular (Estilo "Iluminado" com Classe)
-   ========================================================================== */
 
+/* Letra capitular */
 .paragrafo-capitular::first-letter {
-  font-family: 'Lora', serif;
+  font-family: var(--fonte-titulo);
   font-weight: 700;
-  /* background-color: #f7f2f2; */
-  color: #8c4b4b;
+  color: var(--cor-vinho);
   padding: 5px 14px;
   border-radius: 4px;
   margin-right: 12px;
@@ -390,141 +607,179 @@ aside.menu-aulas li.aula-ativa a {
   font-size: 50px;
 }
 
- /* Define um espaçamento padrão entre parágrafos nos principais containers de texto */
-.texto-aula p,
-p.paragrafo-capitular,
-.texto-introdutorio p,
-.manifesto-conteudo p {
-  margin-bottom: 2em; /* Adiciona um espaço equivalente a 1.2x o tamanho da fonte */
-} 
-p {
-  margin-bottom: 1.5em;
-}
+/* Links + efeito marca-texto (corrigido: antes estava sem seletor) */
+.texto-aula a,
+.link-externo {
+  color: var(--cor-titulo);
+  font-weight: 600;
+  text-decoration: none;
 
-
-  /* --- PREPARAÇÃO PARA O EFEITO MARCA-TEXTO --- */{
   background-image: linear-gradient(to top, rgba(140, 75, 75, 0.25) 50%, transparent 50%);
   background-size: 100% 200%;
   background-position: 0 0;
-  transition: background-position 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animação suave */
-  
-  /* Pequeno ajuste para o marcador ter um "respiro" */
+  transition: background-position 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.2s ease;
+
   padding: 2px 3px;
   margin: -2px -3px;
   border-radius: 4px;
 }
 
-
 .texto-aula a:hover,
 .link-externo:hover {
-  color: #34495E; /* Opcional: escurece o texto para melhor contraste */
-  background-position: 0 100%; /* O fundo "sobe" e colore o texto */
+  color: var(--cor-texto);
+  background-position: 0 100%;
 }
 
 .texto-aula h2 { margin-top: 40px; }
-.navegacao-aulas { display: flex; justify-content: space-between; align-items: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid #EAEAEA; }
 
-/* Estilo para a "Folha de Papel" da seção Manifesto */
+.navegacao-aulas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid var(--borda);
+}
+
+/* ==========================================================================
+   6. MANIFESTO “FOLHA”
+   ========================================================================== */
+
 .folha-manifesto {
-  /* 1. A IMAGEM DE FUNDO */
   background-image: var(--bg-image);
-  background-size: cover; /* Garante que a textura cubra toda a área */
+  background-size: cover;
 
-  /* 2. ESTILOS VISUAIS */
-  padding: 70px 60px; /* Aumenta um pouco o padding horizontal */
+  padding: 70px 60px;
   max-width: 850px;
   margin: 0 auto;
-  border-radius: 3px; /* Bordas menos arredondadas, mais "papel" */
+  border-radius: 3px;
 
-  /* 3. SOMBRA SUTIL */
-  /* Sombra mais suave para um efeito de folha sobre a mesa */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1), 0px 1px 4px rgba(0, 0, 0, 0.08);
-
-  /* Garante que o texto dentro seja legível */
-  color: #333; /* Um preto um pouco mais suave que o preto puro */
+  color: #333;
 }
-/* Garante que o H2 dentro da folha (que já é vermelho) fique centralizado */
-/* Título do Manifesto (Máquina de Escrever) */
+
 .folha-manifesto h2 {
   font-family: 'Special Elite', monospace;
-  font-size: 32px; /* Um pouco menor para o estilo de máquina de escrever */
+  font-size: 32px;
   text-align: center;
-  color: #333; /* Cor do texto da folha */
+  color: #333;
   margin-bottom: 30px;
 }
-/* Parágrafos do Manifesto (Máquina de Escrever) */
+
 .folha-manifesto p {
-  font-family: 'Courier Prime', monospace; /* Nova fonte para leitura */
-  font-size: 16px; /* Tamanho de fonte típico de máquina de escrever */
-  line-height: 1.9;  /* Espaçamento maior entre linhas, como datilografado */
+  font-family: 'Courier Prime', monospace;
+  font-size: 16px;
+  line-height: 1.9;
 }
 
-/* --- Tabela de Conceitos (Aula Textual) --- */
+/* ==========================================================================
+   7. TABELAS / FIGURAS
+   ========================================================================== */
+
 .tabela-conceitos {
   width: 100%;
-  border-collapse: collapse; /* Remove o espaçamento entre as células */
+  border-collapse: collapse;
   margin: 40px 0;
   font-size: 16px;
 }
 
 .tabela-conceitos thead {
-  background-color: #f7f7f7; /* Um fundo sutil para o cabeçalho */
+  background-color: #f7f7f7;
 }
 
 .tabela-conceitos th,
 .tabela-conceitos td {
   text-align: left;
   padding: 12px 15px;
-  border-bottom: 1px solid #e0e0e0; /* Linhas divisórias sutis */
+  border-bottom: 1px solid var(--borda-escura);
 }
 
 .tabela-conceitos th {
   font-family: var(--fonte-titulo);
-  color: var(--cor-texto-principal);
+  color: var(--cor-texto);
 }
 
 .tabela-conceitos tbody tr:nth-child(odd) {
-  background-color: #fafafa; /* Linhas alternadas para melhor legibilidade */
+  background-color: #fafafa;
 }
 
-/* --- Página Sobre --- */
+.paragrafo-destaque {
+  font-style: italic;
+  font-size: 19px;
+  color: var(--cor-texto);
+  margin: 40px 0;
+  padding-left: 25px;
+  border-left: 3px solid var(--cor-titulo);
+}
+
+.charge-artigo {
+  margin: 40px auto;
+  max-width: 100%;
+  width: 700px;
+}
+
+.charge-artigo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.charge-artigo figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--cor-texto-sec);
+}
+
+/* ==========================================================================
+   8. PÁGINA “SOBRE”
+   ========================================================================== */
+
 .pagina-sobre-container {
   padding: 40px;
 }
+
 .pagina-sobre-container > h1 {
   text-align: center;
   font-size: 42px;
   margin-bottom: 30px;
 }
+
 .sobre-secao {
   padding: 60px 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--borda-escura);
 }
+
 .sobre-secao:last-of-type {
   border-bottom: none;
 }
+
 .sobre-secao h2 {
   text-align: center;
   margin-top: 0;
-  margin-bottom: 40px;  
+  margin-bottom: 40px;
 }
-/* Colore apenas o título da seção Manifesto */
+
+/* título manifesto */
 #manifesto h2 {
- font-family: 'Special Elite', monospace; /* Fonte de máquina de escrever */
+  font-family: 'Special Elite', monospace;
   font-size: 36px;
-  text-align: center; /* Alinha à esquerda para quebrar a simetria */
-  color: #8c4b4b;
+  text-align: center;
+  color: var(--cor-vinho);
   margin-top: 20px;
-  margin-bottom: 110px; /* Aumenta o espaço abaixo do título */
-} 
+  margin-bottom: 110px;
+}
 
 .secao-quem-sou-eu {
   background-color: #fdfdfbbc;
-  margin-left: -40px; /* Faz o fundo ir de ponta a ponta */
+  margin-left: -40px;
   margin-right: -40px;
   padding-left: 40px;
   padding-right: 40px;
 }
+
 .texto-coluna-unica {
   max-width: 1100px;
   margin: 0 auto;
@@ -533,7 +788,6 @@ p {
   text-align: justify;
 }
 
-/* Estilo para a "assinatura" com o logo no final do Manifesto */
 .assinatura-manifesto {
   margin-top: 150px;
   padding-top: 30px;
@@ -546,28 +800,38 @@ p {
   width: 60px;
   height: auto;
   margin: 0 auto 15px auto;
-  opacity: 0.7; /* Efeito de "carimbo" */
+  opacity: 0.7;
 }
+
 .nome-assinatura {
-  font-family: 'Lora', serif; /* A mesma fonte dos títulos */
-  color: #4A698B;             /* A cor azul dos títulos */
+  font-family: var(--fonte-titulo);
+  color: var(--cor-titulo);
   font-size: 20px;
-  font-weight: 700;            /* Negrito */
+  font-weight: 700;
   margin-top: 10px;
   margin-bottom: 15px;
 }
+
 .assinatura-manifesto .texto-logo-explicacao {
-  font-family: 'Courier Prime', monospace; /* Nova fonte para leitura */
+  font-family: 'Courier Prime', monospace;
   font-size: 15px;
   max-width: 600px;
   margin: 0 auto;
   color: #2a2a2a;
 }
-/* --- Estilos para a seção "Quem Sou Eu" --- */
+
+.texto-logo-explicacao {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px dotted #ccc;
+  font-size: 17px;
+  color: var(--cor-texto-sec);
+}
+
 .quem-sou-eu-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Coluna de texto (esquerda) 2x mais larga que a da bio */
-  gap: 60px; /* Aumenta o espaço entre as colunas */
+  grid-template-columns: 2fr 1fr;
+  gap: 60px;
   max-width: 1100px;
   margin: 0 auto;
   align-items: flex-start;
@@ -577,22 +841,14 @@ p {
   margin-top: 0;
 }
 
-.texto-logo-explicacao {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px dotted #ccc;
-    font-size: 17px;
-    color: #5a6a7a;
-}
-
 .quem-sou-eu-bio {
-  text-align: center; /* Centraliza os itens na coluna da bio */
+  text-align: center;
 }
 
 .bio-foto {
   width: 100%;
-  max-width: 200px; /* Limita o tamanho máximo da foto */
-  border-radius: 50%; /* Deixa a foto redonda */
+  max-width: 200px;
+  border-radius: 50%;
   margin: 0 auto 20px auto;
   border: 4px solid white;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
@@ -607,207 +863,82 @@ p {
 .quem-sou-eu-bio p {
   margin-top: 0;
   font-size: 16px;
-  color: #5a6a7a;
+  color: var(--cor-texto-sec);
 }
 
-/* Novo estilo para o logo como divisor */
 .logo-divisor-bio {
   display: block;
-  width: 80px; /* Tamanho do logo */
+  width: 80px;
   height: auto;
-  margin: 40px auto 0 auto; /* Espaçamento acima e centralização */
-  opacity: 0.5; /* Deixa o logo mais sutil */
+  margin: 40px auto 0 auto;
+  opacity: 0.5;
 }
+
 .link-externo {
-  font-weight: 600;
-  color: #4A698B;
-  text-decoration: none;
-  border-bottom: 1px dotted #4A698B;
-  transition: all 0.2s ease; /* Adicionando transição */
+  border-bottom: 1px dotted var(--cor-titulo);
 }
 
-/* ADICIONE ESTA NOVA REGRA ABAIXO */
-.link-externo:hover {
-  color: #8c4b4b; /* Vermelho-vinho no hover */
-  border-bottom-color: #8c4b4b; /* A borda também muda de cor */
-}
+/* Visão futuro */
 .secao-visao-futuro {
-  background-color: #fdfdfb; /* O mesmo fundo off-white */
+  background-color: #fdfdfb;
 
-  /* A sua ilustração como imagem de fundo */
-  background-image: var(--visao-bg-image); /* <-- Coloque o nome correto aqui se for diferente */
+  background-image: var(--visao-bg-image);
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: 100% auto;
 
-  /* Padding extra na parte de baixo para a imagem aparecer */
   padding-bottom: 80px;
 
-  /* Regras para ocupar a largura toda */
-  margin-left: -40px; 
+  margin-left: -40px;
   margin-right: -40px;
   padding-left: 40px;
   padding-right: 40px;
 }
+
 .visao-futuro-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 40px;
   max-width: 1100px;
   margin: 0 auto;
 }
+
 .visao-item {
   text-align: center;
 }
+
 .visao-item .fas {
   font-size: 32px;
-  color: #8c4b4b;
+  color: var(--cor-vinho);
   margin-bottom: 20px;
 }
+
 .visao-item h4 {
   font-size: 20px;
 }
 
-/* --- RESPONSIVIDADE PARA A PÁGINA SOBRE --- */
-@media (max-width: 768px) {
-  .visao-futuro-grid {
-    grid-template-columns: 1fr;
-  }
-.quem-sou-eu-grid {
-  grid-template-columns: 1fr; /* Volta para 1 coluna */
-  gap: 40px;
-}
-.quem-sou-eu-bio {
-  grid-row: 1; /* Move a bio (com a foto) para o topo no mobile */
-}
-
-  .fundo-offwhite {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .pagina-sobre-container {
-    padding: 20px;
-  }
-}
-
-/* --- Parágrafo de Destaque (Substitui o pull-quote) --- */
-.paragrafo-destaque {
-  font-style: italic;
-  font-size: 19px; /* Um pouco maior que o texto normal */
-  color: #34495E;  /* Cor de texto mais escura para dar peso */
-  margin: 40px 0; /* Espaçamento vertical para "respirar" */
-  padding-left: 25px; /* Espaçamento à esquerda da linha */
-  border-left: 3px solid #4A698B; /* A linha vertical azul */
-}
-
-/* --- Estilo para Charges e Figuras no Conteúdo --- */
-.charge-artigo {
-  margin: 40px auto; /* Espaçamento vertical e centralização horizontal */
-  max-width: 100%;   /* Garante que a figura não ultrapasse seu contêiner */
-  width: 700px;      /* Define uma largura máxima para a charge */
-}
-
-.charge-artigo img {
-  width: 100%;       /* A imagem se ajusta à largura da figura */
-  height: auto;      /* Mantém a proporção da imagem */
-  display: block;    /* Remove espaçamentos extras que a tag <img> pode ter */
-  border-radius: 4px;
-}
-
-.charge-artigo figcaption {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 15px;
-  font-style: italic;
-  color: #5a6a7a;    /* Cor de texto secundária */
-}
-
-
 /* ==========================================================================
-   5. RESPONSIVIDADE (MOBILE-FIRST)
+   9. ESTILOS PARA CONTEÚDO GERADO POR MARKDOWN
    ========================================================================== */
 
-/* Estilos para telas a partir de 768px (tablets e desktops) */
-@media (min-width: 768px) {
-
-  /* --- Layout da Sala de Aula --- */
-  .container-sala-de-aula {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
-    padding: 40px;
-    align-items: flex-start;
-  }
-  .menu-aulas {
-    position: sticky;
-    top: 40px;
-  }
- 
-  /* --- Outros Layouts --- */
-  .secao-destaque-curso {
-    flex-direction: row;
-  }
-  .grid-cursos {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .ciclos-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .lista-aprendizado {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-/* DENTRO de @media (max-width: 768px) { ... } */
-
- 
-/* Estilos para telas a partir de 900px */
-@media (min-width: 900px) {
-  .grid-cursos {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* O menu hamburger é o único que precisa ser definido para telas pequenas */
-@media (max-width: 768px) {
-  .menu-hamburger { display: flex; flex-direction: column; justify-content: space-around; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
-  .menu-hamburger span { display: block; width: 100%; height: 3px; background-color: white; border-radius: 3px; transition: all 0.3s ease-in-out; }
-  .menu-principal { display: flex; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #34495E; transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
-  .menu-principal ul { flex-direction: column; gap: 40px; text-align: center; }
-  .menu-principal a { font-size: 24px; }
-  .menu-toggle:checked ~ .menu-principal { transform: translateX(0); }
-  .menu-toggle:checked ~ .menu-hamburger span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
-  .menu-toggle:checked ~ .menu-hamburger span:nth-child(2) { opacity: 0; }
-  .menu-toggle:checked ~ .menu-hamburger span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-}
-
-
-/* =============================================== */
-/* ESTILOS PARA CONTEÚDO GERADO POR MARKDOWN       */
-/* =============================================== */
-
-/* Aplica a fonte principal a todos os parágrafos dentro da área de texto da aula */
 .texto-aula p {
-  font-family: 'Source Sans Pro', sans-serif; /* Confirme se este é o nome da sua fonte de parágrafo */
+  font-family: var(--fonte-ui);
   font-size: 1.1rem;
   line-height: 1.7;
-  margin-bottom: 1.5em; /* Adiciona um espaço entre os parágrafos */
+  margin-bottom: 1.5em;
 }
 
-/* Estiliza os subtítulos H2 */
 .texto-aula h2 {
-  font-family: 'Lora', serif; /* Confirme se este é o nome da sua fonte de títulos */
+  font-family: var(--fonte-titulo);
   font-size: 1.8rem;
   margin-top: 2.5em;
   margin-bottom: 1em;
-  border-bottom: 2px solid #eee; /* Exemplo de um detalhe visual */
+  border-bottom: 2px solid #eee;
   padding-bottom: 0.3em;
 }
 
-/* Estiliza outros elementos comuns do Markdown */
 .texto-aula h3 {
-  font-family: 'Lora', serif;
+  font-family: var(--fonte-titulo);
   font-size: 1.5rem;
   margin-top: 2em;
   margin-bottom: 1em;
@@ -824,5 +955,156 @@ p {
 }
 
 .texto-aula strong {
-  font-weight: 600; /* O padrão é 'bold', 600 é um pouco mais específico */
+  font-weight: 600;
 }
+
+
+/* ==========================================================================
+   10. RESPONSIVIDADE (MOBILE-FIRST)
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  /* Sala de aula */
+  .container-sala-de-aula {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    padding: 40px;
+    align-items: flex-start;
+  }
+
+  .menu-aulas {
+    position: sticky;
+    top: 40px;
+  }
+
+
+  /* grids */
+  .grid-cursos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ciclos-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .visao-futuro-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .grid-cursos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  /* Header padding menor */
+  .topo-conteudo {
+    padding: 12px 20px;
+  }
+
+  /* Menu hamburger aparece */
+  .menu-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .menu-hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .menu-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--cor-texto);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .menu-principal ul {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .menu-principal a {
+    font-size: 24px;
+  }
+
+  .menu-toggle:checked ~ .menu-principal {
+    transform: translateX(0);
+  }
+
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+  }
+
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle:checked ~ .menu-hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Sobre */
+  .pagina-sobre-container {
+    padding: 20px;
+  }
+
+  .quem-sou-eu-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .quem-sou-eu-bio {
+    grid-row: 1;
+  }
+
+  /* Texto da aula: garante margem lateral (resolve “colar na direita”) */
+  .texto-aula {
+    padding-inline: 20px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* H1/título com o mesmo padding */
+  .conteudo-aula h1,
+  .titulo-aula {
+    padding-inline: 20px;
+  }
+
+  /* Vídeo full-bleed */
+  .video-responsivo {
+    border-radius: 0;
+    margin-inline: -20px;
+    width: calc(100% + 40px);
+  }
+
+  /* Capitular menor */
+  .paragrafo-capitular::first-letter {
+    font-size: 40px;
+    margin-right: 8px;
+    padding: 2px 10px;
+  }
+}
+

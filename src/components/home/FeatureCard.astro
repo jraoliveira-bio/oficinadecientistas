@@ -1,0 +1,114 @@
+---
+interface Props {
+  href: string;
+  imgSrc: string;
+  imgAlt: string;
+  label?: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  cta?: string;
+}
+
+const { href, imgSrc, imgAlt, label, title, description, meta, cta } = Astro.props;
+---
+
+<a class="feature-card" href={href}>
+  <div class="thumb">
+    <img src={imgSrc} alt={imgAlt} loading="lazy" decoding="async" />
+  </div>
+
+  <div class="content">
+    {label && <p class="label">{label}</p>}
+    <h3 class="title">{title}</h3>
+
+    {description && <p class="desc">{description}</p>}
+    {meta && <p class="meta">{meta}</p>}
+
+    {cta && <span class="cta">{cta} →</span>}
+  </div>
+</a>
+
+<style>
+  .feature-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    height: 100%;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.12);
+  }
+
+  .thumb {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.01);
+    transition: transform 180ms ease;
+  }
+
+  .feature-card:hover .thumb img {
+    transform: scale(1.04);
+  }
+
+  .content {
+    padding: 1rem 1rem 1.1rem 1rem;
+  }
+
+  .label {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+
+  .desc {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+
+    /* mantém os cards com alturas parecidas */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .meta {
+    margin: 0.6rem 0 0 0;
+    font-size: 0.95rem;
+    opacity: 0.75;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cta {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+</style>

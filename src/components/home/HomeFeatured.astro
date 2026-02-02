@@ -1,0 +1,71 @@
+---
+import FeatureHeroCard from "./FeatureHeroCard.astro";
+import CoverCard from "./CoverCard.astro";
+
+interface Hero {
+  href: string;
+  imgSrc: string;
+  imgAlt: string;
+  label?: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  cta?: string;
+}
+
+interface Cover {
+  href: string;
+  imgSrc: string;
+  imgAlt: string;
+  label?: string;
+  title: string;
+  meta?: string;
+  cta?: string;
+}
+
+interface Props {
+  hero: Hero;
+  covers: Cover[];
+}
+
+const { hero, covers } = Astro.props;
+---
+
+<section class="home-featured" aria-label="Destaques">
+  <FeatureHeroCard {...hero} />
+
+  {covers?.length > 0 && (
+    <div class="home-featured__covers">
+      {covers.map((c) => <CoverCard {...c} />)}
+    </div>
+  )}
+</section>
+
+<style>
+  .home-featured {
+    max-width: 1280px;
+    margin: 60px auto;
+    padding: 0 40px;
+    display: grid;
+    gap: 1.6rem;
+  }
+
+  /* Capas: 2-up no desktop, 1-up no mobile */
+  .home-featured__covers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 900px) {
+    .home-featured {
+      padding: 0 20px;
+      margin: 40px auto;
+    }
+
+    .home-featured__covers {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,56 @@
+/* Reset leve + base tipográfica. Importado apenas pelo Blog. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+html { color-scheme: light; }
+
+body {
+  background: var(--oc-bg);
+  background-image: var(--oc-bg-image); /* textura sutil */
+  color: var(--oc-fg);
+  font-family: var(--oc-font-sans);
+  font-size: var(--oc-fs-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg, video { max-width: 100%; height: auto; }
+
+a {
+  color: var(--oc-accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 {
+  font-family: var(--oc-font-serif);
+  line-height: 1.25;
+  margin: var(--oc-space-6) 0 var(--oc-space-3);
+}
+h1 { font-size: var(--oc-fs-3xl); }
+h2 { font-size: var(--oc-fs-2xl); }
+h3 { font-size: var(--oc-fs-xl); }
+
+p { margin: 0 0 var(--oc-space-4); }
+
+code, pre {
+  font-family: var(--oc-font-mono);
+  font-size: 0.95em;
+}
+pre {
+  background: #faf7ff;
+  border: 1px dashed var(--oc-border);
+  padding: var(--oc-space-4);
+  border-radius: var(--oc-radius);
+  overflow: auto;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--oc-border);
+  margin: var(--oc-space-8) 0;
+}

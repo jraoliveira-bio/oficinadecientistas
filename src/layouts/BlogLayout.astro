@@ -1,0 +1,99 @@
+---
+/* Blog layout próprio (sem herdar Layout.astro):
+   - SEO básico via props title/description
+   - slots: header / sidebar / head
+   - tokens/base importados só aqui para não vazar ao site-mãe
+*/
+import "@/styles/tokens.css";
+import "@/styles/base.css";
+import { withBase } from "@/lib/url";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Blog de Desenvolvimento — Oficina de Cientistas",
+  description = "Bastidores, decisões de design e notas de laboratório do projeto Oficina de Cientistas.",
+} = Astro.props;
+---
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- OG/Twitter básicos -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Favicons exclusivos do blog -->
+<link rel="icon" href={withBase("img/favicons/blog.svg")} type="image/svg+xml">
+<link rel="alternate icon" href={withBase("img/favicons/blog.ico")} sizes="any">
+<link rel="icon" href={withBase("img/favicons/blog-32.png")} sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href={withBase("img/favicons/blog-180.png")}>
+<link rel="icon" href={withBase("img/favicons/blog-192.png")} sizes="192x192" type="image/png">
+<link rel="mask-icon" href={withBase("img/favicons/blog-pinned.svg")} color="#683636">
+<meta name="theme-color" content="#683636">
+
+    <!-- Google Fonts (CDN): Oswald (título) e Lora (botão) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;900&display=swap" rel="stylesheet">
+
+    <!-- Slot extra para páginas poderem injetar <head> -->
+    <slot name="head" />
+
+    <style>
+      :global(.oc-container){
+        max-width: var(--oc-maxw);
+        margin: 0 auto;
+        /* topo 0; laterais padrão; base com respiro */
+        padding: 0 var(--oc-space-4) var(--oc-space-6);
+      }
+      :global(.oc-grid){
+        display: grid;
+        grid-template-columns: minmax(0, var(--oc-colw-main)) minmax(260px, var(--oc-colw-aside));
+        gap: var(--oc-space-8);
+        align-items: start;
+      }
+      @media (max-width: 900px){
+        :global(.oc-grid){ grid-template-columns: 1fr; }
+      }
+      :global(.oc-main){ min-width: 0; }
+      :global(.oc-aside){
+        position: sticky;
+        top: var(--oc-space-6); /* ajuste se quiser colar mais/menos abaixo do header */
+        align-self: start;
+      }
+      :global(.oc-card){
+        background: var(--oc-card);
+        border: 1px solid var(--oc-border);
+        border-radius: var(--oc-radius);
+        box-shadow: var(--oc-shadow-1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="oc-container">
+      <slot name="header" />
+      <div class="oc-grid" style="margin-top: var(--oc-space-6);">
+        <main class="oc-main">
+          <slot />
+        </main>
+        <aside class="oc-aside">
+          <slot name="sidebar" />
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

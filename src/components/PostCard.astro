@@ -1,0 +1,107 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "@/lib/blog-utils";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  /** opcional: id de âncora (YYYY-MM) para a primeira ocorrência do mês */
+  anchorId?: string | null;
+  /** variante visual: "inline" quando o container externo já é o card */
+  variant?: "default" | "inline";
+}
+
+const { post, anchorId = null, variant = "default" } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const href = `${base}blog/${post.slug}`;
+
+const dateLabel = formatDate(post.data.dataPublicacao);
+const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
+const dataTags = tags.join(",").toLowerCase();
+
+const titleId = `link-${post.slug}`;
+const controlsId = `expand-${post.slug}`;
+---
+
+<style>
+  /* quando for usado sozinho, este componente já vira “card” */
+  .card {
+    padding: var(--oc-space-4);
+    background: var(--oc-card);
+    border: 1px solid var(--oc-border);
+    border-radius: var(--oc-radius);
+    box-shadow: var(--oc-shadow-1);
+    transition: transform .06s ease, box-shadow .06s ease;
+  }
+  .card:hover { transform: translateY(-1px); }
+
+  /* quando for renderizado dentro de um container .post-item.oc-card, só precisa de padding */
+  .inline {
+    padding: var(--oc-space-4);
+  }
+
+  .title {
+    margin: 0 0 var(--oc-space-2);
+    font-size: var(--oc-fs-1-5xl);
+    line-height: 1.15;
+  }
+  .title a {
+    color: #470d0d;
+    text-decoration: none;
+  }
+  .title a:hover { text-decoration: underline; }
+
+  .meta {
+    color: var(--oc-muted);
+    font-size: var(--oc-fs-xs);
+    display: flex;
+    gap: var(--oc-space-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--oc-space-2);
+  }
+
+  .tags { display: inline-flex; gap: .35rem; flex-wrap: wrap; }
+  .tag {
+    border: 1px dashed var(--oc-border);
+    border-radius: 999px;
+    padding: .1rem .5rem;
+    font-size: var(--oc-fs-xxs);
+    background: #fff;
+  }
+
+  .summary { margin: 0; }
+</style>
+
+<article
+  class:list={[
+    "post-card",
+    variant === "inline" ? "inline" : "card",
+  ]}
+  data-tags={dataTags}
+  data-slug={post.slug}
+  id={anchorId ?? undefined}
+>
+  <h2 class="title">
+    <a
+      href={href}
+      id={titleId}
+      data-behavior="expand-link"
+      aria-controls={controlsId}
+      aria-expanded="false"
+    >
+      {post.data.title}
+    </a>
+  </h2>
+
+  <div class="meta">
+    <span>{dateLabel}</span>
+    {tags.length > 0 && <>
+      <span>•</span>
+      <div class="tags">
+        {tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    </>}
+  </div>
+
+  {post.data.summary && <p class="summary">{post.data.summary}</p>}
+</article>

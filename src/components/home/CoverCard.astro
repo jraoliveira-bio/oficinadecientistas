@@ -1,0 +1,181 @@
+---
+interface Props {
+  href: string;
+  imgSrc: string;
+  imgAlt: string;
+
+  label?: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  cta?: string;
+}
+
+const { href, imgSrc, imgAlt, label, title, description, meta, cta } = Astro.props;
+---
+
+<a class="cover-card" href={href}>
+  <div class="cover-card__media" aria-hidden="true">
+    <img src={imgSrc} alt={imgAlt} loading="lazy" decoding="async" />
+  </div>
+
+  <div class="cover-card__body">
+    {label && <p class="cover-card__label">{label}</p>}
+    <h3 class="cover-card__title">{title}</h3>
+
+    {description && <p class="cover-card__desc">{description}</p>}
+
+    {meta && <p class="cover-card__meta">{meta}</p>}
+    {cta && <span class="cover-card__cta">{cta} →</span>}
+  </div>
+</a>
+
+<style>
+  .cover-card {
+    --radius: 16px;
+    --paper-color: 253, 253, 251;
+    --paper: rgba(var(--paper-color), 0.8);
+
+    /* CONTROLE GLOBAL DO “RODAPÉ” (recomendado: 5% a 8%) */
+    --fade-h: 1%;
+
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+
+    background: rgba(255,255,255,0.22);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .cover-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 34px rgba(0,0,0,0.10);
+  }
+
+  /* Imagem “capa” */
+  .cover-card__media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: rgba(255,255,255,0.18);
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .cover-card__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+  }
+
+  /* --- CAMADA 1: BLUR PROGRESSIVO (::before) --- */
+  .cover-card__media::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: var(--fade-h);
+    z-index: 2;
+    pointer-events: none;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /*
+      Em 5% de altura, poucos “degraus” já resolvem.
+      Mantive um início bem fraco e acelera no final.
+    */
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0,0,0,0.18) 35%,
+      rgba(0,0,0,0.70) 70%,
+      black 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0,0,0,0.18) 35%,
+      rgba(0,0,0,0.70) 70%,
+      black 100%
+    );
+  }
+
+  /* --- CAMADA 2: FADE DE COR (::after) --- */
+  .cover-card__media::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: var(--fade-h);
+    z-index: 3;
+    pointer-events: none;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--paper-color), 0) 0%,
+      var(--paper) 100%
+    );
+  }
+
+  /* Caixa de texto */
+  .cover-card__body {
+    padding: 0.85rem 1rem 1rem 1rem;
+    background: var(--paper);
+    position: relative;
+    z-index: 4;
+
+    /* Pequena “costura” para impedir linha */
+    box-shadow: 0 -2px 0 var(--paper);
+  }
+
+  .cover-card__label {
+    margin: 0 0 0.35rem 0;
+    font-family: var(--fonte-ui);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cor-texto-sec);
+  }
+
+  .cover-card__title {
+    margin: 0 0 0.45rem 0;
+    font-size: 20px;
+    line-height: 1.15;
+    color: var(--cor-titulo);
+  }
+
+  .cover-card__desc {
+    margin: 0 0 0.65rem 0;
+    font-family: var(--fonte-ui);
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--cor-texto-sec);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cover-card__meta {
+    margin: 0 0 0.55rem 0;
+    font-family: var(--fonte-ui);
+    font-size: 13px;
+    color: var(--cor-texto-sec);
+  }
+
+  .cover-card__cta {
+    font-family: var(--fonte-ui);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-titulo);
+  }
+</style>

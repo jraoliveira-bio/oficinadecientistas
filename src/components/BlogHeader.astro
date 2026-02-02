@@ -1,0 +1,103 @@
+---
+interface Props { backHref?: string; title?: string }
+import { withBase } from "@/lib/url";
+
+const { backHref = withBase(""), title = "A PRANCHETA" } = Astro.props;
+const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
+---
+
+<style>
+  /* HEADER FIXO NO TOPO */
+  header.wrap {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: #683636;                      /* fundo sólido */
+    border-bottom: 1px solid rgba(255,255,255,.16);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--oc-space-4);
+
+    padding: var(--oc-space-3) var(--oc-space-4);
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: var(--oc-space-3);
+    min-width: 0; /* permite elipse no título */
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    object-position: center;
+    background: transparent;
+  }
+
+  /* Título com Oswald (CDN no <head> do layout) */
+  .title {
+    font-family: "Montserrat", var(--oc-font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: clamp(1.1rem, 2.2vw, 34px);    /* teto: 24px */
+    letter-spacing: 0.3px;
+    line-height: 1;
+    font-weight: 200;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Botão à direita com Lora e texto branco */
+  .right .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5ch;
+
+    padding: var(--oc-space-2) var(--oc-space-4);
+    border-radius: 999px;
+
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.35);
+
+    text-decoration: none;
+    font-size: var(--oc-fs-sm);
+    font-family: "Lora", var(--oc-font-serif), serif;
+
+    transition: transform .06s ease, box-shadow .06s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .right .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 6px rgba(0,0,0,.18);
+    text-decoration: underline;
+    border-color: rgba(255,255,255,.55);
+  }
+  .right .btn:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 640px) {
+    header.wrap {
+      padding: var(--oc-space-3) var(--oc-space-3);
+      gap: var(--oc-space-3);
+    }
+    .title { max-width: 60vw; }
+  }
+</style>
+
+<header class="wrap" role="banner">
+  <div class="left">
+    <img class="logo" src={logoSrc} alt="Logotipo do blog" width="40" height="40" />
+    <div class="title">{title}</div>
+  </div>
+
+  <div class="right">
+    <a class="btn" href={backHref} aria-label="Ir para a Oficina de Cientistas">Oficina de Cientistas</a>
+  </div>
+</header>

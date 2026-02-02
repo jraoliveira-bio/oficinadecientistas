@@ -1,40 +1,56 @@
 ---
-import Layout from '../layouts/Layout.astro';
-const base = import.meta.env.BASE_URL.endsWith('/')
-? import.meta.env.BASE_URL
-: import.meta.env.BASE_URL + '/';
+import Layout from "../layouts/Layout.astro";
+import HomeHero from "../components/home/HomeHero.astro";
+import HomeIntro from "../components/home/HomeIntro.astro";
 
+import HomeFeatured from "../components/home/HomeFeatured.astro";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + "/";
+
+const hero = {
+  href: `${base}cursos/curso-escrita/`,
+  imgSrc: `${base}imagens/gatocard2.png`,
+  imgAlt: "Ilustração para o curso de escrita científica",
+  label: "Curso em destaque",
+  title: "Escrita Científica: Da Estrutura ao Impacto",
+  description:
+    "Curso completo de 10 aulas para transformar sua relação com a escrita acadêmica.",
+  meta: "10 aulas • ~8h de conteúdo",
+  cta: "Ver conteúdo do curso",
+};
+
+const covers = [
+  {
+    href: `${base}blog/`,
+    imgSrc: `${base}imagens/prancheta-card.png`,
+    imgAlt: "A Prancheta — Blog de desenvolvimento",
+    label: "Bastidores",
+    title: "A Prancheta",
+    description: "Decisões, bastidores e construção do projeto em tempo real — com ideias e testes de layout.",
+    meta: "Atualizações frequentes",
+    cta: "Explorar o blog",
+  },
+  // Quando tiver o “par” (YouTube/Fórum/outro curso), adicione aqui o segundo cover.
+];
 ---
+
 <Layout title="Home">
-    <main>
-        <section class="secao-apresentacao">
-            <img src={`${base}logo1.png`} alt="Logo Oficina de Cientistas" class="logo-apresentacao">
-            <h2>OFICINA DE CIENTISTAS</h2>
-            <p>Propagando conhecimento. Difundindo redes.</p>
-        </section>
+  <main class="home">
+    <HomeHero base={base} />
 
-        <section class="chamada-principal">
-            <div class="chamada-conteudo">
-                <h2>Nossa Proposta</h2>
-                <p>Bem vindos à *Oficina de Cientistas*. Nossa proposta é fornecer material educativo na forma de aulas e cursos para alunos e profissionais da pesquisa. Para entender mais, acesse a página SOBRE ou acesse diretamente nossos Cursos e Aulas.</p>
-            </div>
-        </section>
+    <HomeIntro
+      title="Nossa Proposta"
+      text="Fornecer um ciclo básico de formação para alunos da pós-graduação e fazer análises científicas de temas importantes."
+    />
 
-        <section class="secao-destaque-curso">
-            <div class="texto-destaque">
-                <h2>Curso em Destaque</h2>
-                <h3>Escrita Científica: Da Estrutura ao Impacto</h3>
-                <p>Este curso completo de 10 aulas foi desenhado para transformar sua relação com a escrita acadêmica.</p>
-                <a href={`${base}cursos/curso-escrita/`} class="botao-principal">Ver Conteúdo do Curso</a>
-            </div>
-            <a href={`${base}cursos/curso-escrita/`}
-            class="card-destaque">
-                <img src={`${base}imagens/gatocard2.png`} alt="Ilustração para o curso de escrita científica">
-                <div class="card-destaque-conteudo">
-                    <h4>Escrita Científica</h4>
-                    <p>10 Aulas • 8h de conteúdo</p>
-                </div>
-            </a>
-        </section>
-    </main>
+    <HomeFeatured hero={hero} covers={covers} />
+  </main>
 </Layout>
+
+<style>
+  .home {
+    padding-bottom: 2rem;
+  }
+</style>
