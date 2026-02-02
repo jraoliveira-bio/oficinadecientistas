@@ -5,39 +5,42 @@ interface Props {
 const { base } = Astro.props;
 ---
 
-<section class="secao-apresentacao">
+<section class="home-hero">
   <img
     src={`${base}logo1.png`}
     alt="Logo Oficina de Cientistas"
-    class="logo-apresentacao"
+    class="home-hero__logo"
     loading="eager"
     decoding="async"
   />
-  <h2>Oficina de Cientistas</h2>
-  <p class="texto-slogan">DIFUNDINDO CONHECIMENTO E PROPAGANDO REDES</p>
+  <h2 class="home-hero__titulo">Oficina de Cientistas</h2>
+  <p class="home-hero__slogan">DIFUNDINDO CONHECIMENTO E PROPAGANDO REDES</p>
 </section>
 
 <style>
-  .secao-apresentacao {
+  .home-hero {
     text-align: center;
-    padding: 2rem 0;
+    padding: 45px 40px 60px 40px;
+    border-bottom: 1px solid var(--borda);
   }
 
-  .logo-apresentacao {
-    width: min(220px, 70vw);
-    height: auto;
+  .home-hero__logo {
     display: block;
-    margin: 0 auto 0.75rem auto;
+    max-width: 150px;
+    height: auto;
+    margin: 0 auto 1px auto;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
   }
 
-  .secao-apresentacao h2 {
-    margin-bottom: 0.3rem;
+  .home-hero__titulo {
+    font-size: 36px;
+    margin: 0;
   }
 
-  .texto-slogan {
-    font-family: "Montserrat", sans-serif;
-    margin-top: 0;
-    color: #202020;
+  .home-hero__slogan {
+    font-family: Montserrat;
+    margin: 4px 0 0 0;
+    color: var(--cor-texto-sec);
     font-size: medium;
     font-weight: 300;
     letter-spacing: 4px;

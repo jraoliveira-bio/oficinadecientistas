@@ -1,0 +1,155 @@
+---
+interface Props {
+  href: string;
+  imgSrc: string;
+  imgAlt: string;
+  label?: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  cta?: string;
+}
+
+const { href, imgSrc, imgAlt, label, title, description, meta, cta } = Astro.props;
+---
+
+<a class="feature-hero" href={href}>
+  <div class="feature-hero__media">
+    <div class="feature-hero__poster">
+      <img
+        src={imgSrc}
+        alt={imgAlt}
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </div>
+
+  <div class="feature-hero__text">
+    {label && <p class="feature-hero__label">{label}</p>}
+    <h3 class="feature-hero__title">{title}</h3>
+
+    {description && <p class="feature-hero__desc">{description}</p>}
+    {meta && <p class="feature-hero__meta">{meta}</p>}
+
+    {cta && <span class="feature-hero__cta">{cta} →</span>}
+  </div>
+</a>
+
+<style>
+  .feature-hero {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 1.4rem;
+    align-items: stretch;
+
+    text-decoration: none;
+    color: inherit;
+
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(6px);
+
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .feature-hero:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 34px rgba(0,0,0,0.10);
+  }
+
+  /* Coluna da imagem: pode ter “respiro editorial” */
+  .feature-hero__media {
+    padding: 1.1rem;
+    background: rgba(255,255,255,0.22);
+    display: grid;
+    place-items: center;
+  }
+
+  /* Pôster 4:5 (capa) dentro da coluna */
+  .feature-hero__poster {
+    width: min(420px, 100%);
+    aspect-ratio: 4 / 5;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.25);
+  }
+
+  .feature-hero__poster img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Coluna do texto: leve e compacta */
+  .feature-hero__text {
+    padding: 1.2rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .feature-hero__label {
+    margin: 0 0 0.4rem 0;
+    font-family: var(--fonte-ui);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cor-texto-sec);
+  }
+
+  .feature-hero__title {
+    margin: 0 0 0.6rem 0;
+    font-size: 26px;
+    line-height: 1.15;
+    color: var(--cor-titulo);
+  }
+
+  .feature-hero__desc {
+    margin: 0 0 0.7rem 0;
+    font-family: var(--fonte-ui);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--cor-texto-sec);
+    max-width: 46ch;
+  }
+
+  .feature-hero__meta {
+    margin: 0 0 0.9rem 0;
+    font-family: var(--fonte-ui);
+    font-size: 13px;
+    color: var(--cor-texto-sec);
+  }
+
+  .feature-hero__cta {
+    font-family: var(--fonte-ui);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-titulo);
+  }
+
+  @media (max-width: 900px) {
+    .feature-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-hero__text {
+      padding-top: 0.8rem;
+    }
+
+    .feature-hero__title {
+      font-size: 22px;
+    }
+
+    /* no mobile, o “pôster” continua 4:5 mas ocupa mais a largura */
+    .feature-hero__poster {
+      width: min(520px, 100%);
+    }
+  }
+</style>
