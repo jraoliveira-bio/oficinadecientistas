@@ -208,6 +208,7 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
     if (!videoId) return;
     player = new YT.Player('youtube-player', {
       height: '100%', width: '100%', videoId: videoId,
+      host: 'https://www.youtube-nocookie.com',
       playerVars: { 'playsinline': 1, 'rel': 0 },
       events: {
         'onStateChange': onPlayerStateChange // Adiciona um "vigia" para o estado do player

@@ -50,9 +50,6 @@ const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
       </div>
     </header>
 
-    <!-- SANITY CHECK: remova estas duas linhas depois de validar -->
-    <p style="opacity:.6">[pré-conteúdo]</p>
-
     <div class="content">
       {
         Render
@@ -60,9 +57,6 @@ const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
           : <p style="color: var(--oc-muted);">Não foi possível renderizar o conteúdo deste post. Veja o console do dev para detalhes.</p>
       }
     </div>
-
-    <!-- SANITY CHECK: remova estas duas linhas depois de validar -->
-    <p style="opacity:.6">[pós-conteúdo]</p>
 
     <hr />
     <p><a href={withBase("blog")}>← Voltar ao blog</a></p>
