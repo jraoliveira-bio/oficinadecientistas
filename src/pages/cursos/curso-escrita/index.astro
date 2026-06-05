@@ -1,8 +1,15 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import { Content } from '~/content/curso-escrita/introducao.mdx';
-import Divider from '../../../components/Divider.astro'; // ADICIONE ESTA LINHA
-import imagemDoDivisor from '~/../public/imagens/divider3.png'; 
+import Divider from '../../../components/Divider.astro';
+import imagemDoDivisor from '~/../public/imagens/divider3.png';
+import { getCollection } from 'astro:content';
+
+// Grade curricular gerada a partir da coleção (aulas com menu:true, ordenadas)
+const aulas = (await getCollection('curso-escrita'))
+  .filter(a => a.data.menu === true)
+  .sort((a, b) => (a.data.ordem ?? 999) - (b.data.ordem ?? 999));
+
 const base = import.meta.env.BASE_URL.endsWith('/')
 ? import.meta.env.BASE_URL
 : import.meta.env.BASE_URL + '/';
@@ -27,20 +34,22 @@ const base = import.meta.env.BASE_URL.endsWith('/')
         <section id="grade" class="secao-grade-curricular">
             <h2>Grade Curricular</h2>
             <div class="acordeon-container">
-                <div class="acordeon-item">
-                    <button class="acordeon-cabecalho">
-                        <span class="acordeon-titulo"><i class="fas fa-video"></i> Aula 01: O Esqueleto de um Artigo</span>
-                        <i class="fas fa-plus icone-acordeon"></i>
-                    </button>
-                    <div class="acordeon-conteudo"><p>Descrição da Aula 01...</p></div>
-                </div>
-                <div class="acordeon-item">
-                    <button class="acordeon-cabecalho">
-                        <span class="acordeon-titulo"><i class="fas fa-video"></i> Aula 02: Construindo Parágrafos</span>
-                        <i class="fas fa-plus icone-acordeon"></i>
-                    </button>
-                    <div class="acordeon-conteudo"><p>Descrição da Aula 02...</p></div>
-                </div>
+                {aulas.map(aula => {
+                    const icone = aula.data.tipo === 'texto' ? 'fas fa-align-left' : 'fas fa-video';
+                    const titulo = aula.data.shortTitle ?? aula.data.title;
+                    return (
+                        <div class="acordeon-item">
+                            <button class="acordeon-cabecalho">
+                                <span class="acordeon-titulo"><i class={icone}></i> {titulo}</span>
+                                <i class="fas fa-plus icone-acordeon"></i>
+                            </button>
+                            <div class="acordeon-conteudo">
+                                <p>{aula.data.description ?? 'Descrição em breve.'}</p>
+                                <p><a href={`${base}cursos/curso-escrita/${aula.slug}`}>Ir para a aula →</a></p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </section>
 

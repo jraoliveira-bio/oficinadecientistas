@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
+---
+<Layout title="Links">
+  <main class="pagina-em-breve">
+    <h1>Links</h1>
+    <p>Esta seção está em construção. Em breve, uma seleção de recursos, leituras e
+      ferramentas úteis para o pesquisador em formação.</p>
+    <p><a href={base}>Voltar à página inicial →</a></p>
+  </main>
+</Layout>
+
+<style>
+  .pagina-em-breve {
+    max-width: 60ch;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+  .pagina-em-breve h1 { margin-bottom: 1rem; }
+  .pagina-em-breve p { line-height: 1.6; }
+</style>

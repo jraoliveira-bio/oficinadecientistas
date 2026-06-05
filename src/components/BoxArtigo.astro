@@ -3,10 +3,11 @@
 
 // A prop 'type' agora se chama 'palette' para refletir a intenção de design.
 // O padrão será 'neutro'.
-const { palette = 'neutro', title, imagem } = Astro.props;
-
-// O mapa de estilos agora só define a classe do tema de cor.
-const themeClass = `theme-${palette}`; 
+// Aceita `palette` (preferido) ou `type` (retrocompat). Valores desconhecidos caem em 'neutro'.
+const { palette, type, title, imagem } = Astro.props;
+const PALETAS = ['neutro', 'vermelho', 'roxo'];
+const escolhida = palette ?? type ?? 'neutro';
+const themeClass = `theme-${PALETAS.includes(escolhida) ? escolhida : 'neutro'}`;
 ---
 
 <div class={`box-artigo-editorial ${themeClass}`}>

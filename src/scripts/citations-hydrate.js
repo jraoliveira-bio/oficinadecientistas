@@ -5,7 +5,7 @@
       : fn();
 
   ready(() => {
-    const log = (...a) => console.log('[OC(H) LIST]', ...a);
+    const log = () => {}; // debug silenciado em produção
 
     // utilzinho pra montar a lista a partir dos botões e do REFS
     function buildList() {

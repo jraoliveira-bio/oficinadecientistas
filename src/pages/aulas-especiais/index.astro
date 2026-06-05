@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
+---
+<Layout title="Aulas Especiais">
+  <main class="pagina-em-breve">
+    <h1>Aulas Especiais</h1>
+    <p>Esta seção está em construção. Em breve, aulas avulsas sobre temas pontuais da
+      prática científica — fora da trilha dos cursos.</p>
+    <p><a href={`${base}cursos/`}>Ver os cursos disponíveis →</a></p>
+  </main>
+</Layout>
+
+<style>
+  .pagina-em-breve {
+    max-width: 60ch;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+  .pagina-em-breve h1 { margin-bottom: 1rem; }
+  .pagina-em-breve p { line-height: 1.6; }
+</style>
