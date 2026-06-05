@@ -18,7 +18,7 @@ const refsAttr = encodeURIComponent(JSON.stringify(referencias));
 // Busca todas as aulas da coleção para montar o menu
 const todasAsAulas = (await getCollection('curso-escrita'))
   .filter(aula => aula.data.menu === true)
-  .sort((a, b) => a.data.ordem - b.data.ordem);
+  .sort((a, b) => (a.data.ordem ?? 999) - (b.data.ordem ?? 999));
 ---
 
 <script is:inline>
@@ -66,7 +66,7 @@ const todasAsAulas = (await getCollection('curso-escrita'))
           return (
             <li class:list={[{'aula-ativa': isAtiva}]}>
               <a href={aulaUrl}>
-                <i class={iconeClasse}></i> {aula.data.title}
+                <i class={iconeClasse}></i> {aula.data.shortTitle ?? aula.data.title}
               </a>
             </li>
           )
@@ -247,6 +247,50 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     .handle-leitura,
     .toggle-leitura .icone {
       transition: none !important;
+    }
+  }
+
+  /* ===== Responsivo: aulas no mobile ===== */
+  @media (max-width: 768px) {
+    /* Uma coluna: o menu deixa de esmagar a coluna de conteúdo */
+    .container-sala-de-aula {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .menu-aulas {
+      position: static;
+      width: auto;
+      height: auto;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+    .texto-aula {
+      max-width: 100%;
+    }
+
+    /* "Modo leitura" é um recurso de desktop (recolher a barra lateral);
+       no mobile não há barra fixa, então escondemos os controles. */
+    .toggle-leitura,
+    .handle-leitura {
+      display: none;
+    }
+
+    /* Se o modo leitura foi herdado de uma sessão desktop, não deixa o menu
+       sumir no mobile (senão o aluno fica sem acesso ao índice). */
+    body.modo-leitura-ativo .container-sala-de-aula {
+      grid-template-columns: 1fr;
+    }
+    body.modo-leitura-ativo .menu-aulas {
+      transform: none;
+      pointer-events: auto;
+    }
+
+    /* No mobile as notas de margem viram blocos inline (ver NotaDeMargem),
+       então devem aparecer sempre — não dependem do modo leitura aqui. */
+    :global(.conteudo-aula .nota-de-margem .nota) {
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 </style>

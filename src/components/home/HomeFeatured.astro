@@ -35,7 +35,7 @@ const { hero, covers } = Astro.props;
   <FeatureHeroCard {...hero} />
 
   {covers?.length > 0 && (
-    <div class="home-featured__covers">
+    <div class="home-featured__covers" data-count={covers.length}>
       {covers.map((c) => <CoverCard {...c} />)}
     </div>
   )}
@@ -56,6 +56,11 @@ const { hero, covers } = Astro.props;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.2rem;
     align-items: stretch;
+  }
+
+  /* Um único cover não deve esticar para a largura toda nem deixar metade vazia */
+  .home-featured__covers[data-count="1"] {
+    grid-template-columns: minmax(0, 420px);
   }
 
   @media (max-width: 900px) {

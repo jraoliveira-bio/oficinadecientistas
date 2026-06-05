@@ -41,6 +41,18 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <script is:inline>
+      // Restaura o "modo leitura" no <body> antes do 1º paint (evita flash ao recarregar).
+      // Precisa rodar aqui dentro do <body>: o preload do <head> só alcança o <html>.
+      (function () {
+        try {
+          var v = localStorage.getItem('oficina.modoLeitura');
+          if (v === '1' || v === 'true') {
+            document.body.classList.add('modo-leitura-ativo', 'modo-leitura-handle-pronto');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <div class="pagina-container">
         <Header />
         <slot />
