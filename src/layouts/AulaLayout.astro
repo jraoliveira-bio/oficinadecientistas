@@ -57,10 +57,16 @@ const todasAsAulas = (await getCollection('curso-escrita'))
         {todasAsAulas.map(aula => {
           const aulaUrl = `${base}cursos/curso-escrita/${aula.slug}`;
           const isAtiva = aula.slug === aulaAtual.slug;
+
+          // --- LÓGICA DO ÍCONE ---
+          // Se o tipo for texto, usa "pena de escrita". Se não, usa vídeo.
+          const iconeClasse = aula.data.tipo === 'texto' ? 'fas fa-align-left' : 'fas fa-video';
+          // -----------------------
+
           return (
             <li class:list={[{'aula-ativa': isAtiva}]}>
               <a href={aulaUrl}>
-                <i class="fas fa-video"></i> {aula.data.title}
+                <i class={iconeClasse}></i> {aula.data.title}
               </a>
             </li>
           )
@@ -449,4 +455,3 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   })();
 </script>
-

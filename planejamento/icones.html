@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ícones a substituir por ilustrações — Oficina de Cientistas</title>
+  <!-- FontAwesome só para renderizar os ícones ATUAIS como referência visual -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root{
+      --tinta:#34495E; --vinho:#8c4b4b; --jade:#00695C; --papel:#f7f5ef;
+      --borda:#e3ded2; --suave:#6b6a68;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:2.5rem 1.25rem 4rem; background:var(--papel); color:var(--tinta);
+      font:16px/1.6 'Lato', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    .wrap{max-width:980px; margin:0 auto}
+    h1{font-family:Georgia,'Lora',serif; font-size:1.9rem; margin:0 0 .3rem}
+    .sub{color:var(--suave); margin:0 0 2rem; max-width:62ch}
+    h2{font-family:Georgia,'Lora',serif; font-size:1.3rem; margin:2.5rem 0 .25rem; color:var(--vinho)}
+    .nota{color:var(--suave); font-size:.9rem; margin:0 0 1.25rem}
+    .card{
+      display:grid; grid-template-columns:96px 1fr; gap:1.1rem; align-items:start;
+      background:#fff; border:1px solid var(--borda); border-radius:8px;
+      padding:1rem 1.2rem; margin:.75rem 0;
+    }
+    .glyph{
+      width:96px; height:96px; display:flex; align-items:center; justify-content:center;
+      background:var(--papel); border:1px dashed var(--borda); border-radius:8px;
+      font-size:2.2rem; color:var(--tinta);
+    }
+    .meta h3{margin:.1rem 0 .15rem; font-size:1.05rem}
+    .meta code{background:#f0eee6; padding:.05rem .35rem; border-radius:4px; font-size:.85em}
+    .where{color:var(--suave); font-size:.88rem; margin:.15rem 0 .6rem}
+    .sug{margin:.1rem 0}
+    .sug b{color:var(--jade)}
+    .sim{color:var(--suave); font-size:.92rem; margin:.2rem 0 0}
+    .legenda{display:flex; gap:1rem; flex-wrap:wrap; font-size:.85rem; color:var(--suave); margin-top:.5rem}
+    .pair{border-left:3px solid var(--jade)}
+    @media (max-width:560px){ .card{grid-template-columns:1fr} .glyph{width:72px;height:72px;font-size:1.8rem} }
+    @media print{ body{background:#fff} .card{break-inside:avoid} }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Ícones a substituir por ilustrações</h1>
+  <p class="sub">
+    Página de referência (planejamento). Lista <b>todos os ícones que o site usa hoje</b> e que
+    devem virar <b>ilustrações autorais</b>, no traço do logo (cogumelo/micélio) e das charges.
+    Para cada um: onde aparece, a ilustração sugerida e o simbolismo. Os ícones mostrados à
+    esquerda são os <b>atuais (FontAwesome)</b> — o que vai embora.
+  </p>
+  <p class="nota">
+    <b>Estilo desejado:</b> traço de tinta / desenhado à mão, monocromático (funciona em qualquer
+    cor da paleta), legível em tamanho pequeno (16–24px) — simples e icônico, não detalhado demais.
+    Fonte temática: <b>fungos/micélio</b>, <b>entomologia</b> e <b>ferramentas de naturalista</b>.
+  </p>
+
+  <h2>A · Ícones semânticos (prioridade)</h2>
+  <p class="nota">São os que mais "datam" o site. Trocá-los é o maior salto de personalidade.</p>
+
+  <!-- 1 e 2: par vídeo/texto -->
+  <div class="card pair">
+    <div class="glyph"><i class="fa-solid fa-video"></i></div>
+    <div class="meta">
+      <h3>Aula em <b>vídeo</b> · <code>fa-video</code></h3>
+      <p class="where">Menu lateral das aulas (AulaLayout) · cards de curso (cursos/index, curso-escrita/index)</p>
+      <p class="sug"><b>Sugestão:</b> um <b>vaga-lume com a luz acesa</b> (ou uma lamparina/lanterna).</p>
+      <p class="sim">Simbolismo: a luz viva do inseto = a aula que ilumina e transmite. Vem da entomologia do autor. Forma <b>par</b> com o ícone de "texto".</p>
+    </div>
+  </div>
+
+  <div class="card pair">
+    <div class="glyph"><i class="fa-solid fa-align-left"></i></div>
+    <div class="meta">
+      <h3>Aula em <b>texto</b> · <code>fa-align-left</code></h3>
+      <p class="where">Menu lateral das aulas (AulaLayout), quando <code>tipo: 'texto'</code></p>
+      <p class="sug"><b>Sugestão:</b> um <b>bico de pena com gota de tinta</b> (ou folha de caderno com linhas manuscritas).</p>
+      <p class="sim">Simbolismo: o registro escrito, o ofício da escrita — tema central do projeto. <b>Par</b> visual com o vaga-lume.</p>
+    </div>
+  </div>
+
+  <!-- 3: acordeão -->
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-plus"></i>&nbsp;<i class="fa-solid fa-minus" style="font-size:1.4rem"></i></div>
+    <div class="meta">
+      <h3>Expandir / recolher · <code>fa-plus</code> / <code>fa-minus</code></h3>
+      <p class="where">Acordeão da grade curricular (cursos/curso-escrita/index)</p>
+      <p class="sug"><b>Sugestão:</b> <b>semente/esporo fechado (+)</b> que vira <b>broto/fio de micélio (−)</b>. Alternativa minimalista: "+"/"−" desenhados a tinta.</p>
+      <p class="sim">Simbolismo: germinação — abrir conhecimento é fazer brotar. Manter bem legível por ser um controle.</p>
+    </div>
+  </div>
+
+  <!-- 4-7: InfoBox -->
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-lightbulb"></i></div>
+    <div class="meta">
+      <h3>Caixa "Dica" · <code>fa-lightbulb</code></h3>
+      <p class="where">Componente <code>InfoBox</code>, tipo <code>dica</code></p>
+      <p class="sug"><b>Sugestão:</b> um <b>cogumelo bioluminescente</b> (pequeno, brilhando).</p>
+      <p class="sim">Simbolismo: a fagulha de ideia vinda do <b>próprio símbolo do projeto</b> — e fungos bioluminescentes existem de verdade. Aposenta o clichê da lâmpada.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <div class="meta">
+      <h3>Caixa "Atenção" · <code>fa-triangle-exclamation</code></h3>
+      <p class="where">Componente <code>InfoBox</code>, tipo <code>atencao</code></p>
+      <p class="sug"><b>Sugestão:</b> um <b>cogumelo de aviso (Amanita, com pintas)</b> — ou um <b>inseto aposemático</b> (vespa/marimbondo).</p>
+      <p class="sim">Simbolismo: aposematismo — as cores de alerta da natureza. A Amanita amarra no tema fúngico e diz "cuidado" sem precisar de triângulo.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-book-reader fa-book-open-reader"></i></div>
+    <div class="meta">
+      <h3>Caixa "Saiba mais" · <code>fa-book-reader</code></h3>
+      <p class="where">Componente <code>InfoBox</code>, tipo <code>saiba-mais</code> (padrão)</p>
+      <p class="sug"><b>Sugestão:</b> uma <b>lupa de naturalista sobre um espécime/folha</b> (ou livro aberto com lupa).</p>
+      <p class="sim">Simbolismo: observar de perto, aprofundar — o gesto do naturalista que examina antes de concluir.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-key"></i></div>
+    <div class="meta">
+      <h3>Caixa "Conceito-chave" · <code>fa-key</code></h3>
+      <p class="where">Componente <code>InfoBox</code>, tipo <code>chave</code></p>
+      <p class="sug"><b>Sugestão:</b> uma <b>chave dicotômica estilizada</b> (mini-diagrama ramificado) — ou uma chave antiga a tinta.</p>
+      <p class="sim">Simbolismo: trocadilho perfeito — em biologia, a "chave de identificação" é o que <b>destrava</b> a identidade de uma espécie; aqui, o conceito que destrava o entendimento.</p>
+    </div>
+  </div>
+
+  <!-- 8: Laboratório Mental -->
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-brain"></i></div>
+    <div class="meta">
+      <h3>Selo "Laboratório Mental" · <code>fa-brain</code></h3>
+      <p class="where">Componente <code>LaboratorioMental</code> (seções de experimento mental)</p>
+      <p class="sug"><b>Sugestão:</b> uma <b>cabeça de perfil com micélio/raízes no lugar do cérebro</b> — ou um <b>Erlenmeyer-terrário</b> com um pequeno ecossistema dentro.</p>
+      <p class="sim">Simbolismo: pensar como uma rede interconectada que cresce; o experimento mental como um espaço controlado. Liga direto na metáfora do micélio.</p>
+    </div>
+  </div>
+
+  <!-- 9-11: Visão de Futuro -->
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="meta">
+      <h3>"Expandir a Grade Curricular" · <code>fa-graduation-cap</code></h3>
+      <p class="where">Seção <code>Sobre → Visão de Futuro</code></p>
+      <p class="sug"><b>Sugestão:</b> um <b>báculo de samambaia (fiddlehead) se desenrolando</b> — ou um ramo com novos brotos.</p>
+      <p class="sim">Simbolismo: crescimento orgânico e contínuo da grade de cursos. Substitui o capelo (clichê acadêmico genérico).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-users"></i></div>
+    <div class="meta">
+      <h3>"Construir uma Comunidade" · <code>fa-users</code></h3>
+      <p class="where">Seção <code>Sobre → Visão de Futuro</code></p>
+      <p class="sug"><b>Sugestão:</b> <b>insetos sociais (formigas/abelhas)</b> — ou <b>nós conectados por fios de micélio</b>.</p>
+      <p class="sim">Simbolismo: inteligência coletiva que emerge de indivíduos. Vem direto da entomologia e da metáfora de rede (a Aula 01 fala de formigas, abelhas, cupins, cardumes).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph"><i class="fa-solid fa-bullhorn"></i></div>
+    <div class="meta">
+      <h3>"Polo de Difusão Científica" · <code>fa-bullhorn</code></h3>
+      <p class="where">Seção <code>Sobre → Visão de Futuro</code></p>
+      <p class="sug"><b>Sugestão:</b> um <b>cogumelo (ou puffball) liberando uma nuvem de esporos ao vento</b> — ou um dente-de-leão dispersando sementes.</p>
+      <p class="sim">Simbolismo: <b>é literalmente o Manifesto</b> — "propagar o conhecimento e germinar novas redes". Difusão = dispersão de esporos. O melhor casamento de todo o conjunto.</p>
+    </div>
+  </div>
+
+  <h2>B · Marcas de interface (secundário, opcional)</h2>
+  <p class="nota">
+    São controles em unicode, não ícones de conteúdo. Podem virar pequenas marcas a tinta para
+    reforçar a pessoalidade, mas têm prioridade menor — alguns funcionam bem como estão.
+  </p>
+
+  <div class="card">
+    <div class="glyph" style="font-size:1.8rem">✎</div>
+    <div class="meta">
+      <h3>Ícone da nota de margem · <code>✎</code> (padrão)</h3>
+      <p class="where">Componente <code>NotaDeMargem</code> (prop <code>icone</code>)</p>
+      <p class="sug"><b>Sugestão:</b> um <b>bico de pena</b> a tinta, consistente com o ícone de "aula em texto".</p>
+      <p class="sim">Simbolismo: anotação manuscrita à margem, como num livro lido com atenção.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph" style="font-size:1.6rem">⫷&nbsp;⫸</div>
+    <div class="meta">
+      <h3>Modo leitura: recolher / reabrir · <code>⫷</code> / <code>⫸</code></h3>
+      <p class="where">Botão "Modo leitura" e handle (AulaLayout)</p>
+      <p class="sug"><b>Sugestão:</b> um <b>livro/folha abrindo e fechando</b>, ou colchetes a tinta.</p>
+      <p class="sim">Simbolismo: limpar a mesa para ler — entrar e sair do "modo foco".</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph" style="font-size:1.6rem">▼ &nbsp; → &nbsp; ↗ &nbsp; ×</div>
+    <div class="meta">
+      <h3>Setas, expandir e fechar · <code>▼ → ↗ ×</code></h3>
+      <p class="where">Abas do vídeo e acordeão (▼) · CTAs dos cards (→) · link externo/Lattes (↗) · fechar popover de citação (×)</p>
+      <p class="sug"><b>Sugestão:</b> versões <b>desenhadas a tinta</b> (setas e "x" à mão). A seta <code>→</code> dos CTAs é o ganho de personalidade mais fácil.</p>
+      <p class="sim">Simbolismo: gesto manual, "anotado à mão", em vez de glifo de sistema.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="glyph" style="color:var(--vinho); font-size:1.4rem">●</div>
+    <div class="meta">
+      <h3>Status "● EM GRAVAÇÃO" · <code>●</code></h3>
+      <p class="where">Vitrine de cursos (cursos/index) — selo de status do curso</p>
+      <p class="sug"><b>Sugestão:</b> um <b>esporo/ponto</b> (eventualmente pulsante) no lugar do círculo.</p>
+      <p class="sim">Simbolismo: algo em germinação — curso "brotando", ainda em formação.</p>
+    </div>
+  </div>
+
+  <p class="legenda">
+    <span>● = atual (FontAwesome / unicode), a substituir</span>
+    <span>· Total semânticos: 11 · Marcas de interface: 4 grupos</span>
+  </p>
+
+</div>
+</body>
+</html>

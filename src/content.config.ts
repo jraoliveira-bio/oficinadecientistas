@@ -34,6 +34,7 @@ const cursoEscritaCollection = defineCollection({
     shortTitle: z.string().optional(),      // título curto para menu (se quiser)
     menu: z.boolean().default(false),       // aparece no menu? (default: false)
     ordem: z.number().int().optional(),     // ordem no menu (se aplicável)
+    tipo: z.enum(['video', 'texto']).default('video'), // Define video como padrão
 
     // Metadados úteis (opcionais)
     draft: z.boolean().default(false),      // marcar aula como rascunho

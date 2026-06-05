@@ -20,6 +20,14 @@
         "ordem": {
           "type": "integer"
         },
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "video",
+            "texto"
+          ],
+          "default": "video"
+        },
         "draft": {
           "type": "boolean",
           "default": false
