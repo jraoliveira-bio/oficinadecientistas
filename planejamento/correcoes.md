@@ -15,6 +15,34 @@ Tarefas para deixar a **estrutura sólida antes do redesign**. Corresponde à **
 
 ---
 
+## ✅ Status da execução — branch `correcoes-e-robustez`
+
+Esta rodada fechou quase tudo. O checklist abaixo é o **plano original**; este bloco é o
+**registro autoritativo** do que foi feito.
+
+**Feito:** P0.1, P0.2, P0.3, P0.4, P1.1, P1.2, P1.3, P1.4, P1.5, P1.6, P1.8, P1.9, P1.10, P1.11,
+P2.1, P2.2, P3.1, M.1.
+
+**Parcial — P2.3:** removido o plugin morto `remark-cite-to-html.mjs`; a **consolidação dos 3
+scripts de citação fica como follow-up** (refator de risco médio; o sistema atual funciona —
+verificado em tela).
+
+**Adiado de propósito:**
+- **P2.4** (padronizar `base`/aliases) — explicitamente gradual, para não inflar diffs.
+- **P3.2** (Astro 5 → 6) — não agora.
+- **M.2** (generalizar layout para N cursos) — prematuro com um curso só; entra quando nascer o
+  2º curso (ver `design.md`, Fase 6).
+
+**Pendente de você (decisão/insumo):**
+- **P1.8** — URL real do Lattes (deixei o link desativado em `QuemSouEu.astro`).
+- **P1.1** — confirmar que `precisao.mdx` é a Aula 02 canônica; deixei `precisao2` e `prototype`
+  **fora do menu** (`menu:false`), sem apagar nada.
+
+Commits da branch: `.gitignore` + desversionamento → conteúdo/marcação → robustez aulas/home →
+nav/limpeza/grade → remoção de código morto.
+
+---
+
 ## P0 — Bugs que quebram a experiência
 
 - [ ] **P0.1 · Aulas ilegíveis no mobile** 🔴

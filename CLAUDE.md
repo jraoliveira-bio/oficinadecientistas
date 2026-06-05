@@ -152,8 +152,7 @@ oficinadecientistas/
    ├─ data/conceitos.json   # dados consumidos por Table.astro
    ├─ lib/url.ts, lib/blog-utils.ts
    ├─ plugins/
-   │  ├─ rehype-citations.mjs      # registrado no astro.config (ver seção 9)
-   │  └─ remark-cite-to-html.mjs   # NÃO registrado — legado/dormiente
+   │  └─ rehype-citations.mjs      # registrado no astro.config (ver seção 9)
    ├─ scripts/citations-hydrate.js # constrói a lista de referências no cliente
    └─ styles/            # tokens.css, base.css, blog-index.css, citations.css
 ```
@@ -260,7 +259,7 @@ Para autores, é simples (detalhes em [`docs/autoria-aulas.md`](docs/autoria-aul
 > - O plugin **`rehype-citations.mjs`** está registrado no `astro.config.mjs`, mas ele só
 >   captura tags `<cite>` **literais** escritas à mão no markdown — **não** captura o
 >   componente `<Cite/>`. Na prática, para o fluxo normal de autoria ele fica **inerte**.
-> - O plugin **`remark-cite-to-html.mjs`** **não está registrado em lugar nenhum** (legado).
+> - O plugin legado `remark-cite-to-html.mjs` foi **removido** (não era registrado/usado).
 > - Há **lógica de citação duplicada** em 3 arquivos (Layout inline, AulaLayout inline,
 >   citations-hydrate.js). Antes de "consertar" citações, entenda os três — mexer em um só
 >   costuma quebrar o conjunto. Idealmente isso seria consolidado num único script.
