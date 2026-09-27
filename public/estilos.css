@@ -1044,12 +1044,6 @@ p.paragrafo-capitular,
     word-break: break-word;
   }
 
-  /* H1/título com o mesmo padding */
-  .conteudo-aula h1,
-  .titulo-aula {
-    padding-inline: 20px;
-  }
-
   /* Capitular menor */
   .paragrafo-capitular::first-letter {
     font-size: 40px;
