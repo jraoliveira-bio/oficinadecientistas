@@ -73,6 +73,9 @@ npm run preview  # serve o dist/ localmente
   `npm run build` → publica `dist/` no Pages. Node 18.
 - `.nojekyll` na raiz impede o Jekyll de mexer no output.
 - **Não há ambiente de staging.** Push na `main` = publicar em produção.
+- **Site não-listado (alfa):** `Layout.astro` e `BlogLayout.astro` têm `<meta name="robots" content="noindex, nofollow">`.
+  Quem tem o link acessa; buscadores não indexam. Remova as duas tags quando for hora de listar.
+  (Um `robots.txt` não resolveria: no GitHub Pages de projeto ele ficaria fora da raiz do domínio.)
 
 ---
 
@@ -130,9 +133,10 @@ oficinadecientistas/
 ├─ jsconfig.json         # alias ~→src
 ├─ package.json
 ├─ .github/workflows/deploy.yml
-├─ public/               # servido como está (NÃO passa por bundler)
+├─ arte/                # arquivos de trabalho (.psd) e backups de imagens — FORA do build
+├─ public/               # servido como está (NÃO passa por bundler) — tudo aqui vai para o ar
 │  ├─ estilos.css        # ★ CSS GLOBAL do site principal (~930 linhas)
-│  ├─ imagens/           # imagens das aulas e home (inclui .psd de trabalho)
+│  ├─ imagens/           # imagens das aulas e home (só o que vai para o ar)
 │  ├─ img/               # favicons do blog + logos
 │  ├─ js/blog-index-expand.js
 │  └─ logo*.png, favicon*, site.webmanifest
@@ -192,11 +196,22 @@ Há **dois sistemas de estilo deliberadamente separados** para o site não "vaza
 ### Blog — `BlogLayout.astro`
 - **Não herda** `Layout.astro`. É autocontido.
 - Carrega o **design system próprio**: `styles/tokens.css` (variáveis `--oc-*`) + `styles/base.css`.
-- Fontes próprias (Oswald, Lora, Montserrat) e **favicons próprios** (`public/img/favicons/blog*`).
+- Fontes próprias (Lora, Montserrat) e **favicons próprios** (`public/img/favicons/blog*`).
 - **Não** tem sistema de citações.
 
 > Regra prática: estilizou algo no site principal? É em `public/estilos.css` ou no `<style>`
 > do componente. Estilizou algo no blog? Use os tokens `--oc-*` e os CSS de `src/styles/`.
+>
+> **Cores e tokens (três camadas):**
+> 1. `src/styles/paleta.css` — as **tintas nomeadas** (`--tinta`, `--ardosia`, `--vinho`,
+>    `--jade`, `--papel`…). Importada pelos **dois** mundos. Único lugar com hex de cor.
+> 2. **Papéis semânticos** — site: seção 0 de `public/estilos.css` (`--cor-texto`,
+>    `--cor-destaque`, `--cor-dica`, `--raio-*`, `--sombra-*`…); blog: `src/styles/tokens.css`
+>    (`--oc-*`). Cada mundo distribui as mesmas tintas em papéis diferentes.
+> 3. **Componentes usam só papéis** — nunca hex solto nem a tinta direto.
+>
+> Cor nova? Primeiro veja se uma tinta existente serve; se não, crie a tinta em `paleta.css` e
+> um papel que a use. O "espelho" do blog é trocar papéis em `tokens.css`, não criar cores.
 >
 > A diferença visual entre os dois é **proposital** — o "espelho estranho" da seção 1 (a cor de
 > destaque do site vira a cor base do blog, com outras inversões). Mantenha-os
@@ -329,7 +344,8 @@ Itens reais no repositório hoje — **não "conserte" silenciosamente; confirme
 **Adicionar um post no blog:** crie `src/content/blog/AAAA-MM-DD-slug.mdx` com `title`,
 `dataPublicacao` (data sem aspas), `tags`, `summary`. Aparece sozinho no índice (ordenado por data).
 
-**Mexer no visual do site principal:** quase sempre é `public/estilos.css` ou o `<style>` do componente.
+**Mexer no visual do site principal:** quase sempre é `public/estilos.css` ou o `<style>` do componente
+(cores só via papéis `--cor-*` — ver "Cores e tokens" na seção 8).
 **Mexer no visual do blog:** use os tokens `--oc-*` (`src/styles/tokens.css`) e os CSS de `src/styles/`.
 
 **Antes de finalizar qualquer mudança:** rode `npm run build` para garantir que o site estático

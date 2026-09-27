@@ -35,7 +35,7 @@ const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
 
 <BlogLayout title={title} description={description}>
   <Fragment slot="header">
-    <BlogHeader backHref={withBase("blog")} />
+    <BlogHeader backHref={withBase("blog/")} />
   </Fragment>
 
   <article class="oc-card" style="padding: var(--oc-space-4);">
@@ -59,7 +59,7 @@ const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
     </div>
 
     <hr />
-    <p><a href={withBase("blog")}>← Voltar ao blog</a></p>
+    <p><a href={withBase("blog/")}>← Voltar ao blog</a></p>
 
     <section id="comments-root" data-post-uid={post.slug} style="margin-top: var(--oc-space-8);">
       <!-- Futuro:

@@ -4,6 +4,7 @@
    - slots: header / sidebar / head
    - tokens/base importados só aqui para não vazar ao site-mãe
 */
+import "@/styles/paleta.css"; // tintas nomeadas, compartilhadas com o site
 import "@/styles/tokens.css";
 import "@/styles/base.css";
 import { withBase } from "@/lib/url";
@@ -25,6 +26,10 @@ const {
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <title>{title}</title>
+    <!-- Site NÃO-LISTADO (alfa): acessível pelo link, mas buscadores não indexam nem seguem links.
+         Para listar publicamente no futuro, apague esta linha aqui e no outro layout
+         (Layout.astro e BlogLayout.astro). -->
+    <meta name="robots" content="noindex, nofollow">
     <meta name="description" content={description} />
 
     <!-- OG/Twitter básicos -->
@@ -36,18 +41,17 @@ const {
     <meta name="twitter:description" content={description} />
 
     <!-- Favicons exclusivos do blog -->
-<link rel="icon" href={withBase("img/favicons/blog.svg")} type="image/svg+xml">
-<link rel="alternate icon" href={withBase("img/favicons/blog.ico")} sizes="any">
-<link rel="icon" href={withBase("img/favicons/blog-32.png")} sizes="32x32" type="image/png">
-<link rel="apple-touch-icon" href={withBase("img/favicons/blog-180.png")}>
-<link rel="icon" href={withBase("img/favicons/blog-192.png")} sizes="192x192" type="image/png">
-<link rel="mask-icon" href={withBase("img/favicons/blog-pinned.svg")} color="#683636">
+    <link rel="icon" href={withBase("img/favicons/blog.ico")} sizes="any">
+    <link rel="icon" href={withBase("img/favicons/blog-32x32.png")} sizes="32x32" type="image/png">
+    <link rel="icon" href={withBase("img/favicons/blog-16x16.png")} sizes="16x16" type="image/png">
+    <link rel="icon" href={withBase("img/favicons/blogandroid-chrome-192x192.png")} sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href={withBase("img/favicons/blog-apple-touch-icon.png")}>
 <meta name="theme-color" content="#683636">
 
-    <!-- Google Fonts (CDN): Oswald (título) e Lora (botão) -->
+    <!-- Google Fonts (CDN): Lora (títulos/botão) e Montserrat (título do header) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;900&display=swap" rel="stylesheet">
 
     <!-- Slot extra para páginas poderem injetar <head> -->

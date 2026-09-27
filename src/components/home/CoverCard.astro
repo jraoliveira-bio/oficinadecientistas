@@ -32,9 +32,8 @@ const { href, imgSrc, imgAlt, label, title, description, meta, cta } = Astro.pro
 
 <style>
   .cover-card {
-    --radius: 16px;
-    --paper-color: 253, 253, 251;
-    --paper: rgba(var(--paper-color), 0.8);
+    --radius: var(--raio-l);
+    --paper: color-mix(in srgb, var(--cor-superficie) 80%, transparent);
 
     /* CONTROLE GLOBAL DO “RODAPÉ” (recomendado: 5% a 8%) */
     --fade-h: 1%;
@@ -46,22 +45,22 @@ const { href, imgSrc, imgAlt, label, title, description, meta, cta } = Astro.pro
 
     border-radius: var(--radius);
     overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.06);
+    border: 1px solid var(--linha-sutil);
 
-    background: rgba(255,255,255,0.22);
+    background: color-mix(in srgb, var(--cor-superficie) 22%, transparent);
     transition: transform 220ms ease, box-shadow 220ms ease;
   }
 
   .cover-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 16px 34px rgba(0,0,0,0.10);
+    box-shadow: var(--sombra-2);
   }
 
   /* Imagem “capa” */
   .cover-card__media {
     position: relative;
     aspect-ratio: 3 / 4;
-    background: rgba(255,255,255,0.18);
+    background: color-mix(in srgb, var(--cor-superficie) 18%, transparent);
     overflow: hidden;
     z-index: 0;
   }
@@ -120,7 +119,7 @@ const { href, imgSrc, imgAlt, label, title, description, meta, cta } = Astro.pro
 
     background: linear-gradient(
       to bottom,
-      rgba(var(--paper-color), 0) 0%,
+      transparent 0%,
       var(--paper) 100%
     );
   }

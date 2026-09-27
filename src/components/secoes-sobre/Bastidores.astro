@@ -1,13 +1,16 @@
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+---
 <section class="sobre-secao">
   <h2>Nos Bastidores da Oficina</h2>
   <div class="texto-coluna-unica">
-    <p>Eu registro no Blog de Desenvolvimento toda a filosofia do projeto e a sua construção com IAs (Gemini e, eventualmente, ChatGPT). A construção deste site é um processo aberto e pode ser vista no repositório do GitHub do projeto.</p>
+    <p>Eu registro no <a href={`${base}blog/`} class="link-externo">Blog de Desenvolvimento</a> toda a filosofia do projeto e a sua construção com IAs (Gemini e, eventualmente, ChatGPT). A construção deste site é um processo aberto e pode ser vista no <a href="https://github.com/jraoliveira-bio/oficinadecientistas" target="_blank" rel="noopener" class="link-externo">repositório do GitHub do projeto ↗</a>.</p>
   </div>
 </section>
 <style>
   .sobre-secao {
-    background-color: rgba(74, 105, 139, 0.03); /* Fundo azulado */
-    margin: 0 -40px;
-    padding: 60px 40px;
+    background-color: color-mix(in srgb, var(--cor-titulo) 3%, transparent); /* fundo azulado */
+    margin: 0 calc(-1 * var(--sobre-pad, 40px));
+    padding: 60px var(--sobre-pad, 40px);
   }
 </style>

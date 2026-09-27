@@ -1,7 +1,7 @@
 // Supondo: label de mês "nov/2025" (abreviação pt-BR minúscula).
 export function formatDate(
   date: Date,
-  tz = "America/Manaus",
+  tz = "UTC", // datas do frontmatter chegam como meia-noite UTC; outro fuso "volta" um dia
   locale: string | string[] = "pt-BR"
 ): string {
   return new Intl.DateTimeFormat(locale, {

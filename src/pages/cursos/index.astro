@@ -1,15 +1,20 @@
 ---
 import Layout from '~/layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL.endsWith('/')
 ? import.meta.env.BASE_URL
 : import.meta.env.BASE_URL + '/';
+
+// Nº de aulas publicadas (no menu e fora de rascunho)
+const totalAulas = (await getCollection('curso-escrita'))
+  .filter(a => a.data.menu === true && !a.data.draft).length;
 ---
 
 <Layout title="Cursos">
     <main>
         <section class="secao-manifesto">
             <div class="manifesto-conteudo">
-                <h2>Ferramentas para o Pensamento Crítico</h2>
+                <h1>Ferramentas para o Pensamento Crítico</h1>
                 <p>A Oficina de Cientistas reúne cursos gratuitos com as habilidades essenciais que raramente são ensinadas de forma estruturada na pós-graduação — da escrita científica à estatística e ao desenho experimental. Nossa biblioteca de conteúdo é 100% gratuita e está em constante expansão.</p>
             </div>
         </section>
@@ -27,7 +32,7 @@ const base = import.meta.env.BASE_URL.endsWith('/')
                         <p class="card-curso-descricao">Aprenda a estruturar seus artigos, argumentar com clareza, e aumentar as chances de publicação em periódicos de prestígio.</p>
                         <div class="card-curso-meta">
                             <span class="tag-meta tag-status-rec">● EM GRAVAÇÃO</span>
-                            <span class="tag-meta">10 AULAS</span>
+                            <span class="tag-meta">{totalAulas} AULAS</span>
                             <span class="tag-meta">GRATUITO</span>
                         </div>
                     </div>

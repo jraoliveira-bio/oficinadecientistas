@@ -158,7 +158,8 @@ Todos ficam em `src/components/`. Props com ✱ são obrigatórias.
 </NotaDeMargem>
 ```
 - `resumo`✱ (texto curto da margem), `lado` (`'direita'`|`'esquerda'`, default `'direita'`),
-  `cor` (`'jade'`|`'vinho'`|qualquer cor CSS/hex, default `'jade'`), `largura` (default `'18ch'`),
+  `cor` (nome de uma tinta da paleta — `'jade'`, `'vinho'`, `'ardosia'`, `'tinta'`, `'salvia'`… —
+  ou qualquer cor CSS/hex; default `'jade'`), `largura` (default `'18ch'`),
   `offset` (default `'1.5rem'`), `icone` (default `'✎'`; passe `icone=""` para nenhum).
 - **Importante:** no desktop, as notas da margem ficam **invisíveis até o leitor ativar o
   "Modo leitura"** (que recolhe o menu e libera espaço lateral). No mobile viram um bloco

@@ -1,0 +1,57 @@
+/* src/styles/paleta.css
+   ==========================================================================
+   PALETA NOMEADA DA OFICINA — as "tintas" do projeto.
+   Importada pelo site principal (Layout.astro) e pelo blog (BlogLayout.astro).
+
+   REGRA: componentes NÃO usam estas variáveis direto. Cada "mundo" distribui as
+   tintas em PAPÉIS semânticos (--cor-texto, --cor-destaque, --cor-dica, …):
+     - site principal → public/estilos.css, seção 0  (--cor-*, --raio-*, --sombra-*)
+     - blog           → src/styles/tokens.css        (--oc-*)
+
+   O "espelho estranho" (CLAUDE.md §1) mora aqui: são as MESMAS tintas com os
+   papéis trocados. Hoje, por exemplo:
+                         site (palco)          blog (bastidores)
+     cor base / header   --tinta (ardósia)     --vinho-escuro
+     destaque            --vinho               (roxo provisório — ver tokens.css)
+     logo                cogumelo em vinho     cogumelo em ardósia
+   Para mexer no espelho, troque os papéis em tokens.css — não crie cores novas.
+   ========================================================================== */
+
+:root {
+  /* --- Ardósias (azul-acinzentado) --- */
+  --tinta:    #34495E; /* texto e header do site */
+  --ardosia:  #4A698B; /* títulos e links do site */
+  --grafite:  #5a6a7a; /* texto secundário */
+
+  /* --- Vinhos --- */
+  --vinho:          #8c4b4b; /* destaque do site (capitular, CTA, aula ativa) */
+  --vinho-escuro:   #683636; /* header do blog */
+  --vinho-profundo: #470d0d; /* títulos do blog */
+  --vinho-noite:    #380a0a; /* texto de destaque do blog */
+  --vinho-breu:     #240101; /* texto dos posts do blog */
+
+  /* --- Verdes --- */
+  --jade:   #00695C; /* Laboratório Mental, notas de margem */
+  --salvia: #348455; /* caixa "conceito-chave" */
+
+  /* --- Acentos editoriais (paletas do BoxArtigo) --- */
+  --ameixa:    #6D5B87;
+  --lavanda:   #a39cc4;
+  --terracota: #b95c50;
+  --ocre:      #D4A237;
+  --sinal:     #d9534f; /* "● EM GRAVAÇÃO" */
+
+  /* --- Neutros --- */
+  --nanquim:      #333333; /* tinta da "folha" datilografada do Manifesto */
+  --cinza:        #6B7280;
+  --cinza-quente: #6b6a68; /* o "cinza" do blog — o mesmo valor, puxado para o quente */
+  --cinza-linha:  #e0e0e0;
+  --nevoa:        #EAEAEA;
+  --nevoa-fria:   #DCDFE2; /* fundo do site (início do gradiente) */
+  --nevoa-quente: #E2DFDC; /* fundo do blog — o mesmo tom, espelhado para o quente */
+  --papel:        #fdfdfb;
+  --papel-sombra: #f7f7f7;
+  --papel-cru:    #f4f2f0; /* cartão de curso */
+  --branco:       #ffffff;
+  --preto:        #000000;
+}

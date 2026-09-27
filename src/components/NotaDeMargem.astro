@@ -6,7 +6,8 @@
  * Props:
  * - resumo (string)         -> texto curto que aparece na margem (obrigatório)
  * - lado ('direita'|'esquerda') -> lado onde a nota aparece no desktop (default: 'direita')
- * - cor ('jade'|'vinho'|hex) -> cor do texto/realce da nota (default: 'jade')
+ * - cor (nome da paleta|cor CSS) -> cor do texto/realce da nota (default: 'jade').
+ *     Nomes aceitos: os de src/styles/paleta.css (jade, vinho, ardosia, tinta, salvia…).
  * - largura (CSS length)    -> largura da caixa da nota (default: '18ch')
  * - offset (CSS length)     -> distância entre o texto e a nota (default: '1.5rem')
  * - icone (string)          -> opcional; ícone da nota (default: '✎')
@@ -30,17 +31,12 @@ const {
   icone = '✎',
 } = Astro.props;
 
-// Resolve cor principal (hex) e um fundo suave para o modo mobile
-const corHex =
-  cor === 'jade' ? '#00695C' :
-  cor === 'vinho' ? '#8c4b4b' :
-  cor; // permite hex ou qualquer cor CSS válida
+// Nome da paleta (ex.: 'jade') vira var(--jade); qualquer outra cor CSS passa direto.
+const TINTAS = ['tinta', 'ardosia', 'grafite', 'vinho', 'vinho-escuro', 'jade', 'salvia', 'ameixa', 'terracota', 'ocre'];
+const corCss = TINTAS.includes(cor) ? `var(--${cor})` : cor;
 
-// Fundo suave para mobile (fallbacks pensados para jade/vinho; se custom, usa um neutro claro)
-const bgMobile =
-  corHex.toLowerCase() === '#00695c' ? '#e6f2f0' :
-  corHex.toLowerCase() === '#8c4b4b' ? '#f5ecec' :
-  '#f7f9f8';
+// Fundo suave para o mobile: a própria cor da nota, bem diluída no branco
+const bgMobile = `color-mix(in srgb, ${corCss} 9%, white)`;
 ---
 
 <!--
@@ -52,7 +48,7 @@ const bgMobile =
 <div
   class="nota-de-margem"
   data-lado={lado}
-  style={`--nota-largura:${largura}; --nota-cor:${corHex}; --nota-offset:${offset}; --nota-bg-mobile:${bgMobile};`}
+  style={`--nota-largura:${largura}; --nota-cor:${corCss}; --nota-offset:${offset}; --nota-bg-mobile:${bgMobile};`}
 >
   <aside class="nota" role="note" aria-label="Nota de margem">
     <span class="icone" aria-hidden="true">{icone}</span>

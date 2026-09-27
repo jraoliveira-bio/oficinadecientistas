@@ -16,3 +16,13 @@ Esse isolamento também facilita o versionamento de tokens de estilo.
 
 ```ts
 // Exemplo: tipagem de frontmatter via schema Zod em content/config.ts
+const blog = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    dataPublicacao: z.date(),
+    tags: z.array(z.string()),
+    summary: z.string().optional(),
+  }),
+});
+```
