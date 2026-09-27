@@ -42,7 +42,7 @@ code, pre {
   font-size: 0.95em;
 }
 pre {
-  background: #faf7ff;
+  background: var(--oc-codigo-fundo);
   border: 1px dashed var(--oc-border);
   padding: var(--oc-space-4);
   border-radius: var(--oc-radius);

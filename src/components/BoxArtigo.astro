@@ -42,17 +42,17 @@ const themeClass = `theme-${PALETAS.includes(escolhida) ? escolhida : 'neutro'}`
   .box-artigo-editorial {
     margin: 40px 0;
     padding: 25px 30px;
-    border-radius: 4px;
-    
+    border-radius: var(--raio-s);
+
     /* ESTILO NOVO: Bordas duplas verticais */
     border-left: 3px solid;
     border-right: 3px solid;
 
     /* Borda superior e inferior muito sutis para fechar o quadro */
-    border-top: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;
-    
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+
+    box-shadow: var(--sombra-1);
   }
 
   .box-artigo-titulo {
@@ -69,13 +69,13 @@ const themeClass = `theme-${PALETAS.includes(escolhida) ? escolhida : 'neutro'}`
   .box-artigo-figura img {
     max-width: 100%;
     height: auto;
-    border-radius: 4px;
+    border-radius: var(--raio-s);
     margin-bottom: 10px;
   }
   .box-artigo-figura figcaption {
     font-size: 15px;
     font-style: italic;
-    color: #5a6a7a;
+    color: var(--cor-texto-sec);
   }
 
   .box-artigo-conteudo {
@@ -90,23 +90,24 @@ const themeClass = `theme-${PALETAS.includes(escolhida) ? escolhida : 'neutro'}`
   }
 
   /* --- PALETAS DE COR --- */
-  .theme-vermelho { 
-    border-color: #D4A237; /* Vermelho terracota dessaturado */
-    background-color: #fffaf0;
+  /* Cores vêm dos papéis --cor-box-* e --cor-neutro (public/estilos.css) */
+  .theme-vermelho {
+    border-color: var(--cor-box-vermelho-borda);
+    background-color: color-mix(in srgb, var(--cor-box-vermelho-borda) 7%, white);
   }
-  .theme-vermelho .box-artigo-titulo { color: #b95c50; }
+  .theme-vermelho .box-artigo-titulo { color: var(--cor-box-vermelho); }
 
   .theme-roxo {
-    border-color: #a39cc4; /* Roxo ameixa/lavanda dessaturado */
-    background-color: #f5f3f7;
+    border-color: var(--cor-box-roxo-borda);
+    background-color: color-mix(in srgb, var(--cor-box-roxo-borda) 10%, white);
   }
-  .theme-roxo .box-artigo-titulo { color: #6D5B87; }
+  .theme-roxo .box-artigo-titulo { color: var(--cor-box-roxo); }
 
   .theme-neutro {
-    border-color: #d1d5db; /* Cinza claro */
-    background-color: #fafafa;
+    border-color: color-mix(in srgb, var(--cor-neutro) 30%, white);
+    background-color: var(--cor-neutro-fundo);
   }
-  .theme-neutro .box-artigo-titulo { color: #6B7280; }
+  .theme-neutro .box-artigo-titulo { color: var(--cor-neutro); }
 
   /* --- RESPONSIVIDADE --- */
   @media (max-width: 768px) {

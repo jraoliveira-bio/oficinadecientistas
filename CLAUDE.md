@@ -193,11 +193,22 @@ Há **dois sistemas de estilo deliberadamente separados** para o site não "vaza
 ### Blog — `BlogLayout.astro`
 - **Não herda** `Layout.astro`. É autocontido.
 - Carrega o **design system próprio**: `styles/tokens.css` (variáveis `--oc-*`) + `styles/base.css`.
-- Fontes próprias (Oswald, Lora, Montserrat) e **favicons próprios** (`public/img/favicons/blog*`).
+- Fontes próprias (Lora, Montserrat) e **favicons próprios** (`public/img/favicons/blog*`).
 - **Não** tem sistema de citações.
 
 > Regra prática: estilizou algo no site principal? É em `public/estilos.css` ou no `<style>`
 > do componente. Estilizou algo no blog? Use os tokens `--oc-*` e os CSS de `src/styles/`.
+>
+> **Cores e tokens (três camadas):**
+> 1. `src/styles/paleta.css` — as **tintas nomeadas** (`--tinta`, `--ardosia`, `--vinho`,
+>    `--jade`, `--papel`…). Importada pelos **dois** mundos. Único lugar com hex de cor.
+> 2. **Papéis semânticos** — site: seção 0 de `public/estilos.css` (`--cor-texto`,
+>    `--cor-destaque`, `--cor-dica`, `--raio-*`, `--sombra-*`…); blog: `src/styles/tokens.css`
+>    (`--oc-*`). Cada mundo distribui as mesmas tintas em papéis diferentes.
+> 3. **Componentes usam só papéis** — nunca hex solto nem a tinta direto.
+>
+> Cor nova? Primeiro veja se uma tinta existente serve; se não, crie a tinta em `paleta.css` e
+> um papel que a use. O "espelho" do blog é trocar papéis em `tokens.css`, não criar cores.
 >
 > A diferença visual entre os dois é **proposital** — o "espelho estranho" da seção 1 (a cor de
 > destaque do site vira a cor base do blog, com outras inversões). Mantenha-os
@@ -330,7 +341,8 @@ Itens reais no repositório hoje — **não "conserte" silenciosamente; confirme
 **Adicionar um post no blog:** crie `src/content/blog/AAAA-MM-DD-slug.mdx` com `title`,
 `dataPublicacao` (data sem aspas), `tags`, `summary`. Aparece sozinho no índice (ordenado por data).
 
-**Mexer no visual do site principal:** quase sempre é `public/estilos.css` ou o `<style>` do componente.
+**Mexer no visual do site principal:** quase sempre é `public/estilos.css` ou o `<style>` do componente
+(cores só via papéis `--cor-*` — ver "Cores e tokens" na seção 8).
 **Mexer no visual do blog:** use os tokens `--oc-*` (`src/styles/tokens.css`) e os CSS de `src/styles/`.
 
 **Antes de finalizar qualquer mudança:** rode `npm run build` para garantir que o site estático

@@ -14,11 +14,11 @@
   .caixa-sintese {
     margin: 60px auto;
     padding: 25px 30px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    background-color: #fafafa;
+    border-radius: var(--raio-m);
+    border: 1px solid color-mix(in srgb, var(--cor-neutro) 30%, white);
+    background-color: var(--cor-neutro-fundo);
     max-width: 900px;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--sombra-1);
   }
 
   .sintese-titulo {
@@ -26,8 +26,8 @@
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 600;
-    color: #6B7280;
-    border-bottom: 1px solid #e0e0e0;
+    color: var(--cor-neutro);
+    border-bottom: 1px solid var(--borda-escura);
     padding-bottom: 15px;
     /* Alterações aqui 👇 */
     text-align: center; 
@@ -36,17 +36,12 @@
   .sintese-conteudo :global(p) {
     margin: 0;
     line-height: 1.7;
-    font-family: var(--fonte-slab);
+    font-family: var(--fonte-base);
   }
   
   .sintese-conteudo :global(.take-home-grid) {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  @media (min-width: 768px) {
-    .sintese-conteudo :global(.take-home-grid) {
-    }
   }
 </style>

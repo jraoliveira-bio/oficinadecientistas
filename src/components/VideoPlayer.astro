@@ -84,11 +84,11 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
   .video-player-container {
     max-width: 800px;
     margin: 2rem auto;
-    border: 1px solid #0000001b;
-    border-radius: 8px;
-    background-color: #dee1e4;
+    border: 1px solid var(--borda-escura);
+    border-radius: var(--raio-m);
+    background-color: var(--cor-bg-1);
     overflow: hidden;
-    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.1)
+    box-shadow: var(--sombra-1);
   }
 
   /* Player de Vídeo */
@@ -96,9 +96,10 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
     position: relative;
     aspect-ratio: 16 / 9;
     width: 100%;
-    background-color: #000;
+    background-color: var(--cor-tela);
   }
-  .video-wrapper iframe {
+  /* :global — o <iframe> é criado em tempo de execução pela API do YouTube e não recebe o atributo de escopo */
+  .video-wrapper :global(iframe) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -108,32 +109,32 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
 
   /* Interface de Abas */
   .interactive-panel {
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--borda-escura);
     padding: 0 1.5rem;
   }
   .tab-nav {
     display: flex;
     gap: 2rem;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--borda);
   }
   .tab-button {
     border: none; background: none; padding: 1rem 0.25rem; cursor: pointer;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 1rem; font-weight: 600; color: #666; position: relative;
+    font-family: var(--fonte-ui);
+    font-size: 1rem; font-weight: 600; color: var(--cor-texto-sec); position: relative;
     transition: color 0.3s ease;
   }
-  .tab-button:hover { color: #000; }
+  .tab-button:hover { color: var(--cor-texto); }
   .tab-button::after {
     content: ''; position: absolute; bottom: -1px; left: 0;
-    width: 100%; height: 3px; background-color: #0056b3;
+    width: 100%; height: 3px; background-color: var(--cor-destaque);
     transform: scaleX(0); transform-origin: center;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  .tab-button.active { color: #000; }
+  .tab-button.active { color: var(--cor-texto); }
   .tab-button.active::after { transform: scaleX(1); }
   .arrow-icon {
     display: inline-block; margin-left: 0.5rem; font-size: 0.7em;
-    color: #999; transition: transform 0.3s ease;
+    color: var(--cor-texto-suave); transition: transform 0.3s ease;
   }
   .tab-button .arrow-icon::before { content: '▼'; opacity: 0; transition: opacity 0.2s ease; }
   .tab-button.active .arrow-icon::before { opacity: 1; }
@@ -170,22 +171,22 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
 
   .list-item {
     display: flex; align-items: baseline; gap: 1.5rem; margin: 0;
-    padding: 0.5rem; border-radius: 6px; /* Adiciona padding para o destaque */
+    padding: 0.5rem; border-radius: var(--raio-m); /* padding para o destaque */
     transition: background-color 0.3s ease; /* Anima a cor de fundo do destaque */
   }
   .list-item .timestamp-link {
-    flex-shrink: 0; width: 70px; font-family: 'Courier New', monospace;
-    font-weight: bold; font-size: 0.95em; color: #0056b3;
-    text-decoration: none; background-color: #f2f2f2;
-    padding: 4px 8px; border-radius: 4px; text-align: center;
+    flex-shrink: 0; width: 70px; font-family: var(--fonte-datilo);
+    font-weight: bold; font-size: 0.95em; color: var(--cor-link);
+    text-decoration: none; background-color: var(--cor-superficie-suave);
+    padding: 4px 8px; border-radius: var(--raio-s); text-align: center;
     transition: background-color 0.2s ease;
   }
-  .list-item .timestamp-link:hover { background-color: #e0eaf6; }
-  .list-item .text-content { line-height: 1.6; color: #333; }
+  .list-item .timestamp-link:hover { background-color: var(--cor-dica-fundo); }
+  .list-item .text-content { line-height: 1.6; color: var(--cor-texto); }
 
   /* MUDANÇA 3: Estilo Visual do Destaque */
   .list-item.current {
-    background-color: #e7f1ff; /* Cor de fundo para o item ativo */
+    background-color: var(--cor-dica-fundo); /* item ativo */
   }
   .list-item.current .text-content {
     font-weight: 500; /* Deixa o texto do item ativo um pouco mais forte */

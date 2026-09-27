@@ -4,6 +4,7 @@
    - slots: header / sidebar / head
    - tokens/base importados só aqui para não vazar ao site-mãe
 */
+import "@/styles/paleta.css"; // tintas nomeadas, compartilhadas com o site
 import "@/styles/tokens.css";
 import "@/styles/base.css";
 import { withBase } from "@/lib/url";
@@ -43,10 +44,10 @@ const {
     <link rel="apple-touch-icon" href={withBase("img/favicons/blog-apple-touch-icon.png")}>
 <meta name="theme-color" content="#683636">
 
-    <!-- Google Fonts (CDN): Oswald (título) e Lora (botão) -->
+    <!-- Google Fonts (CDN): Lora (títulos/botão) e Montserrat (título do header) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;900&display=swap" rel="stylesheet">
 
     <!-- Slot extra para páginas poderem injetar <head> -->

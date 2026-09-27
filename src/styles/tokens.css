@@ -1,28 +1,34 @@
-/* Supondo: tokens mínimos, estética “zine”. Mantém contraste AA. */
+/* src/styles/tokens.css — papéis semânticos do BLOG (estética "zine").
+   As tintas vêm de src/styles/paleta.css (a mesma do site principal).
+   O "espelho estranho": o blog usa as MESMAS tintas do site com os papéis
+   trocados — a cor de destaque do site (vinho) vira a cor base daqui.
+   Para mexer no espelho, troque as atribuições abaixo; não crie hex novos. */
 :root {
-  /* --- Cores de Fundo --- */
-  /* Fundo alinhado ao site principal */
-  --oc-bg: #EAEAEA;
-  --oc-bg-image: linear-gradient(to right, #E2DFDC, #EAEAEA);
-  --oc-card: #ffffff;
-  --oc-border: #e5e2dc;
+  /* --- Fundo e superfícies --- */
+  --oc-bg: var(--nevoa);
+  --oc-bg-image: linear-gradient(to right, var(--nevoa-quente), var(--nevoa)); /* o site vai do frio; o blog, do quente */
+  --oc-card: var(--branco);
+  --oc-border: var(--nevoa-quente);
 
-  /* --- Cores de Texto (Foreground) --- */
-  /* Cor principal (alterada conforme solicitado - cinza azulado escuro) */
-  --oc-fg: #34495E; 
-  
-  /* ✅ NOVA LINHA: Cor de texto secundária/destaque (Aquele vermelho punk/máquina de escrever) */
-  --oc-fg-highlight: #380a0a;
+  /* --- Marca (o espelho do header do site) --- */
+  --oc-cor-base: var(--vinho-escuro);   /* header — no site, a base é a ardósia (--tinta) */
+  --oc-sobre-base: var(--branco);       /* texto/contornos sobre a cor base */
 
-  /* Cor para texto suavizado (datas, legendas) */
-  --oc-muted: #6b6a68;
+  /* --- Texto --- */
+  --oc-fg: var(--tinta);                /* texto corrido */
+  --oc-titulo: var(--vinho-profundo);   /* títulos dos posts */
+  --oc-fg-highlight: var(--vinho-noite);/* chamada dos posts no índice */
+  --oc-pfblack: var(--vinho-breu);      /* texto do post expandido */
+  --oc-muted: var(--cinza-quente);      /* datas, contagens, legendas */
 
-  /* --- Cores de Ação/Detalhes --- */
+  /* --- Ação / detalhes ---
+     PROVISÓRIO: roxo e rosa estão FORA da paleta da Oficina (herança do esboço).
+     No redesign do blog (revisão D10) o destaque passa a ser uma tinta do site
+     — p.ex. a ardósia —, fechando o espelho. Trocar só aqui. */
   --oc-accent: #7a3cff;
   --oc-accent-2: #ff3c7a;
-
-    /* --- Cores de postagem --- */
-  --oc-pfblack: #240101;
+  --oc-tag-ativa-fundo: color-mix(in srgb, var(--oc-accent) 9%, white);
+  --oc-codigo-fundo: color-mix(in srgb, var(--oc-accent) 3%, white);
   
   /* --- Tipografia --- */
   /* Tipografia básica alinhada ao site */

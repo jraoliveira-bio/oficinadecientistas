@@ -13,8 +13,8 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
     top: 0;
     z-index: 1000;
 
-    background: #683636;                      /* fundo sólido */
-    border-bottom: 1px solid rgba(255,255,255,.16);
+    background: var(--oc-cor-base);          /* o espelho do header ardósia do site */
+    border-bottom: 1px solid color-mix(in srgb, var(--oc-sobre-base) 16%, transparent);
 
     display: flex;
     align-items: center;
@@ -39,14 +39,14 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
     background: transparent;
   }
 
-  /* Título com Oswald (CDN no <head> do layout) */
+  /* Título com Montserrat 200 (CDN no <head> do layout) */
   .title {
     font-family: "Montserrat", var(--oc-font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     font-size: clamp(1.1rem, 2.2vw, 34px);    /* teto: 24px */
     letter-spacing: 0.3px;
     line-height: 1;
     font-weight: 200;
-    color: #fff;
+    color: var(--oc-sobre-base);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -62,8 +62,8 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
     border-radius: 999px;
 
     background: transparent;
-    color: #fff;
-    border: 1px solid rgba(255,255,255,.35);
+    color: var(--oc-sobre-base);
+    border: 1px solid color-mix(in srgb, var(--oc-sobre-base) 35%, transparent);
 
     text-decoration: none;
     font-size: var(--oc-fs-sm);
@@ -73,12 +73,12 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
   }
   .right .btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 1px 6px rgba(0,0,0,.18);
+    box-shadow: var(--oc-shadow-1);
     text-decoration: underline;
-    border-color: rgba(255,255,255,.55);
+    border-color: color-mix(in srgb, var(--oc-sobre-base) 55%, transparent);
   }
   .right .btn:focus {
-    outline: 2px solid #fff;
+    outline: 2px solid var(--oc-sobre-base);
     outline-offset: 2px;
   }
 
