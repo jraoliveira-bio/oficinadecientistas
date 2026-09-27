@@ -47,7 +47,7 @@ const cursoEscritaCollection = defineCollection({
 });
 
 /**
- * Coleção do blog de desenvolvimento (“Os Bastidores”).
+ * Coleção do blog “A Prancheta” (os bastidores da Oficina: diário de desenvolvimento).
  * Os posts ficam em: src/content/blog/*.mdx
  * Importante: dataPublicacao é Date real (use YYYY-MM-DD no frontmatter).
  */

@@ -16,7 +16,9 @@ Site educacional gratuito voltado a alunos de pós-graduação (e curiosos), foc
 1. **Cursos** — atualmente o curso "Escrita Científica: Da Estrutura ao Impacto",
    composto por **aulas** em vídeo + texto longo (formato "livro digital" com
    componentes editoriais ricos).
-2. **Blog "A Prancheta" / "Os Bastidores"** — diário de desenvolvimento do próprio site.
+2. **Blog "A Prancheta"** (subtítulo: "bastidores da Oficina de Cientistas") — diário de
+   desenvolvimento do próprio site. Use esse nome; "Os Bastidores" e "Blog de Desenvolvimento"
+   eram nomes antigos.
 3. **Sobre** — manifesto, quem sou eu, visão de futuro etc.
 
 Autor/desenvolvedor: João Rafael Alves de Oliveira (biólogo, não-programador de formação).
@@ -186,18 +188,21 @@ Há **dois sistemas de estilo deliberadamente separados** para o site não "vaza
 
 ### Site principal — `Layout.astro`
 - Carrega o **CSS global** `public/estilos.css` (a maior parte do visual do site mora aqui).
-- Carrega fontes via Google Fonts, **num único `<link>`** (Lora, Source Sans Pro, Lato,
-  Special Elite, Courier Prime, Montserrat) e o FontAwesome 6.7 (CDN).
+- Carrega fontes via Google Fonts, **num único `<link>`** (Lora, Source Sans 3, Lato,
+  Special Elite, Courier Prime, Montserrat) e o FontAwesome 6.7 (CDN). Componentes não
+  pedem fonte por conta própria: usam os papéis `--fonte-*` de `estilos.css`.
 - Tem `<meta name="description">`, Open Graph (prévia de link) e canonical; recebe
   `title` e `description` como props.
 - `AulaLayout.astro` **envolve** `Layout.astro` e adiciona: menu lateral de aulas (ordenado
   por `ordem`, filtrando `menu: true`), botão **"Modo leitura"** (esconde o menu; estado em
-  `localStorage` sob a chave `oficina.modoLeitura`) e a infra de citações.
+  `localStorage` sob a chave `oficina.modoLeitura`), a infra de citações e, em tela larga
+  (≥1280px), uma **coluna de margem à direita** quando a aula tem `NotaDeMargem` desse lado.
 
 ### Blog — `BlogLayout.astro`
 - **Não herda** `Layout.astro`. É autocontido.
 - Carrega o **design system próprio**: `styles/tokens.css` (variáveis `--oc-*`) + `styles/base.css`.
-- Fontes próprias (Lora, Montserrat) e **favicons próprios** (`public/img/favicons/blog*`).
+- Fontes num único `<link>`: as **mesmas famílias do site** (Lato no texto, Lora nos títulos) +
+  Montserrat 200 no título do header. **Favicons próprios** (`public/img/favicons/blog*`).
 - **Não** tem sistema de citações.
 
 > Regra prática: estilizou algo no site principal? É em `public/estilos.css` ou no `<style>`
@@ -284,7 +289,10 @@ Para autores, é simples (detalhes em [`docs/autoria-aulas.md`](docs/autoria-aul
 - **Interatividade:** `<script>` vanilla. Use `is:inline` quando o script precisa rodar cedo
   (ex.: evitar flash do "modo leitura") ou ler dados embutidos no HTML.
 - **Acessibilidade:** o código existente capricha em `aria-*`, `role`, foco visível e
-  `prefers-reduced-motion`. Acompanhe esse padrão ao adicionar interações.
+  `prefers-reduced-motion`. Acompanhe esse padrão ao adicionar interações. Em particular:
+  todo botão que abre/fecha algo leva `aria-expanded` (e `aria-controls`), e **conteúdo
+  recolhido fica `inert`** (acordeão da grade, "O que é esta seção?", painel do `VideoPlayer`,
+  posts do índice do blog) — senão o Tab entra em links que não aparecem na tela.
 - **Responsividade:** breakpoint recorrente em `max-width: 768px` (e `900px` no blog/home).
 
 ---
@@ -297,19 +305,13 @@ A auditoria completa (e o que já foi feito) está em
 
 - **Dois padrões de `base` e dois aliases** (`withBase()` × cálculo inline; `@` × `~`) —
   ver seções 4 e 5. Padronizar aos poucos, sem inflar diffs.
-- **Fontes demais:** ~7 famílias no site + Inter importada dentro da `NotaDeMargem`.
-  A proposta (revisão, D2) é reduzir a 3 papéis. `Source Sans Pro` foi renomeada para
-  `Source Sans 3` no Google Fonts (a antiga ainda funciona).
-- **Notas de margem invisíveis fora do modo leitura:** as notas da Aula 01 são
-  `lado="esquerda"` (onde fica o menu) e só aparecem no "Modo leitura" (revisão, I5).
-- **Sidebar do blog na página de post:** os botões de tag e os links do arquivo só funcionam
-  no índice (revisão, I10). Posts recolhidos no índice continuam "tabuláveis" (I11).
-- **Acessibilidade pendente:** hambúrguer do mobile sem `aria-expanded`/foco; abas do
-  `VideoPlayer` não atualizam `aria-selected` (revisão, I14).
-- **Nome do blog:** "A Prancheta" × "Os Bastidores" × "Blog de Desenvolvimento" (revisão, I9).
+- **Fontes ainda demais:** 6 famílias no site (Lora, Lato, Source Sans 3, Special Elite,
+  Courier Prime, Montserrat). A proposta (revisão, D2) é reduzir a 3 papéis — inclusive
+  decidir a fonte do corpo das aulas (hoje Source Sans 3; a revisão sugere testar uma serifada).
+  É decisão de design do autor: não troque sem combinar.
 - **Conteúdo:** a `description` da Aula 01 ainda fala de IMRaD (assunto do vídeo antigo);
-  erros de digitação listados na revisão (H11); e-mail de contato e link do Lattes
-  aguardam o autor (TODOs em `Sustentabilidade.astro` e `QuemSouEu.astro`).
+  e-mail de contato e link do Lattes aguardam o autor (TODOs em `Sustentabilidade.astro` e
+  `QuemSouEu.astro`).
 - **Site não-listado** de propósito (`noindex` — ver seção 3).
 
 ---

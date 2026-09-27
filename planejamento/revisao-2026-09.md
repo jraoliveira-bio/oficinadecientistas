@@ -12,13 +12,25 @@ do código.
 
 Legenda: 🔴 quebrado · 🟠 inconsistência visível / UX · 🟡 higiene de código
 
-> **Andamento (branch `claude/sharp-allen-q2cjv5`):**
-> - ✅ **Bloco 1** — B1, B2, B7, B9, B10, I2, I3, I6, I7, I12, I13, H4, H5.
-> - ✅ **D1** — tokens semânticos (`src/styles/paleta.css` + papéis no site e no blog).
-> - ✅ **Bloco 2** — B5, B6, B8, I4, I8, I15, H1, H2, H3.
-> - ✅ **Bloco 3** — B3, B4 (citações num único script; plugin inerte removido).
-> - ✅ **Bloco 4** — H6, H7, H8, H9, H10 (FontAwesome estável, fontes num pedido, Node 22, SEO/OG, 404, manifesto, `CLAUDE.md`).
-> - Próximos candidatos: I1/D2 (fontes), I5, I9, I10, I11, I14, H11 e as sugestões de design.
+> **Andamento:**
+> - Branch `claude/sharp-allen-q2cjv5`:
+>   - ✅ **Bloco 1** — B1, B2, B7, B9, B10, I2, I3, I6, I7, I12, I13, H4, H5.
+>   - ✅ **D1** — tokens semânticos (`src/styles/paleta.css` + papéis no site e no blog).
+>   - ✅ **Bloco 2** — B5, B6, B8, I4, I8, I15, H1, H2, H3.
+>   - ✅ **Bloco 3** — B3, B4 (citações num único script; plugin inerte removido).
+>   - ✅ **Bloco 4** — H6, H7, H8, H9, H10 (FontAwesome estável, fontes num pedido, Node 22, SEO/OG, 404, manifesto, `CLAUDE.md`).
+> - Branch `claude/blissful-wright-o1rikh`:
+>   - ✅ **Bloco 5** — resto da Parte 1: I1 (blog carrega Lato; Inter fora da `NotaDeMargem`;
+>     Source Sans 3), I5, I9 ("A Prancheta — bastidores da Oficina de Cientistas"), I10, I11, I14,
+>     I16 (vários players por página) e H11. De quebra: `aria-current` no menu principal (parte do D3)
+>     e o filtro de tags pela URL (parte do D13).
+>   - 🐛 Achado no caminho: **o filtro de tags do índice do blog nunca funcionou** — o script fica no
+>     `<main>`, antes da sidebar no HTML, e rodava quando ainda não havia botão nenhum. Corrigido.
+> - Pendentes que dependem do autor: **D2** (qual fonte no corpo das aulas; reduzir a 3 papéis),
+>   I7 (e-mail de contato e Lattes) e a `description` da Aula 01 (fala de IMRaD).
+> - Próximos candidatos (Parte 2, os estruturais e baratos primeiro): D5 (anterior/próxima nas
+>   aulas; índice recolhível no celular), D13 (rodapé, anterior/próximo e RSS no blog), D3 (header
+>   de ponta a ponta), D7 (campo `ciclo` para agrupar a grade).
 
 ---
 
@@ -176,6 +188,8 @@ Legenda: 🔴 quebrado · 🟠 inconsistência visível / UX · 🟡 higiene de 
   Os links do arquivo (`#m-2025-11`) apontam para âncoras que só existem no índice.
 - **Correção:** na página do post, as tags viram links `blog/?tag=x`, e o arquivo vira `blog/#m-…`.
   O índice passa a ler o `?tag=` ao carregar.
+- **Achado depois (Bloco 5):** nem no índice o filtro funcionava — o script inline rodava antes de
+  a sidebar existir no HTML. Agora espera o `DOMContentLoaded`.
 
 **I11 · Posts recolhidos no índice continuam "tabuláveis"**
 - `.post-expand[hidden] { display: block }` deixa o conteúdo invisível mas acessível: o Tab e o

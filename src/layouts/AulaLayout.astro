@@ -280,10 +280,30 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     font: 600 0.95rem/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     box-shadow: var(--sombra-1);
   }
-  :global(.conteudo-aula .nota-de-margem .nota) {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--t) var(--easing);
+  /* ===== Notas de margem (NotaDeMargem) em tela larga =====
+     Abaixo de 1280px elas são blocos dentro do texto (ver o componente). */
+  @media (min-width: 1280px) {
+    /* Aula com notas à direita: reserva uma coluna de margem ao lado do texto, como num livro.
+       --margem-notas também limita a largura da nota (NotaDeMargem). */
+    :global(.texto-aula:has(.nota-de-margem[data-lado="direita"])) {
+      --margem-notas: 14rem;
+      max-width: calc(var(--conteudo-max-padrao) + var(--margem-notas));
+      padding-right: var(--margem-notas);
+    }
+    :global(body.modo-leitura-ativo .texto-aula:has(.nota-de-margem[data-lado="direita"])) {
+      max-width: calc(var(--conteudo-max) + var(--margem-notas));
+    }
+
+    /* Notas à ESQUERDA dividem espaço com o menu: só aparecem no modo leitura */
+    :global(.conteudo-aula .nota-de-margem[data-lado="esquerda"] .nota) {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--t) var(--easing);
+    }
+    body.modo-leitura-ativo :global(.conteudo-aula .nota-de-margem[data-lado="esquerda"] .nota) {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
   body.modo-leitura-ativo .container-sala-de-aula {
     grid-template-columns: 0 1fr;
@@ -309,10 +329,6 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     pointer-events: auto;
     transform: translateX(0);
     transition-delay: 0s, 0s, 0s;
-  }
-  body.modo-leitura-ativo :global(.conteudo-aula .nota-de-margem .nota) {
-    opacity: 1;
-    pointer-events: auto;
   }
   body.modo-leitura-ativo .texto-aula {
     max-width: var(--conteudo-max, 70ch);
@@ -384,13 +400,6 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     /* Justificado em coluna estreita abre "rios" de espaço entre as palavras */
     .conteudo-aula :global(.texto-aula) {
       text-align: left;
-    }
-
-    /* No mobile as notas de margem viram blocos inline (ver NotaDeMargem),
-       então devem aparecer sempre — não dependem do modo leitura aqui. */
-    :global(.conteudo-aula .nota-de-margem .nota) {
-      opacity: 1;
-      pointer-events: auto;
     }
   }
 </style>

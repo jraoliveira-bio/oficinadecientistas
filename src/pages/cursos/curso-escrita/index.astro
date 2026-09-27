@@ -42,11 +42,12 @@ const primeiraAula = aulas[0] ? `${base}cursos/curso-escrita/${aulas[0].slug}/` 
                     const titulo = aula.data.shortTitle ?? aula.data.title;
                     return (
                         <div class="acordeon-item">
-                            <button class="acordeon-cabecalho" type="button" aria-expanded="false">
-                                <span class="acordeon-titulo"><i class={icone}></i> {titulo}</span>
+                            <button class="acordeon-cabecalho" type="button" aria-expanded="false" aria-controls={`grade-${aula.slug}`}>
+                                <span class="acordeon-titulo"><i class={icone} aria-hidden="true"></i> {titulo}</span>
                                 <i class="fas fa-plus icone-acordeon" aria-hidden="true"></i>
                             </button>
-                            <div class="acordeon-conteudo">
+                            {/* fechado = inert: o link de dentro não recebe Tab enquanto está invisível */}
+                            <div class="acordeon-conteudo" id={`grade-${aula.slug}`} inert>
                                 <p>{aula.data.description ?? 'Descrição em breve.'}</p>
                                 <p><a href={`${base}cursos/curso-escrita/${aula.slug}/`}>Ir para a aula →</a></p>
                             </div>
@@ -73,6 +74,7 @@ const primeiraAula = aulas[0] ? `${base}cursos/curso-escrita/${aulas[0].slug}/` 
                 item.classList.toggle('aberto');
                 // O ícone "+" gira 45° via CSS (.acordeon-item.aberto) e vira "×".
                 cabecalho.setAttribute('aria-expanded', String(!isAberto));
+                conteudo.inert = isAberto;
                 conteudo.style.maxHeight = isAberto ? null : conteudo.scrollHeight + "px";
             });
         });

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const {
-  title = "Blog de Desenvolvimento — Oficina de Cientistas",
+  title = "A Prancheta — bastidores da Oficina de Cientistas",
   description = "Bastidores, decisões de design e notas de laboratório do projeto Oficina de Cientistas.",
 } = Astro.props;
 ---
@@ -48,11 +48,12 @@ const {
     <link rel="apple-touch-icon" href={withBase("img/favicons/blog-apple-touch-icon.png")}>
 <meta name="theme-color" content="#683636">
 
-    <!-- Google Fonts (CDN): Lora (títulos/botão) e Montserrat (título do header) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <!-- Fontes num único pedido — as mesmas famílias do site (o espelho troca cores, não letras):
+         Lato (texto, --oc-font-sans), Lora (títulos e botão, --oc-font-serif) e
+         Montserrat 200 (título do header, que rima com o slogan da home) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;700&family=Montserrat:wght@200&display=swap" rel="stylesheet">
 
     <!-- Slot extra para páginas poderem injetar <head> -->
     <slot name="head" />

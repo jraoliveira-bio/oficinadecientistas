@@ -61,7 +61,7 @@
   /* --- Tipografia --- */
   --fonte-base: 'Lato', sans-serif;
   --fonte-titulo: 'Lora', serif;
-  --fonte-ui: 'Source Sans Pro', sans-serif;
+  --fonte-ui: 'Source Sans 3', 'Source Sans Pro', sans-serif; /* a Google renomeou a "Pro" */
   --fonte-maquina: 'Special Elite', monospace; /* títulos "datilografados" */
   --fonte-datilo: 'Courier Prime', monospace;  /* texto "datilografado" */
   --fonte-lema: 'Montserrat', var(--fonte-ui);  /* slogan da home — rima com o título do blog */
@@ -182,6 +182,20 @@ img {
 
 .menu-principal a:hover {
   opacity: 0.7;
+}
+
+/* Página atual (ou seção atual, como "Cursos" dentro de uma aula) */
+.menu-principal a[aria-current] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.menu-principal a:focus-visible,
+.logo-titulo-wrapper:focus-visible,
+.menu-hamburger:focus-visible {
+  outline: 3px solid var(--cor-sobre-base);
+  outline-offset: 3px;
 }
 
 footer {
@@ -367,15 +381,6 @@ footer {
 /* --- Menu Hamburger (estado padrão desktop) --- */
 .menu-hamburger {
   display: none;
-}
-
-/* Checkbox do hamburger: esconder visualmente (sem quebrar a interação) */
-.menu-toggle {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
 }
 
 /* ==========================================================================
@@ -951,13 +956,16 @@ p.paragrafo-capitular,
     padding: 12px 20px;
   }
 
-  /* Menu hamburger aparece */
+  /* Menu hamburger aparece (é um <button>; o estado fica em aria-expanded) */
   .menu-hamburger {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 30px;
     height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
     cursor: pointer;
     z-index: 1001;
   }
@@ -982,7 +990,9 @@ p.paragrafo-capitular,
     height: 100%;
     background-color: var(--cor-base);
     transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
+    /* fechado = fora da tela E fora do Tab (visibility só muda depois de deslizar) */
+    visibility: hidden;
+    transition: transform 0.3s ease-in-out, visibility 0s linear 0.3s;
   }
 
   .menu-principal ul {
@@ -995,19 +1005,21 @@ p.paragrafo-capitular,
     font-size: 24px;
   }
 
-  .menu-toggle:checked ~ .menu-principal {
+  .menu-hamburger[aria-expanded="true"] + .menu-principal {
     transform: translateX(0);
+    visibility: visible;
+    transition: transform 0.3s ease-in-out, visibility 0s;
   }
 
-  .menu-toggle:checked ~ .menu-hamburger span:nth-child(1) {
+  .menu-hamburger[aria-expanded="true"] span:nth-child(1) {
     transform: rotate(45deg) translate(7px, 7px);
   }
 
-  .menu-toggle:checked ~ .menu-hamburger span:nth-child(2) {
+  .menu-hamburger[aria-expanded="true"] span:nth-child(2) {
     opacity: 0;
   }
 
-  .menu-toggle:checked ~ .menu-hamburger span:nth-child(3) {
+  .menu-hamburger[aria-expanded="true"] span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
   }
 

@@ -33,7 +33,7 @@ const dateLabel = formatDate(post.data.dataPublicacao);
 const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
 ---
 
-<BlogLayout title={title} description={description}>
+<BlogLayout title={`${title} — A Prancheta`} description={description}>
   <Fragment slot="header">
     <BlogHeader backHref={withBase("blog/")} />
   </Fragment>
@@ -70,7 +70,7 @@ const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
 
   <Fragment slot="sidebar">
     <BlogSidebar>
-      <p>“Os Bastidores”: registro das decisões e experimentos que não cabem na documentação formal.</p>
+      <p>Os bastidores da Oficina: registro das decisões e experimentos que não cabem na documentação formal.</p>
     </BlogSidebar>
   </Fragment>
 </BlogLayout>
