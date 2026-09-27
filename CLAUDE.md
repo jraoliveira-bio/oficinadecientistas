@@ -73,6 +73,9 @@ npm run preview  # serve o dist/ localmente
   `npm run build` → publica `dist/` no Pages. Node 18.
 - `.nojekyll` na raiz impede o Jekyll de mexer no output.
 - **Não há ambiente de staging.** Push na `main` = publicar em produção.
+- **Site não-listado (alfa):** `Layout.astro` e `BlogLayout.astro` têm `<meta name="robots" content="noindex, nofollow">`.
+  Quem tem o link acessa; buscadores não indexam. Remova as duas tags quando for hora de listar.
+  (Um `robots.txt` não resolveria: no GitHub Pages de projeto ele ficaria fora da raiz do domínio.)
 
 ---
 

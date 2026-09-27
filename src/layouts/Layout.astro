@@ -16,6 +16,10 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - Oficina de Cientistas</title>
+    <!-- Site NÃO-LISTADO (alfa): acessível pelo link, mas buscadores não indexam nem seguem links.
+         Para listar publicamente no futuro, apague esta linha aqui e no outro layout
+         (Layout.astro e BlogLayout.astro). -->
+    <meta name="robots" content="noindex, nofollow">
     <script is:inline>
   (function () {
     try {

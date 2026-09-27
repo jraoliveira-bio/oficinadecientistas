@@ -26,6 +26,10 @@ const {
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <title>{title}</title>
+    <!-- Site NÃO-LISTADO (alfa): acessível pelo link, mas buscadores não indexam nem seguem links.
+         Para listar publicamente no futuro, apague esta linha aqui e no outro layout
+         (Layout.astro e BlogLayout.astro). -->
+    <meta name="robots" content="noindex, nofollow">
     <meta name="description" content={description} />
 
     <!-- OG/Twitter básicos -->
