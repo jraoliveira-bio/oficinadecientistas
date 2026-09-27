@@ -237,7 +237,8 @@ Arquivos em `src/content/curso-escrita/`. **Slug** depende da forma do arquivo:
 
 Campos do schema (todos opcionais têm default — não quebram conteúdo existente):
 `title` (obrigatório), `description`, `shortTitle`, `menu` (bool, default `false` — controla
-se aparece no menu lateral), `ordem` (int — ordem no menu), `tipo` (`'video'|'texto'`,
+se aparece no menu lateral), `ordem` (int — ordem no menu), `ciclo` (int — agrupa a grade da
+landing; nomes dos ciclos em `CICLOS` na própria landing), `tipo` (`'video'|'texto'`,
 default `'video'` — define o ícone no menu), `draft`, `tags`, `updatedAt`, `references` (array — ver abaixo).
 
 > **Pegadinha — dados de vídeo fora do schema:** `videoId`, `chapters` e `transcript`
@@ -320,7 +321,7 @@ A auditoria completa (e o que já foi feito) está em
 
 **Adicionar uma aula nova:**
 1. Crie `src/content/curso-escrita/aulaNN/index.mdx` (pasta com `index.mdx`).
-2. Frontmatter mínimo: `title`, `ordem: NN`, `menu: true`, `tipo: 'video'|'texto'`.
+2. Frontmatter mínimo: `title`, `ordem: NN`, `ciclo: N`, `menu: true`, `tipo: 'video'|'texto'`.
    Para vídeo, adicione `videoId/chapters/transcript` e renderize `<VideoPlayer/>` no corpo.
 3. Para citações, preencha `references:` e use `<Cite/>` + `<ReferenceList/>`.
 4. Detalhes e catálogo de componentes editoriais: [`docs/autoria-aulas.md`](docs/autoria-aulas.md).

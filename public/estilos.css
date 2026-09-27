@@ -352,10 +352,11 @@ footer {
   gap: 12px;
 }
 
-.acordeon-titulo .fa-video,
-.acordeon-titulo .fa-book-open {
+/* ícone da aula (vídeo ou texto) com largura fixa: os títulos ficam alinhados */
+.acordeon-titulo i {
   color: var(--cor-titulo);
   width: 20px;
+  text-align: center;
 }
 
 .icone-acordeon {
@@ -495,6 +496,28 @@ footer {
   text-align: center;
   margin-top: 0;
   margin-bottom: 40px;
+}
+
+/* Grade agrupada pelos ciclos do curso (campo `ciclo` das aulas) */
+.grade-ciclo {
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.grade-ciclo-titulo {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: var(--cor-texto);
+}
+
+.grade-ciclo-vazio {
+  margin: 0;
+  padding: 16px 20px;
+  border: 1px dashed color-mix(in srgb, var(--cor-texto) 25%, transparent);
+  border-radius: var(--raio-m);
+  font-family: var(--fonte-datilo);
+  font-size: 16px;
+  color: var(--cor-texto-suave);
 }
 
 /* ==========================================================================
