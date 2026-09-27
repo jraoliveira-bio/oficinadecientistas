@@ -16,27 +16,17 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 const refsAttr = encodeURIComponent(JSON.stringify(referencias));
 
 // Busca todas as aulas da coleção para montar o menu
+// Rascunhos (draft: true) aparecem no `npm run dev`, mas ficam fora do site publicado
 const todasAsAulas = (await getCollection('curso-escrita'))
-  .filter(aula => aula.data.menu === true)
+  .filter(aula => aula.data.menu === true && (import.meta.env.DEV || !aula.data.draft))
   .sort((a, b) => (a.data.ordem ?? 999) - (b.data.ordem ?? 999));
 ---
 
-<script is:inline>
-  (function () {
-    try {
-      // Desliga qualquer transição no 1º paint para evitar "flash" de conteúdo
-      document.body.classList.add('ml-preload');
-
-      // Se estava em modo leitura, aplica as classes corretas na carga inicial
-      if (localStorage.getItem('oficina.modoLeitura') === '1') {
-        document.documentElement.classList.add('modo-leitura-ativo', 'modo-leitura-handle-pronto');
-        document.body.classList.add('modo-leitura-ativo', 'modo-leitura-handle-pronto');
-      }
-    } catch (e) {}
-  })();
-</script>
-
 <Layout title={aulaAtual.data.title}>
+  <script is:inline>
+    // Desliga transições no 1º paint (o estado do modo leitura já foi restaurado pelo Layout)
+    document.body.classList.add('ml-preload');
+  </script>
   <main class="container-sala-de-aula">
     <aside class="menu-aulas">
       <button
@@ -55,7 +45,7 @@ const todasAsAulas = (await getCollection('curso-escrita'))
       <h3>Escrita Científica</h3>
       <ol>
         {todasAsAulas.map(aula => {
-          const aulaUrl = `${base}cursos/curso-escrita/${aula.slug}`;
+          const aulaUrl = `${base}cursos/curso-escrita/${aula.slug}/`;
           const isAtiva = aula.slug === aulaAtual.slug;
 
           // --- LÓGICA DO ÍCONE ---
@@ -65,8 +55,8 @@ const todasAsAulas = (await getCollection('curso-escrita'))
 
           return (
             <li class:list={[{'aula-ativa': isAtiva}]}>
-              <a href={aulaUrl}>
-                <i class={iconeClasse}></i> {aula.data.shortTitle ?? aula.data.title}
+              <a href={aulaUrl} aria-current={isAtiva ? 'page' : undefined}>
+                <i class={iconeClasse} aria-hidden="true"></i> {aula.data.shortTitle ?? aula.data.title}
               </a>
             </li>
           )
@@ -86,6 +76,7 @@ const todasAsAulas = (await getCollection('curso-escrita'))
 
     <div class="conteudo-aula">
       <article class="texto-aula">
+        <h1 class="titulo-pagina-aula">{aulaAtual.data.title}</h1>
         <slot />
 
         {/* Dados das referências embutidos de forma segura em uma tag <meta> */}
@@ -96,6 +87,211 @@ const todasAsAulas = (await getCollection('curso-escrita'))
       </article>
     </div>
   </main>
+
+<!-- Script para a funcionalidade do "Modo Leitura" -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const LS_KEY   = 'oficina.modoLeitura';
+      const ROOT     = document.documentElement;
+      const BODY     = document.body;
+      const container = document.querySelector('.container-sala-de-aula');
+      const menu      = document.querySelector('.menu-aulas');
+      const menuBtn   = document.querySelector('.menu-aulas .toggle-leitura');
+      const toggles   = Array.from(document.querySelectorAll('[data-leitura-toggle], #toggle-leitura, .toggle-leitura, .handle-leitura'));
+
+      if (!container || !menu || !toggles.length) {
+        BODY.classList.remove('ml-preload');
+        return;
+      }
+
+      function setPressed(active) {
+        for (const btn of toggles) {
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+          const isHandle = btn.classList.contains('handle-leitura');
+          const label = active ? 'Sair do modo leitura' : (isHandle ? 'Reabrir menu' : 'Ativar modo leitura');
+          btn.setAttribute('aria-label', label);
+          btn.title = label;
+        }
+      }
+
+      function placeHandleAnchored() {
+        if (menuBtn) {
+          const rTop = menuBtn.getBoundingClientRect();
+          ROOT.style.setProperty('--handle-top', `${Math.max(8, Math.round(rTop.top))}px`);
+        }
+        const rLeft = container.getBoundingClientRect();
+        ROOT.style.setProperty('--handle-left', `${Math.max(8, Math.round(rLeft.left))}px`);
+      }
+
+      function revealHandleAfterMenuSlidesOut() {
+        const fallback = setTimeout(() => {
+          ROOT.classList.add('modo-leitura-handle-pronto');
+          BODY.classList.add('modo-leitura-handle-pronto');
+        }, 550);
+        function onEnd(e) {
+          if (e.propertyName !== 'transform') return;
+          clearTimeout(fallback);
+          menu.removeEventListener('transitionend', onEnd);
+          ROOT.classList.add('modo-leitura-handle-pronto');
+          BODY.classList.add('modo-leitura-handle-pronto');
+        }
+        menu.addEventListener('transitionend', onEnd, { once: true });
+      }
+
+      function syncClasses(active) {
+        [ROOT, BODY].forEach(el => {
+          el.classList.toggle('modo-leitura-ativo', active);
+          if (!active) el.classList.remove('modo-leitura-handle-pronto');
+        });
+      }
+
+      const startActive = ROOT.classList.contains('modo-leitura-ativo');
+      if (startActive) {
+        placeHandleAnchored();
+        setPressed(true);
+      } else {
+        setPressed(false);
+      }
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          BODY.classList.remove('ml-preload');
+        });
+      });
+
+      toggles.forEach(btn => btn.addEventListener('click', () => {
+        const next = !ROOT.classList.contains('modo-leitura-ativo');
+        syncClasses(next);
+        setPressed(next);
+        localStorage.setItem(LS_KEY, next ? '1' : '0');
+
+        if (next) {
+          placeHandleAnchored();
+          revealHandleAfterMenuSlidesOut();
+        }
+      }));
+
+      window.addEventListener('resize', () => {
+        if (ROOT.classList.contains('modo-leitura-ativo')) placeHandleAnchored();
+      }, { passive: true });
+
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mq.matches) {
+        toggles.forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (ROOT.classList.contains('modo-leitura-ativo')) {
+              ROOT.classList.add('modo-leitura-handle-pronto');
+              BODY.classList.add('modo-leitura-handle-pronto');
+            }
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- MODIFICAÇÃO: Script integrado para interatividade dos popovers de citação -->
+  <script is:inline>
+    (function(){
+      let open = null; // Guarda o estado do popover aberto: { btn, pop }
+
+      function closeOpen() {
+        if (!open) return;
+        const { btn, pop } = open;
+        pop.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+        open = null;
+      }
+
+      function positionPopover(btn, pop) {
+        const r = btn.getBoundingClientRect();
+        const gap = 8;
+        const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        
+        // Posiciona fora da tela para medir o tamanho sem "piscar"
+        pop.style.left = '0px';
+        pop.style.top = '-10000px';
+        pop.removeAttribute('hidden');
+        
+        const pr = pop.getBoundingClientRect();
+        let left = r.left;
+        let top = r.bottom + gap;
+        
+        // Ajusta a posição para não sair da tela
+        if (left + pr.width > vw - 8) left = vw - pr.width - 8;
+        if (left < 8) left = 8;
+        if (top + pr.height > vh - 8) top = Math.max(8, r.top - pr.height - gap);
+        
+        pop.style.left = Math.round(left) + 'px';
+        pop.style.top = Math.round(top) + 'px';
+      }
+
+      function onBtnClick(e){
+        const btn = /** @type {HTMLElement} */(e.currentTarget);
+        const pop = /** @type {HTMLElement} */(btn.nextElementSibling);
+        if (!pop || !pop.classList.contains('oc-popover')) return;
+
+        // Se clicar no mesmo botão, apenas fecha (toggle)
+        if (open && open.pop === pop) { closeOpen(); return; }
+        
+        closeOpen(); // Fecha qualquer outro que esteja aberto
+        positionPopover(btn, pop);
+        btn.setAttribute('aria-expanded', 'true');
+        open = { btn, pop };
+      }
+
+      function onDocClick(e){
+        if (!open) return;
+        const path = e.composedPath ? e.composedPath() : (e.path || []);
+        // Não fecha se o clique for dentro do popover ou no seu botão
+        if (path.includes(open.pop) || path.includes(open.btn)) return;
+        closeOpen();
+      }
+
+      // Funções para fechar o popover em diferentes eventos
+      function onKey(e){ if (e.key === 'Escape') closeOpen(); }
+      function onScroll(){ closeOpen(); }
+      function onResize(){ closeOpen(); }
+
+      function init(){
+        // O script de hidratação (citations-hydrate.js) cria os botões.
+        // Este script precisa esperar que eles existam.
+        // Usamos um MutationObserver para "ouvir" quando os botões forem adicionados ao DOM.
+        const observer = new MutationObserver((mutationsList, obs) => {
+          for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+              const citeButtons = document.querySelectorAll('.oc-cite-button:not([data-bound])');
+              if (citeButtons.length > 0) {
+                citeButtons.forEach((btn)=>{
+                  btn.addEventListener('click', onBtnClick);
+                  btn.setAttribute('aria-haspopup', 'dialog');
+                  btn.setAttribute('aria-expanded', 'false');
+                  btn.dataset.bound = 'true'; // Marca como já processado
+                });
+                // Uma vez que os botões foram encontrados e os eventos adicionados,
+                // não precisamos mais observar.
+                obs.disconnect(); 
+              }
+            }
+          }
+        });
+        
+        const article = document.querySelector('.texto-aula');
+        if (article) {
+          observer.observe(article, { childList: true, subtree: true });
+        }
+
+        // Adiciona eventos globais para fechar o popover
+        document.addEventListener('click', onDocClick);
+        window.addEventListener('keydown', onKey);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+      }
+      
+      // Inicia a lógica assim que o DOM estiver pronto
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+  </script>
 </Layout>
 
 <style>
@@ -114,11 +310,13 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     display: grid;
     grid-template-columns: var(--menu-largura) 1fr;
     gap: var(--gap-sala);
+    padding: 40px;
+    align-items: start;
     transition: grid-template-columns var(--t) var(--easing);
   }
   .menu-aulas {
     position: sticky;
-    top: var(--menu-stick-top, 0.5rem);
+    top: 0.5rem;
     align-self: start;
     height: max-content;
     transform: translateX(0);
@@ -256,6 +454,7 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     .container-sala-de-aula {
       grid-template-columns: 1fr;
       gap: 1rem;
+      padding: 0;
     }
     .menu-aulas {
       position: static;
@@ -299,208 +498,3 @@ const todasAsAulas = (await getCollection('curso-escrita'))
     }
   }
 </style>
-
-<!-- Script para a funcionalidade do "Modo Leitura" -->
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const LS_KEY   = 'oficina.modoLeitura';
-    const ROOT     = document.documentElement;
-    const BODY     = document.body;
-    const container = document.querySelector('.container-sala-de-aula');
-    const menu      = document.querySelector('.menu-aulas');
-    const menuBtn   = document.querySelector('.menu-aulas .toggle-leitura');
-    const toggles   = Array.from(document.querySelectorAll('[data-leitura-toggle], #toggle-leitura, .toggle-leitura, .handle-leitura'));
-
-    if (!container || !menu || !toggles.length) {
-      BODY.classList.remove('ml-preload');
-      return;
-    }
-
-    function setPressed(active) {
-      for (const btn of toggles) {
-        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-        const isHandle = btn.classList.contains('handle-leitura');
-        const label = active ? 'Sair do modo leitura' : (isHandle ? 'Reabrir menu' : 'Ativar modo leitura');
-        btn.setAttribute('aria-label', label);
-        btn.title = label;
-      }
-    }
-
-    function placeHandleAnchored() {
-      if (menuBtn) {
-        const rTop = menuBtn.getBoundingClientRect();
-        ROOT.style.setProperty('--handle-top', `${Math.max(8, Math.round(rTop.top))}px`);
-      }
-      const rLeft = container.getBoundingClientRect();
-      ROOT.style.setProperty('--handle-left', `${Math.max(8, Math.round(rLeft.left))}px`);
-    }
-
-    function revealHandleAfterMenuSlidesOut() {
-      const fallback = setTimeout(() => {
-        ROOT.classList.add('modo-leitura-handle-pronto');
-        BODY.classList.add('modo-leitura-handle-pronto');
-      }, 550);
-      function onEnd(e) {
-        if (e.propertyName !== 'transform') return;
-        clearTimeout(fallback);
-        menu.removeEventListener('transitionend', onEnd);
-        ROOT.classList.add('modo-leitura-handle-pronto');
-        BODY.classList.add('modo-leitura-handle-pronto');
-      }
-      menu.addEventListener('transitionend', onEnd, { once: true });
-    }
-
-    function syncClasses(active) {
-      [ROOT, BODY].forEach(el => {
-        el.classList.toggle('modo-leitura-ativo', active);
-        if (!active) el.classList.remove('modo-leitura-handle-pronto');
-      });
-    }
-
-    const startActive = ROOT.classList.contains('modo-leitura-ativo');
-    if (startActive) {
-      placeHandleAnchored();
-      setPressed(true);
-    } else {
-      setPressed(false);
-    }
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        BODY.classList.remove('ml-preload');
-      });
-    });
-
-    toggles.forEach(btn => btn.addEventListener('click', () => {
-      const next = !ROOT.classList.contains('modo-leitura-ativo');
-      syncClasses(next);
-      setPressed(next);
-      localStorage.setItem(LS_KEY, next ? '1' : '0');
-
-      if (next) {
-        placeHandleAnchored();
-        revealHandleAfterMenuSlidesOut();
-      }
-    }));
-
-    window.addEventListener('resize', () => {
-      if (ROOT.classList.contains('modo-leitura-ativo')) placeHandleAnchored();
-    }, { passive: true });
-
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mq.matches) {
-      toggles.forEach(btn => {
-        btn.addEventListener('click', () => {
-          if (ROOT.classList.contains('modo-leitura-ativo')) {
-            ROOT.classList.add('modo-leitura-handle-pronto');
-            BODY.classList.add('modo-leitura-handle-pronto');
-          }
-        });
-      });
-    }
-  });
-</script>
-
-<!-- MODIFICAÇÃO: Script integrado para interatividade dos popovers de citação -->
-<script is:inline>
-  (function(){
-    let open = null; // Guarda o estado do popover aberto: { btn, pop }
-
-    function closeOpen() {
-      if (!open) return;
-      const { btn, pop } = open;
-      pop.setAttribute('hidden', '');
-      btn.setAttribute('aria-expanded', 'false');
-      open = null;
-    }
-
-    function positionPopover(btn, pop) {
-      const r = btn.getBoundingClientRect();
-      const gap = 8;
-      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-      
-      // Posiciona fora da tela para medir o tamanho sem "piscar"
-      pop.style.left = '0px';
-      pop.style.top = '-10000px';
-      pop.removeAttribute('hidden');
-      
-      const pr = pop.getBoundingClientRect();
-      let left = r.left;
-      let top = r.bottom + gap;
-      
-      // Ajusta a posição para não sair da tela
-      if (left + pr.width > vw - 8) left = vw - pr.width - 8;
-      if (left < 8) left = 8;
-      if (top + pr.height > vh - 8) top = Math.max(8, r.top - pr.height - gap);
-      
-      pop.style.left = Math.round(left) + 'px';
-      pop.style.top = Math.round(top) + 'px';
-    }
-
-    function onBtnClick(e){
-      const btn = /** @type {HTMLElement} */(e.currentTarget);
-      const pop = /** @type {HTMLElement} */(btn.nextElementSibling);
-      if (!pop || !pop.classList.contains('oc-popover')) return;
-
-      // Se clicar no mesmo botão, apenas fecha (toggle)
-      if (open && open.pop === pop) { closeOpen(); return; }
-      
-      closeOpen(); // Fecha qualquer outro que esteja aberto
-      positionPopover(btn, pop);
-      btn.setAttribute('aria-expanded', 'true');
-      open = { btn, pop };
-    }
-
-    function onDocClick(e){
-      if (!open) return;
-      const path = e.composedPath ? e.composedPath() : (e.path || []);
-      // Não fecha se o clique for dentro do popover ou no seu botão
-      if (path.includes(open.pop) || path.includes(open.btn)) return;
-      closeOpen();
-    }
-
-    // Funções para fechar o popover em diferentes eventos
-    function onKey(e){ if (e.key === 'Escape') closeOpen(); }
-    function onScroll(){ closeOpen(); }
-    function onResize(){ closeOpen(); }
-
-    function init(){
-      // O script de hidratação (citations-hydrate.js) cria os botões.
-      // Este script precisa esperar que eles existam.
-      // Usamos um MutationObserver para "ouvir" quando os botões forem adicionados ao DOM.
-      const observer = new MutationObserver((mutationsList, obs) => {
-        for (const mutation of mutationsList) {
-          if (mutation.type === 'childList') {
-            const citeButtons = document.querySelectorAll('.oc-cite-button:not([data-bound])');
-            if (citeButtons.length > 0) {
-              citeButtons.forEach((btn)=>{
-                btn.addEventListener('click', onBtnClick);
-                btn.setAttribute('aria-haspopup', 'dialog');
-                btn.setAttribute('aria-expanded', 'false');
-                btn.dataset.bound = 'true'; // Marca como já processado
-              });
-              // Uma vez que os botões foram encontrados e os eventos adicionados,
-              // não precisamos mais observar.
-              obs.disconnect(); 
-            }
-          }
-        }
-      });
-      
-      const article = document.querySelector('.texto-aula');
-      if (article) {
-        observer.observe(article, { childList: true, subtree: true });
-      }
-
-      // Adiciona eventos globais para fechar o popover
-      document.addEventListener('click', onDocClick);
-      window.addEventListener('keydown', onKey);
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onResize);
-    }
-    
-    // Inicia a lógica assim que o DOM estiver pronto
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  })();
-</script>

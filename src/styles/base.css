@@ -49,6 +49,12 @@ pre {
   overflow: auto;
 }
 
+/* Texto só para leitores de tela (ex.: o <h1> do índice do blog) */
+.oc-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
 hr {
   border: 0;
   border-top: 1px solid var(--oc-border);

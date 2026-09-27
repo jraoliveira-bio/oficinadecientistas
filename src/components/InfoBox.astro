@@ -34,10 +34,10 @@ const currentStyle = styleMap[type] ?? styleMap['saiba-mais'];
 <div class={`info-box ${currentStyle.colorClass}`}>
   
   {title && (
-    <h4 class="info-box-titulo">
-      <i class={`fas ${currentStyle.iconClass}`}></i>
+    <h3 class="info-box-titulo">
+      <i class={currentStyle.iconClass} aria-hidden="true"></i>
       {title}
-    </h4>
+    </h3>
   )}
 
   <div class="info-box-conteudo">

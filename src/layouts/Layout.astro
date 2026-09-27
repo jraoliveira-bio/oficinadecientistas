@@ -20,8 +20,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   (function () {
     try {
       const root = document.documentElement; // <html>
-      root.classList.add('ml-preload'); // evita flicker/transições no 1º paint
-
       // aceita '1' ou 'true' (legado)
       const v = localStorage.getItem('oficina.modoLeitura');
       const on = v === '1' || v === 'true';

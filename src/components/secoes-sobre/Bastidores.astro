@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 <style>
   .sobre-secao {
     background-color: color-mix(in srgb, var(--cor-titulo) 3%, transparent); /* fundo azulado */
-    margin: 0 -40px;
-    padding: 60px 40px;
+    margin: 0 calc(-1 * var(--sobre-pad, 40px));
+    padding: 60px var(--sobre-pad, 40px);
   }
 </style>

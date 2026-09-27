@@ -4,7 +4,9 @@ import { getCollection } from 'astro:content';
 import AulaLayout from '~/layouts/AulaLayout.astro';
 
 export async function getStaticPaths() {
-  const aulas = await getCollection('curso-escrita');
+  // Rascunhos (draft: true) só existem no `npm run dev` — não viram página no site publicado
+  const aulas = (await getCollection('curso-escrita'))
+    .filter(aula => import.meta.env.DEV || !aula.data.draft);
   return aulas.map(aula => ({
     params: { slug: aula.slug },
     props: { aula: aula },

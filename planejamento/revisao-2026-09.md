@@ -12,6 +12,12 @@ do código.
 
 Legenda: 🔴 quebrado · 🟠 inconsistência visível / UX · 🟡 higiene de código
 
+> **Andamento (branch `claude/sharp-allen-q2cjv5`):**
+> - ✅ **Bloco 1** — B1, B2, B7, B9, B10, I2, I3, I6, I7, I12, I13, H4, H5.
+> - ✅ **D1** — tokens semânticos (`src/styles/paleta.css` + papéis no site e no blog).
+> - ✅ **Bloco 2** — B5, B6, B8, I4, I8, I15, H1, H2, H3.
+> - ⏳ Bloco 3 (citações: B3 + B4) e bloco 4 (infra: H6, H7, H8, H10) — pendentes.
+
 ---
 
 # Parte 1 — Bugs e inconsistências (e como corrigir)

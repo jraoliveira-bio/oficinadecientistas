@@ -144,6 +144,7 @@ img {
   display: flex;
   align-items: center;
   gap: 15px;
+  text-decoration: none;
 }
 
 .logo-header {
@@ -151,9 +152,12 @@ img {
   width: auto;
 }
 
-.topo-conteudo h1 {
+/* nome do site no header: é um link, não um título (cada página tem o seu <h1>) */
+.marca-nome {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
   font-size: 24px;
-  margin: 0;
+  line-height: 1.2;
   color: var(--cor-sobre-base);
 }
 
@@ -393,7 +397,7 @@ footer {
   margin: 0 auto 15px auto;
 }
 
-.secao-emblema h3 {
+.secao-emblema h1 {
   font-size: 24px;
   font-weight: 600;
   margin: 0;
@@ -407,8 +411,9 @@ footer {
   text-align: center;
 }
 
-.manifesto-conteudo h2 {
+.manifesto-conteudo h1 {
   margin-top: 0;
+  font-size: 1.5em; /* mesmo tamanho do antigo <h2> */
 }
 
 .manifesto-conteudo p {
@@ -445,7 +450,7 @@ footer {
   line-height: 1.8;
 }
 
-.texto-introdutorio h4 {
+.texto-introdutorio h2 {
   font-size: 22px;
   margin-top: 30px;
   margin-bottom: 15px;
@@ -461,7 +466,7 @@ footer {
   margin: 30px 0;
 }
 
-.ciclo-item h5 {
+.ciclo-item h3 {
   margin-top: 0;
   font-size: 18px;
   color: var(--cor-texto);
@@ -703,7 +708,9 @@ p.paragrafo-capitular,
    ========================================================================== */
 
 .pagina-sobre-container {
-  padding: 40px;
+  /* Uma variável só: as seções "sangram" até a borda com margem negativa igual ao padding */
+  --sobre-pad: 40px;
+  padding: var(--sobre-pad);
 }
 
 .pagina-sobre-container > h1 {
@@ -739,10 +746,8 @@ p.paragrafo-capitular,
 
 .secao-quem-sou-eu {
   background-color: color-mix(in srgb, var(--cor-superficie) 74%, transparent);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding-left: 40px;
-  padding-right: 40px;
+  margin-inline: calc(-1 * var(--sobre-pad));
+  padding-inline: var(--sobre-pad);
 }
 
 .texto-coluna-unica {
@@ -819,7 +824,7 @@ p.paragrafo-capitular,
   box-shadow: var(--sombra-1);
 }
 
-.quem-sou-eu-bio h4 {
+.quem-sou-eu-bio h3 {
   margin-top: 0;
   margin-bottom: 5px;
   font-size: 20px;
@@ -854,10 +859,8 @@ p.paragrafo-capitular,
 
   padding-bottom: 80px;
 
-  margin-left: -40px;
-  margin-right: -40px;
-  padding-left: 40px;
-  padding-right: 40px;
+  margin-inline: calc(-1 * var(--sobre-pad));
+  padding-inline: var(--sobre-pad);
 }
 
 .visao-futuro-grid {
@@ -878,7 +881,7 @@ p.paragrafo-capitular,
   margin-bottom: 20px;
 }
 
-.visao-item h4 {
+.visao-item h3 {
   font-size: 20px;
 }
 
@@ -929,20 +932,7 @@ p.paragrafo-capitular,
    ========================================================================== */
 
 @media (min-width: 768px) {
-  /* Sala de aula */
-  .container-sala-de-aula {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
-    padding: 40px;
-    align-items: flex-start;
-  }
-
-  .menu-aulas {
-    position: sticky;
-    top: 40px;
-  }
-
+  /* (a grade da sala de aula mora só no AulaLayout.astro) */
 
   /* grids */
   .ciclos-container {
@@ -1023,7 +1013,7 @@ p.paragrafo-capitular,
 
   /* Sobre */
   .pagina-sobre-container {
-    padding: 20px;
+    --sobre-pad: 20px;
   }
 
   .quem-sou-eu-grid {
