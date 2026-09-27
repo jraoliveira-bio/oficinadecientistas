@@ -14,32 +14,26 @@ jobs:
       id-token: write
 
     steps:
-      # 1) checkout com token e histórico completo
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          persist-credentials: true
+      # 1) checkout
+      - uses: actions/checkout@v4
 
-      # 2) instala Node e dependências
-      - uses: actions/setup-node@v3
+      # 2) instala Node (22 LTS; o 18 saiu de suporte em abr/2025) e dependências, com cache do npm
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
+          cache: npm
       - run: npm ci
 
-      # 3) corrige permissão do Astro CLI
-      - name: Fix Astro CLI permissions
-        run: chmod +x ./node_modules/.bin/astro
-
-      # 4) build
+      # 3) build
       - name: Build with Astro
         run: npm run build
 
-      # 5) envia o dist/ como artefato para o Pages (v3 corrige uso de upload-artifact v3)
+      # 4) envia o dist/ como artefato para o Pages
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
-      # 6) publica o site no GitHub Pages (atualizado para v4)
+      # 5) publica o site no GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

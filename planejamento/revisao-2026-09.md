@@ -16,7 +16,9 @@ Legenda: 🔴 quebrado · 🟠 inconsistência visível / UX · 🟡 higiene de 
 > - ✅ **Bloco 1** — B1, B2, B7, B9, B10, I2, I3, I6, I7, I12, I13, H4, H5.
 > - ✅ **D1** — tokens semânticos (`src/styles/paleta.css` + papéis no site e no blog).
 > - ✅ **Bloco 2** — B5, B6, B8, I4, I8, I15, H1, H2, H3.
-> - ⏳ Bloco 3 (citações: B3 + B4) e bloco 4 (infra: H6, H7, H8, H10) — pendentes.
+> - ✅ **Bloco 3** — B3, B4 (citações num único script; plugin inerte removido).
+> - ✅ **Bloco 4** — H6, H7, H8, H9, H10 (FontAwesome estável, fontes num pedido, Node 22, SEO/OG, 404, manifesto, `CLAUDE.md`).
+> - Próximos candidatos: I1/D2 (fontes), I5, I9, I10, I11, I14, H11 e as sugestões de design.
 
 ---
 

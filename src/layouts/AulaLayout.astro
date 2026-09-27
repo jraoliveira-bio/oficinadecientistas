@@ -22,7 +22,7 @@ const todasAsAulas = (await getCollection('curso-escrita'))
   .sort((a, b) => (a.data.ordem ?? 999) - (b.data.ordem ?? 999));
 ---
 
-<Layout title={aulaAtual.data.title}>
+<Layout title={aulaAtual.data.title} description={aulaAtual.data.description}>
   <script is:inline>
     // Desliga transições no 1º paint (o estado do modo leitura já foi restaurado pelo Layout)
     document.body.classList.add('ml-preload');

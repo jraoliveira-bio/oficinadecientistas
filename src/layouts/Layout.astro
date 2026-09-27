@@ -3,8 +3,8 @@ import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
 import "../styles/paleta.css"; // tintas nomeadas; os papéis ficam em public/estilos.css
 
-// O frontmatter deste layout não precisa mais saber sobre 'aulaAtual' ou 'referencias'
-const { title } = Astro.props;
+const DESCRICAO_PADRAO = 'Cursos gratuitos de formação científica para pós-graduandos — começando pela escrita científica.';
+const { title, description = DESCRICAO_PADRAO } = Astro.props;
 
 // Lógica segura que garante que a base sempre termine com uma barra
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
@@ -15,6 +15,16 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - Oficina de Cientistas</title>
+    <meta name="description" content={description}>
+    <!-- Prévia do link quando compartilhado (WhatsApp, redes etc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Oficina de Cientistas">
+    <meta property="og:title" content={`${title} - Oficina de Cientistas`}>
+    <meta property="og:description" content={description}>
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)}>
+    <meta property="og:image" content={new URL(`${base}logo1.png`, Astro.site)}>
+    <meta property="og:locale" content="pt_BR">
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}>
     <!-- Site NÃO-LISTADO (alfa): acessível pelo link, mas buscadores não indexam nem seguem links.
          Para listar publicamente no futuro, apague esta linha aqui e no outro layout
          (Layout.astro e BlogLayout.astro). -->
@@ -33,15 +43,15 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <link rel="stylesheet" href={`${base}estilos.css`}>
     <link rel="icon" type="image/png" href={`${base}favicon-96x96.png`} sizes="96x96" />
     <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`}>
+    <link rel="manifest" href={`${base}site.webmanifest`}>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Ícones (FontAwesome 6, versão estável — antes era um beta) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Fontes num único pedido: Lora (títulos), Source Sans Pro (texto das aulas), Lato (base),
+         Special Elite + Courier Prime (máquina de escrever), Montserrat (slogan da home) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet"> 
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+Pro:wght@400;600&family=Lato:wght@400;700&family=Special+Elite&family=Courier+Prime&family=Montserrat:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
     <script is:inline>
