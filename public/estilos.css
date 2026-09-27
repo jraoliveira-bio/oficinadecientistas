@@ -124,7 +124,7 @@ img {
   margin: 0 auto;
 }
 
-/* --- CABEÇALHO (Faixa de Largura Total) --- */
+/* --- CABEÇALHO (faixa de largura total: fica fora de .pagina-container no Layout) --- */
 .topo {
   background-color: var(--cor-base);
   border-bottom: 1px solid var(--borda);

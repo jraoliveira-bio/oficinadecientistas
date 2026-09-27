@@ -89,8 +89,9 @@ const {
     </style>
   </head>
   <body>
+    <!-- Header fora do contêiner: faixa de ponta a ponta, como no site (o espelho rima) -->
+    <slot name="header" />
     <div class="oc-container">
-      <slot name="header" />
       <div class="oc-grid" style="margin-top: var(--oc-space-6);">
         <main class="oc-main">
           <slot />
