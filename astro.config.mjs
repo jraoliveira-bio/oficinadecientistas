@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-import rehypeCitations from './src/plugins/rehype-citations.mjs';
 
 // 🔧 Alias robusto pro Windows
 import { fileURLToPath } from 'node:url';
@@ -8,32 +7,15 @@ import { dirname, resolve } from 'node:path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Opcional: se já tiver um resolver de bibliografia, declare aqui:
-// import bib from './src/data/bib.json' assert { type: 'json' };
-// const resolveBib = (key) => ({ text: bib[key] ?? key });
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jraoliveira-bio.github.io',
   base: '/oficinadecientistas',
   output: 'static',
 
-  // .md
-  markdown: {
-    rehypePlugins: [
-      // [rehypeCitations, { resolve: resolveBib }],
-      rehypeCitations,
-    ],
-  },
-
-  // .mdx
+  // MDX (citações: componentes <Cite/> + <ReferenceList/>, resolvidos no cliente por src/scripts/citations-hydrate.js)
   integrations: [
-    mdx({
-      rehypePlugins: [
-        // [rehypeCitations, { resolve: resolveBib }],
-        rehypeCitations,
-      ],
-    }),
+    mdx(),
   ],
 
   // ✅ Alias @ -> src (evita erros de import no Windows)

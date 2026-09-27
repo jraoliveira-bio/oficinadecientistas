@@ -1,143 +1,214 @@
+// src/scripts/citations-hydrate.js
+// ÚNICO script do sistema de citações (antes eram três, sobrepostos).
+// Carregado só pelo AulaLayout. Faz tudo no cliente:
+//   1. lê as referências do frontmatter, serializadas em <meta id="oc-refs" data-refs="...">;
+//   2. numera os <cite class="oc-cite" data-key> (vindos de <Cite/>) pela ordem de 1ª aparição
+//      e troca cada um por um botão [n] + popover;
+//   3. monta a lista numerada dentro de [data-ref-list] (vindo de <ReferenceList/>),
+//      com âncoras #ref-n e links DOI · Link · Google Scholar;
+//   4. liga o popover: abrir/fechar no [n], botão ×, Esc, clique fora, rolagem e redimensionamento.
+
 (() => {
   const ready = (fn) =>
     document.readyState === 'loading'
       ? document.addEventListener('DOMContentLoaded', fn, { once: true })
       : fn();
 
-  ready(() => {
-    const log = () => {}; // debug silenciado em produção
+  // ---------- dados ----------
+  function lerReferencias() {
+    const meta = document.getElementById('oc-refs');
+    try {
+      return JSON.parse(decodeURIComponent(meta?.dataset.refs || '[]'));
+    } catch (e) {
+      console.warn('[citações] não consegui ler as referências do frontmatter', e);
+      return [];
+    }
+  }
 
-    // utilzinho pra montar a lista a partir dos botões e do REFS
-    function buildList() {
-      const host = document.querySelector('[data-ref-list]');
-      if (!host) { log('sem host [data-ref-list]'); return; }
+  const textoDaRef = (ref) =>
+    ref.text || [ref.author, ref.year, ref.title].filter(Boolean).join(' — ');
 
-      // 1) ordem por primeira aparição (via botões prontos)
-      const buttons = [...document.querySelectorAll('.oc-cite-button')];
-      const seen = new Set(); const order = [];
-      buttons.forEach(b => {
-        const k = b.getAttribute('data-key');
-        if (k && !seen.has(k)) { seen.add(k); order.push(k); }
-      });
-      log('ordem:', order);
+  function scholarURL(ref) {
+    const q = ref.scholar_query || [ref.author, ref.title, ref.year].filter(Boolean).join(' ');
+    return q ? 'https://scholar.google.com/scholar?q=' + encodeURIComponent(q) : null;
+  }
 
-      // 2) refs do meta
-      const meta = document.getElementById('oc-refs');
-      const REFS = JSON.parse(decodeURIComponent(meta?.dataset.refs || '[]'));
-      const refByKey = new Map(REFS.map(r => [String(r.key), r]));
+  // Links DOI · Link · Google Scholar, separados por " · "
+  function linksDaRef(ref) {
+    const pares = [];
+    if (ref.doi) pares.push(['DOI', ref.doi]);
+    if (ref.url) pares.push(['Link', ref.url]);
+    const sch = scholarURL(ref);
+    if (sch) pares.push(['Google Scholar', sch]);
+    const frag = document.createDocumentFragment();
+    pares.forEach(([rotulo, href], i) => {
+      if (i) frag.append(' · ');
+      const a = document.createElement('a');
+      a.href = href;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = rotulo;
+      frag.append(a);
+    });
+    return { frag, total: pares.length };
+  }
 
-      // --- INÍCIO DO PATCH ---
-      // (NOVO) Atualiza o conteúdo de popovers existentes com os dados de REFS
-      (() => {
-        const btns = [...document.querySelectorAll('.oc-cite-button')];
-        btns.forEach((btn) => {
-          const key = btn.getAttribute('data-key');
-          const pop = btn.nextElementSibling;
-          if (!key || !pop || !pop.classList?.contains('oc-popover')) return;
+  // ---------- montagem ----------
+  function transformarCitacoes(refPorChave) {
+    const numPorChave = new Map();
+    const ordem = [];
 
-          const ref = refByKey.get(key);
-          if (!ref) {
-            pop.innerHTML = `<div class="oc-pop-body"><p class="oc-pop-text">Referência não encontrada: ${key}</p></div>`;
-            return;
-          }
-
-          // (Re)monta o conteúdo do popover a partir de REFS
-          const scholarURL = (r) => {
-            const q = r.scholar_query || [r.author, r.title, r.year].filter(Boolean).join(' ');
-            return q ? 'https://scholar.google.com/scholar?q=' + encodeURIComponent(q) : null;
-          };
-          const makeLink = (href, label) => {
-            const a = document.createElement('a');
-            a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = label;
-            return a;
-          };
-
-          pop.innerHTML = ''; // limpa o que veio do SSR
-          const close = document.createElement('button');
-          close.className = 'oc-pop-close';
-          close.type = 'button';
-          close.setAttribute('aria-label', 'Fechar');
-          close.textContent = '×';
-
-          const body = document.createElement('div');
-          body.className = 'oc-pop-body';
-
-          const p = document.createElement('p');
-          p.className = 'oc-pop-text';
-          p.textContent = ref.text || [ref.author, ref.year, ref.title].filter(Boolean).join(' — ');
-          body.appendChild(p);
-
-          const links = [];
-          if (ref.doi) links.push(makeLink(ref.doi, 'DOI'));
-          if (ref.url) links.push(makeLink(ref.url, 'Link'));
-          const sch = scholarURL(ref); if (sch) links.push(makeLink(sch, 'Google Scholar'));
-          if (links.length) {
-            const lp = document.createElement('p'); lp.className = 'oc-pop-links';
-            links.forEach((a, i) => { if (i) lp.append(document.createTextNode(' · ')); lp.append(a); });
-            body.appendChild(lp);
-          }
-
-          pop.append(close, body);
-        });
-      })();
-      // --- FIM DO PATCH ---
-
-      // 3) constrói a lista
-      const h2 = document.createElement('h2');
-      h2.className = 'oc-ref-title';
-      h2.textContent = 'Referências';
-
-      const ol = document.createElement('ol');
-      ol.className = 'oc-ref-ol';
-      ol.style.listStyle = 'decimal';
-      ol.style.paddingLeft = '1.25rem';
-      ol.style.margin = '.5rem 0';
-
-      order.forEach((key, i) => {
-        const li = document.createElement('li');
-        li.className = 'oc-ref-item';
-        const ref = refByKey.get(key);
-        if (ref) {
-          li.textContent = ref.text || [ref.author, ref.year, ref.title].filter(Boolean).join(' — ');
-        } else {
-          li.textContent = `[${i + 1}] Referência não encontrada: ${key}`;
-        }
-        ol.appendChild(li);
-      });
-
-      host.replaceChildren(h2, ol);
-      log('host.innerHTML depois:', host.innerHTML);
-
-      // 4) debug de visibilidade
-      const hs = getComputedStyle(host);
-      const os = getComputedStyle(ol);
-      const rect = host.getBoundingClientRect();
-      log('host styles', { display: hs.display, visibility: hs.visibility, opacity: hs.opacity });
-      log('ol styles', { display: os.display, visibility: os.visibility, opacity: os.opacity });
-      log('host rect', rect);
-
-      // 5) fallback: se estiver invisível/altura 0, cria uma seção no fim do artigo
-      const invisible = (hs.display === 'none' || hs.visibility === 'hidden' || hs.opacity === '0');
-      if (invisible || rect.height < 4) {
-        log('host parece invisível/colapsado — criando fallback no final do artigo');
-        const article = document.querySelector('.texto-aula') || document.querySelector('article') || document.body;
-        const section = document.createElement('section');
-        section.className = 'oc-ref-fallback';
-        section.style.borderTop = '1px solid rgba(0,0,0,.1)';
-        section.style.marginTop = '1.5rem';
-        section.style.paddingTop = '1rem';
-
-        const h2b = h2.cloneNode(true);
-        const olb = ol.cloneNode(true);
-
-        section.append(h2b, olb);
-        article.appendChild(section);
+    document.querySelectorAll('cite.oc-cite[data-key]').forEach((cite) => {
+      const chave = cite.getAttribute('data-key');
+      if (!numPorChave.has(chave)) {
+        numPorChave.set(chave, ordem.length + 1);
+        ordem.push(chave);
       }
+      const n = numPorChave.get(chave);
+      const ref = refPorChave.get(chave);
+      const idPop = `oc-pop-${n}-${Math.random().toString(36).slice(2, 7)}`;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'oc-cite-button';
+      btn.dataset.key = chave;
+      btn.setAttribute('aria-label', `Ver referência ${n}`);
+      btn.setAttribute('aria-haspopup', 'dialog');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', idPop);
+      const sup = document.createElement('sup');
+      sup.className = 'oc-cite-sup';
+      sup.textContent = `[${n}]`;
+      btn.append(sup);
+
+      const pop = document.createElement('div');
+      pop.className = 'oc-popover';
+      pop.id = idPop;
+      pop.hidden = true;
+      pop.setAttribute('role', 'dialog');
+      pop.setAttribute('aria-label', `Referência ${n}`);
+
+      const fechar = document.createElement('button');
+      fechar.type = 'button';
+      fechar.className = 'oc-pop-close';
+      fechar.setAttribute('aria-label', 'Fechar');
+      fechar.textContent = '×';
+
+      const corpo = document.createElement('div');
+      corpo.className = 'oc-pop-body';
+      const p = document.createElement('p');
+      p.className = 'oc-pop-text';
+      p.textContent = ref ? textoDaRef(ref) : `Referência não encontrada: ${chave}`;
+      corpo.append(p);
+      if (ref) {
+        const { frag, total } = linksDaRef(ref);
+        if (total) {
+          const lp = document.createElement('p');
+          lp.className = 'oc-pop-links';
+          lp.append(frag);
+          corpo.append(lp);
+        }
+      }
+
+      pop.append(fechar, corpo);
+      cite.replaceWith(btn, pop);
+    });
+
+    return ordem;
+  }
+
+  function montarLista(ordem, refPorChave) {
+    const host = document.querySelector('[data-ref-list]');
+    if (!host || !ordem.length) return;
+
+    const h2 = document.createElement('h2');
+    h2.className = 'oc-ref-title';
+    h2.textContent = 'Referências';
+
+    const ol = document.createElement('ol');
+    ol.className = 'oc-ref-ol';
+    ordem.forEach((chave, i) => {
+      const li = document.createElement('li');
+      li.className = 'oc-ref-item';
+      li.id = `ref-${i + 1}`;
+      const ref = refPorChave.get(chave);
+      if (!ref) {
+        li.textContent = `Referência não encontrada: ${chave}`;
+      } else {
+        li.append(textoDaRef(ref));
+        const { frag, total } = linksDaRef(ref);
+        if (total) {
+          const span = document.createElement('span');
+          span.className = 'oc-ref-links';
+          span.append(' ', frag);
+          li.append(span);
+        }
+      }
+      ol.append(li);
+    });
+
+    host.replaceChildren(h2, ol);
+  }
+
+  // ---------- interação ----------
+  function ligarPopovers() {
+    let aberto = null; // { btn, pop }
+
+    function fechar({ devolverFoco = false } = {}) {
+      if (!aberto) return;
+      aberto.pop.hidden = true;
+      aberto.btn.setAttribute('aria-expanded', 'false');
+      if (devolverFoco) aberto.btn.focus();
+      aberto = null;
     }
 
-    // chama depois que os botões já existem
-    requestAnimationFrame(() => {
-      requestAnimationFrame(buildList);
+    function posicionar(btn, pop) {
+      const r = btn.getBoundingClientRect();
+      const margem = 8;
+      const vw = document.documentElement.clientWidth;
+      const vh = document.documentElement.clientHeight;
+      pop.style.left = '0px';
+      pop.style.top = '-10000px';
+      pop.hidden = false; // mede fora da tela, sem "piscar"
+      const pr = pop.getBoundingClientRect();
+      let left = Math.min(r.left, vw - pr.width - margem);
+      left = Math.max(margem, left);
+      let top = r.bottom + margem;
+      if (top + pr.height > vh - margem) top = Math.max(margem, r.top - pr.height - margem);
+      pop.style.left = Math.round(left) + 'px';
+      pop.style.top = Math.round(top) + 'px';
+    }
+
+    // Um único ouvinte no documento cobre botões [n], o × e o clique fora
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.oc-cite-button');
+      if (btn) {
+        const pop = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!pop) return;
+        if (aberto && aberto.pop === pop) { fechar(); return; }
+        fechar();
+        posicionar(btn, pop);
+        btn.setAttribute('aria-expanded', 'true');
+        aberto = { btn, pop };
+        return;
+      }
+      if (e.target.closest('.oc-pop-close')) { fechar({ devolverFoco: true }); return; }
+      if (aberto && !aberto.pop.contains(e.target)) fechar();
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') fechar({ devolverFoco: true });
+    });
+    window.addEventListener('scroll', () => fechar(), { passive: true });
+    window.addEventListener('resize', () => fechar());
+  }
+
+  ready(() => {
+    if (!document.querySelector('cite.oc-cite[data-key], [data-ref-list]')) return;
+    const refs = lerReferencias();
+    const refPorChave = new Map(refs.map((r) => [String(r.key), r]));
+    const ordem = transformarCitacoes(refPorChave);
+    montarLista(ordem, refPorChave);
+    ligarPopovers();
   });
 })();

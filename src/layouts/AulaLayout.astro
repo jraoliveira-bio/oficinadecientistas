@@ -81,7 +81,7 @@ const todasAsAulas = (await getCollection('curso-escrita'))
 
         {/* Dados das referências embutidos de forma segura em uma tag <meta> */}
         <meta id="oc-refs" data-refs={refsAttr} />
-        {/* Script externo que lê os dados acima e constrói os botões/popovers */}
+        {/* Script único das citações: numera os <Cite/>, cria os popovers e monta a <ReferenceList/> */}
         <script type="module" src={hydrateUrl}></script>
 
       </article>
@@ -187,110 +187,6 @@ const todasAsAulas = (await getCollection('curso-escrita'))
         });
       }
     });
-  </script>
-
-  <!-- MODIFICAÇÃO: Script integrado para interatividade dos popovers de citação -->
-  <script is:inline>
-    (function(){
-      let open = null; // Guarda o estado do popover aberto: { btn, pop }
-
-      function closeOpen() {
-        if (!open) return;
-        const { btn, pop } = open;
-        pop.setAttribute('hidden', '');
-        btn.setAttribute('aria-expanded', 'false');
-        open = null;
-      }
-
-      function positionPopover(btn, pop) {
-        const r = btn.getBoundingClientRect();
-        const gap = 8;
-        const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-        
-        // Posiciona fora da tela para medir o tamanho sem "piscar"
-        pop.style.left = '0px';
-        pop.style.top = '-10000px';
-        pop.removeAttribute('hidden');
-        
-        const pr = pop.getBoundingClientRect();
-        let left = r.left;
-        let top = r.bottom + gap;
-        
-        // Ajusta a posição para não sair da tela
-        if (left + pr.width > vw - 8) left = vw - pr.width - 8;
-        if (left < 8) left = 8;
-        if (top + pr.height > vh - 8) top = Math.max(8, r.top - pr.height - gap);
-        
-        pop.style.left = Math.round(left) + 'px';
-        pop.style.top = Math.round(top) + 'px';
-      }
-
-      function onBtnClick(e){
-        const btn = /** @type {HTMLElement} */(e.currentTarget);
-        const pop = /** @type {HTMLElement} */(btn.nextElementSibling);
-        if (!pop || !pop.classList.contains('oc-popover')) return;
-
-        // Se clicar no mesmo botão, apenas fecha (toggle)
-        if (open && open.pop === pop) { closeOpen(); return; }
-        
-        closeOpen(); // Fecha qualquer outro que esteja aberto
-        positionPopover(btn, pop);
-        btn.setAttribute('aria-expanded', 'true');
-        open = { btn, pop };
-      }
-
-      function onDocClick(e){
-        if (!open) return;
-        const path = e.composedPath ? e.composedPath() : (e.path || []);
-        // Não fecha se o clique for dentro do popover ou no seu botão
-        if (path.includes(open.pop) || path.includes(open.btn)) return;
-        closeOpen();
-      }
-
-      // Funções para fechar o popover em diferentes eventos
-      function onKey(e){ if (e.key === 'Escape') closeOpen(); }
-      function onScroll(){ closeOpen(); }
-      function onResize(){ closeOpen(); }
-
-      function init(){
-        // O script de hidratação (citations-hydrate.js) cria os botões.
-        // Este script precisa esperar que eles existam.
-        // Usamos um MutationObserver para "ouvir" quando os botões forem adicionados ao DOM.
-        const observer = new MutationObserver((mutationsList, obs) => {
-          for (const mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-              const citeButtons = document.querySelectorAll('.oc-cite-button:not([data-bound])');
-              if (citeButtons.length > 0) {
-                citeButtons.forEach((btn)=>{
-                  btn.addEventListener('click', onBtnClick);
-                  btn.setAttribute('aria-haspopup', 'dialog');
-                  btn.setAttribute('aria-expanded', 'false');
-                  btn.dataset.bound = 'true'; // Marca como já processado
-                });
-                // Uma vez que os botões foram encontrados e os eventos adicionados,
-                // não precisamos mais observar.
-                obs.disconnect(); 
-              }
-            }
-          }
-        });
-        
-        const article = document.querySelector('.texto-aula');
-        if (article) {
-          observer.observe(article, { childList: true, subtree: true });
-        }
-
-        // Adiciona eventos globais para fechar o popover
-        document.addEventListener('click', onDocClick);
-        window.addEventListener('keydown', onKey);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onResize);
-      }
-      
-      // Inicia a lógica assim que o DOM estiver pronto
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-    })();
   </script>
 </Layout>
 
