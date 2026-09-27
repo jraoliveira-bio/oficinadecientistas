@@ -55,6 +55,9 @@ const {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;700&family=Montserrat:wght@200&display=swap" rel="stylesheet">
 
+    <!-- Feed RSS (src/pages/blog/rss.xml.js): leitores de feed acham sozinhos por aqui -->
+    <link rel="alternate" type="application/rss+xml" title="A Prancheta" href={withBase("blog/rss.xml")} />
+
     <!-- Slot extra para páginas poderem injetar <head> -->
     <slot name="head" />
 
@@ -86,6 +89,17 @@ const {
         border-radius: var(--oc-radius);
         box-shadow: var(--oc-shadow-1);
       }
+      /* Rodapé: rima com o do site (filete em cima, centralizado, discreto) */
+      .oc-rodape {
+        margin-top: var(--oc-space-12);
+        padding: var(--oc-space-6) 0 var(--oc-space-2);
+        border-top: 1px solid color-mix(in srgb, var(--oc-fg) 15%, transparent);
+        text-align: center;
+        font-size: var(--oc-fs-xs);
+        color: var(--oc-muted);
+      }
+      .oc-rodape p { margin: 0 0 var(--oc-space-2); }
+      .oc-rodape a { text-decoration: underline; }
     </style>
   </head>
   <body>
@@ -100,6 +114,10 @@ const {
           <slot name="sidebar" />
         </aside>
       </div>
+      <footer class="oc-rodape">
+        <p>A Prancheta: os bastidores da <a href={withBase("")}>Oficina de Cientistas</a>.</p>
+        <p><a href={withBase("blog/")}>Todos os posts</a> · <a href={withBase("blog/rss.xml")}>Assinar pelo RSS</a></p>
+      </footer>
     </div>
   </body>
 </html>
