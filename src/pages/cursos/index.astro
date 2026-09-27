@@ -10,7 +10,7 @@ const totalAulas = (await getCollection('curso-escrita'))
   .filter(a => a.data.menu === true && !a.data.draft).length;
 ---
 
-<Layout title="Cursos">
+<Layout title="Cursos" description="Cursos gratuitos com as habilidades essenciais que raramente são ensinadas na pós-graduação.">
     <main>
         <section class="secao-manifesto">
             <div class="manifesto-conteudo">

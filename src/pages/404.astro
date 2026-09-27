@@ -1,0 +1,56 @@
+---
+// Página 404 própria. No GitHub Pages de projeto, o 404.html gerado aqui é servido
+// para qualquer endereço inexistente dentro de /oficinadecientistas/.
+import Layout from '~/layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
+---
+<Layout title="Página não encontrada" description="Esta página não existe (ou mudou de lugar).">
+  <main class="pagina-404">
+    <img src={`${base}imagens/gatocard2-mobile.png`} alt="O gato da Oficina, escrevendo no computador" class="gato-404">
+    <p class="rotulo-404">Erro 404</p>
+    <h1>Este experimento não replicou.</h1>
+    <p>A página que você procurou não existe, ou mudou de lugar durante a reforma do laboratório.</p>
+    <ul class="saidas-404">
+      <li><a href={base}>Voltar ao início →</a></li>
+      <li><a href={`${base}cursos/`}>Ver os cursos →</a></li>
+      <li><a href={`${base}blog/`}>Ler os bastidores →</a></li>
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  .pagina-404 {
+    max-width: 56ch;
+    margin: 3rem auto 4rem;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+  .gato-404 {
+    width: min(260px, 70%);
+    border-radius: var(--raio-l);
+    box-shadow: var(--sombra-1);
+  }
+  .rotulo-404 {
+    font-family: var(--fonte-maquina);
+    color: var(--cor-destaque);
+    letter-spacing: 0.08em;
+    margin: 1.5rem 0 0.25rem;
+  }
+  .pagina-404 h1 { margin: 0 0 1rem; text-wrap: balance; }
+  .saidas-404 {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+  }
+  .saidas-404 a {
+    color: var(--cor-link);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .saidas-404 a:hover { color: var(--cor-destaque); }
+</style>

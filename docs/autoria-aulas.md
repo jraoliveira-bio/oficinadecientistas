@@ -129,7 +129,7 @@ export const { videoId, chapters, transcript } = frontmatter;
    A `<ol>` é montada no cliente a partir das `references` e da ordem das citações.
 
 A mesma `key` pode ser citada várias vezes — ela mantém o mesmo número.
-Detalhes da implementação interna (e a dívida técnica dos 3 scripts) estão no `CLAUDE.md`, seção 10.
+Detalhes da implementação interna (um único script, `src/scripts/citations-hydrate.js`) estão no `CLAUDE.md`, seção 10.
 
 ---
 

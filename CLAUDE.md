@@ -70,7 +70,7 @@ npm run preview  # serve o dist/ localmente
 
 - **GitHub Pages.** `site: 'https://jraoliveira-bio.github.io'`, `base: '/oficinadecientistas'`.
 - CI em `.github/workflows/deploy.yml`: a cada **push na `main`**, roda `npm ci` →
-  `npm run build` → publica `dist/` no Pages. Node 18.
+  `npm run build` → publica `dist/` no Pages. Node 22 (com cache do npm).
 - `.nojekyll` na raiz impede o Jekyll de mexer no output.
 - **Não há ambiente de staging.** Push na `main` = publicar em produção.
 - **Site não-listado (alfa):** `Layout.astro` e `BlogLayout.astro` têm `<meta name="robots" content="noindex, nofollow">`.
@@ -129,7 +129,7 @@ um asset de `public/` como módulo, o padrão no projeto é `~/../public/imagens
 
 ```
 oficinadecientistas/
-├─ astro.config.mjs      # site/base, integração MDX, rehype-citations, alias @→src
+├─ astro.config.mjs      # site/base, integração MDX, alias @→src
 ├─ jsconfig.json         # alias ~→src
 ├─ package.json
 ├─ .github/workflows/deploy.yml
@@ -155,9 +155,7 @@ oficinadecientistas/
    │  └─ blog/           # posts .mdx  → coleção "blog"
    ├─ data/conceitos.json   # dados consumidos por Table.astro
    ├─ lib/url.ts, lib/blog-utils.ts
-   ├─ plugins/
-   │  └─ rehype-citations.mjs      # registrado no astro.config (ver seção 9)
-   ├─ scripts/citations-hydrate.js # constrói a lista de referências no cliente
+   ├─ scripts/citations-hydrate.js # ÚNICO script das citações (ver seção 10)
    └─ styles/            # tokens.css, base.css, blog-index.css, citations.css
 ```
 
@@ -174,10 +172,11 @@ oficinadecientistas/
 | `cursos/curso-escrita/[slug].astro` | `/cursos/curso-escrita/<slug>/` | Renderiza cada aula via `AulaLayout` |
 | `blog/index.astro` | `/blog/` | Índice com expansão inline + filtro de tags |
 | `blog/[slug].astro` | `/blog/<slug>/` | Post individual |
+| `aulas-especiais/index.astro`, `links/index.astro` | `/aulas-especiais/`, `/links/` | Páginas "em construção" (seções planejadas) |
+| `404.astro` | qualquer endereço inexistente | Página 404 própria (o gato: "Este experimento não replicou") |
 
-**Links de menu sem página correspondente (pendência):** o `Header.astro` aponta para
-`/aulas-especiais/` e `/links/`, que **ainda não existem**. Não são bugs introduzidos — são
-seções planejadas. Não remova sem confirmar com o autor.
+**Rascunhos:** aulas com `draft: true` só existem no `npm run dev`; no build (site publicado)
+não viram página nem entram no menu/grade.
 
 ---
 
@@ -187,8 +186,10 @@ Há **dois sistemas de estilo deliberadamente separados** para o site não "vaza
 
 ### Site principal — `Layout.astro`
 - Carrega o **CSS global** `public/estilos.css` (a maior parte do visual do site mora aqui).
-- Carrega fontes via Google Fonts (Lora, Source Sans Pro, Special Elite, Courier Prime, Lato).
-- Inclui o **script de hidratação de citações** (ver seção 9).
+- Carrega fontes via Google Fonts, **num único `<link>`** (Lora, Source Sans Pro, Lato,
+  Special Elite, Courier Prime, Montserrat) e o FontAwesome 6.7 (CDN).
+- Tem `<meta name="description">`, Open Graph (prévia de link) e canonical; recebe
+  `title` e `description` como props.
 - `AulaLayout.astro` **envolve** `Layout.astro` e adiciona: menu lateral de aulas (ordenado
   por `ordem`, filtrando `menu: true`), botão **"Modo leitura"** (esconde o menu; estado em
   `localStorage` sob a chave `oficina.modoLeitura`) e a infra de citações.
@@ -259,25 +260,17 @@ Para autores, é simples (detalhes em [`docs/autoria-aulas.md`](docs/autoria-aul
 2. No corpo, cite com `<Cite refKey="mayr1942" />` (vira um `[n]` clicável com popover).
 3. Ponha `<ReferenceList />` onde a lista numerada deve aparecer.
 
-### Como funciona por baixo (avançado — há dívida técnica aqui)
+### Como funciona por baixo
 - `Cite.astro` renderiza `<cite class="oc-cite" data-key="...">`; `ReferenceList.astro`
   renderiza `<div class="oc-ref-list" data-ref-list>` (placeholders vazios).
 - `AulaLayout` serializa `data.references` em `<meta id="oc-refs" data-refs="...">`
-  (JSON + `encodeURIComponent`) e injeta `scripts/citations-hydrate.js`.
-- **No cliente**, três scripts cooperam (com sobreposição):
-  1. inline em `Layout.astro` — numera os `<cite>` e cria os botões `[n]` + popovers;
-  2. `citations-hydrate.js` — preenche os popovers com o texto real e monta a `<ol>` em `[data-ref-list]`;
-  3. inline em `AulaLayout.astro` — liga os cliques (abrir/fechar/posicionar popover) via `MutationObserver`.
+  (JSON + `encodeURIComponent`) e carrega `src/scripts/citations-hydrate.js` e `citations.css`.
+- **Um único script no cliente** (`citations-hydrate.js`) faz tudo: numera os `<cite>` pela
+  ordem de 1ª aparição, troca cada um por botão `[n]` + popover, monta a `<ol>` em
+  `[data-ref-list]` (com âncoras `#ref-n` e links DOI · Link · Google Scholar) e liga a
+  interação (abrir/fechar no `[n]`, botão ×, Esc, clique fora, rolagem).
+- Não há plugin de build para citações (o antigo `rehype-citations` era inerte e foi removido).
 - Estilos dos popovers/lista: `src/styles/citations.css`.
-
-> **Atenção / dívida técnica:**
-> - O plugin **`rehype-citations.mjs`** está registrado no `astro.config.mjs`, mas ele só
->   captura tags `<cite>` **literais** escritas à mão no markdown — **não** captura o
->   componente `<Cite/>`. Na prática, para o fluxo normal de autoria ele fica **inerte**.
-> - O plugin legado `remark-cite-to-html.mjs` foi **removido** (não era registrado/usado).
-> - Há **lógica de citação duplicada** em 3 arquivos (Layout inline, AulaLayout inline,
->   citations-hydrate.js). Antes de "consertar" citações, entenda os três — mexer em um só
->   costuma quebrar o conjunto. Idealmente isso seria consolidado num único script.
 
 ---
 
@@ -298,36 +291,26 @@ Para autores, é simples (detalhes em [`docs/autoria-aulas.md`](docs/autoria-aul
 
 ## 12. Dívidas técnicas e pegadinhas conhecidas
 
-Itens reais no repositório hoje — **não "conserte" silenciosamente; confirme antes**:
+Itens reais no repositório hoje — **não "conserte" silenciosamente; confirme antes**.
+A auditoria completa (e o que já foi feito) está em
+[`planejamento/revisao-2026-09.md`](planejamento/revisao-2026-09.md).
 
-- **`node_modules/` e `dist/` estão versionados no git e não existe `.gitignore`.**
-  São ~9.7k arquivos de `node_modules` rastreados. Criar um `.gitignore`
-  (`node_modules/`, `dist/`, `.astro/`) e remover esses diretórios do índice é uma melhoria
-  desejável, mas é uma mudança grande — alinhe com o autor antes.
-- **Citações:** ver a dívida descrita na seção 10 (3 scripts sobrepostos + 1 plugin inerte + 1 legado).
-- **Logs de debug:** `scripts/citations-hydrate.js` tem vários `console.log('[OC(H) LIST]', ...)`.
-- **Marcadores de sanity-check:** `blog/[slug].astro` ainda renderiza `[pré-conteúdo]` e
-  `[pós-conteúdo]` (havia um comentário "remova depois de validar").
-- **Bug pequeno:** em `cursos/index.astro` há uma aspa sobrando no atributo
-  (`<a href={...}"` — aspa dupla extra após a chave).
-- **Grade curricular hardcoded:** o acordeão em `cursos/curso-escrita/index.astro` é estático
-  (Aula 01/02 escritas à mão), não é gerado a partir da coleção.
-- **Páginas de menu inexistentes:** `/aulas-especiais/` e `/links/` (seção 7).
-
-**Encontrados rodando o site (confirmados em tela — ainda NÃO corrigidos):**
-
-- 🔴 **Aulas quebradas no mobile.** `AulaLayout` usa `grid-template-columns: 320px 1fr` e
-  **não tem nenhum `@media` para telas estreitas** — no celular o menu lateral esmaga a coluna
-  de conteúdo e o texto/notas viram ~1 caractere por linha. Maior prioridade de UX. (A lógica
-  do "modo leitura", que zera a coluna do menu, é metade do caminho para o conserto.)
-- 🟠 **"Modo leitura" não persiste no reload.** O clique no botão funciona, mas o preload não
-  reaplica o estado salvo em `localStorage` (`oficina.modoLeitura`) ao recarregar a página.
-- 🟡 **Home com bloco cinza vazio.** O `CoverCard` do blog na home renderiza uma área grande e
-  vazia (a imagem da capa não aparece e há só 1 cover num grid 2-up).
-- 🟡 **Rastreadores do YouTube.** O `VideoPlayer` embeda `youtube.com`, que dispara requests a
-  `doubleclick.net` (erros no console + privacidade). Avaliar `youtube-nocookie.com`.
-- **Typo de conteúdo:** título de uma aula no menu — "Vendo a**r** Coisas como as Coisas São"
-  (deveria ser "as"), no frontmatter da aula correspondente.
+- **Dois padrões de `base` e dois aliases** (`withBase()` × cálculo inline; `@` × `~`) —
+  ver seções 4 e 5. Padronizar aos poucos, sem inflar diffs.
+- **Fontes demais:** ~7 famílias no site + Inter importada dentro da `NotaDeMargem`.
+  A proposta (revisão, D2) é reduzir a 3 papéis. `Source Sans Pro` foi renomeada para
+  `Source Sans 3` no Google Fonts (a antiga ainda funciona).
+- **Notas de margem invisíveis fora do modo leitura:** as notas da Aula 01 são
+  `lado="esquerda"` (onde fica o menu) e só aparecem no "Modo leitura" (revisão, I5).
+- **Sidebar do blog na página de post:** os botões de tag e os links do arquivo só funcionam
+  no índice (revisão, I10). Posts recolhidos no índice continuam "tabuláveis" (I11).
+- **Acessibilidade pendente:** hambúrguer do mobile sem `aria-expanded`/foco; abas do
+  `VideoPlayer` não atualizam `aria-selected` (revisão, I14).
+- **Nome do blog:** "A Prancheta" × "Os Bastidores" × "Blog de Desenvolvimento" (revisão, I9).
+- **Conteúdo:** a `description` da Aula 01 ainda fala de IMRaD (assunto do vídeo antigo);
+  erros de digitação listados na revisão (H11); e-mail de contato e link do Lattes
+  aguardam o autor (TODOs em `Sustentabilidade.astro` e `QuemSouEu.astro`).
+- **Site não-listado** de propósito (`noindex` — ver seção 3).
 
 ---
 

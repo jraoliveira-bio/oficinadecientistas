@@ -1,6 +1,7 @@
 ---
-// src/components/Image.astro
+// src/components/Image.astro — <img> com a base do site já aplicada.
+// Uso no MDX: <Image src="imagens/x.png" alt="..." />
+import { withBase } from '~/lib/url';
 const { src, alt, class: className } = Astro.props;
-const base = import.meta.env.BASE_URL;
 ---
-<img src={`${base}/${src}`} alt={alt} class={className} />
+<img src={withBase(src)} alt={alt} class={className} />
