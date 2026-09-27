@@ -506,7 +506,7 @@ footer {
 
 .menu-aulas li a {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 10px 15px;
   text-decoration: none;
@@ -522,6 +522,7 @@ footer {
   color: var(--cor-vinho);
   font-size: 12px;
   padding-left: 10px;
+  margin-left: auto;
 }
 
 .menu-aulas li a:hover {

@@ -286,6 +286,11 @@ const todasAsAulas = (await getCollection('curso-escrita'))
       pointer-events: auto;
     }
 
+    /* Justificado em coluna estreita abre "rios" de espaço entre as palavras */
+    .conteudo-aula :global(.texto-aula) {
+      text-align: left;
+    }
+
     /* No mobile as notas de margem viram blocos inline (ver NotaDeMargem),
        então devem aparecer sempre — não dependem do modo leitura aqui. */
     :global(.conteudo-aula .nota-de-margem .nota) {

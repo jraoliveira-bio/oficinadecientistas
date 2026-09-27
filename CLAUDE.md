@@ -130,9 +130,10 @@ oficinadecientistas/
 ├─ jsconfig.json         # alias ~→src
 ├─ package.json
 ├─ .github/workflows/deploy.yml
-├─ public/               # servido como está (NÃO passa por bundler)
+├─ arte/                # arquivos de trabalho (.psd) e backups de imagens — FORA do build
+├─ public/               # servido como está (NÃO passa por bundler) — tudo aqui vai para o ar
 │  ├─ estilos.css        # ★ CSS GLOBAL do site principal (~930 linhas)
-│  ├─ imagens/           # imagens das aulas e home (inclui .psd de trabalho)
+│  ├─ imagens/           # imagens das aulas e home (só o que vai para o ar)
 │  ├─ img/               # favicons do blog + logos
 │  ├─ js/blog-index-expand.js
 │  └─ logo*.png, favicon*, site.webmanifest

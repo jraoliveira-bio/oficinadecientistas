@@ -19,9 +19,11 @@ const themeClass = `theme-${PALETAS.includes(escolhida) ? escolhida : 'neutro'}`
   {imagem && (
     <figure class="box-artigo-figura">
       <img src={imagem} alt={title || 'Imagem de destaque do artigo'} />
-      <figcaption>
-        <slot name="legenda" />
-      </figcaption>
+      {Astro.slots.has('legenda') && (
+        <figcaption>
+          <slot name="legenda" />
+        </figcaption>
+      )}
     </figure>
   )}
 

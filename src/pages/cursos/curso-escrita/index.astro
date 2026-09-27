@@ -39,9 +39,9 @@ const base = import.meta.env.BASE_URL.endsWith('/')
                     const titulo = aula.data.shortTitle ?? aula.data.title;
                     return (
                         <div class="acordeon-item">
-                            <button class="acordeon-cabecalho">
+                            <button class="acordeon-cabecalho" type="button" aria-expanded="false">
                                 <span class="acordeon-titulo"><i class={icone}></i> {titulo}</span>
-                                <i class="fas fa-plus icone-acordeon"></i>
+                                <i class="fas fa-plus icone-acordeon" aria-hidden="true"></i>
                             </button>
                             <div class="acordeon-conteudo">
                                 <p>{aula.data.description ?? 'Descrição em breve.'}</p>
@@ -68,14 +68,9 @@ const base = import.meta.env.BASE_URL.endsWith('/')
                 const conteudo = item.querySelector('.acordeon-conteudo');
                 const isAberto = item.classList.contains('aberto');
                 item.classList.toggle('aberto');
-                const icone = cabecalho.querySelector('.icone-acordeon');
-                if (isAberto) {
-                    conteudo.style.maxHeight = null;
-                    icone.classList.replace('fa-minus', 'fa-plus');
-                } else {
-                    conteudo.style.maxHeight = conteudo.scrollHeight + "px";
-                    icone.classList.replace('fa-plus', 'fa-minus');
-                }
+                // O ícone "+" gira 45° via CSS (.acordeon-item.aberto) e vira "×".
+                cabecalho.setAttribute('aria-expanded', String(!isAberto));
+                conteudo.style.maxHeight = isAberto ? null : conteudo.scrollHeight + "px";
             });
         });
     });
