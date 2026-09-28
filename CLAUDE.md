@@ -156,7 +156,7 @@ oficinadecientistas/
    │  ├─ curso-escrita/  # aulas .mdx  → coleção "curso-escrita"
    │  └─ blog/           # posts .mdx  → coleção "blog"
    ├─ data/conceitos.json   # dados consumidos por Table.astro
-   ├─ lib/url.ts, lib/blog-utils.ts
+   ├─ lib/url.ts, lib/blog-utils.ts, lib/tempo-leitura.ts
    ├─ scripts/citations-hydrate.js # ÚNICO script das citações (ver seção 10)
    └─ styles/            # tokens.css, base.css, blog-index.css, citations.css
 ```
@@ -173,7 +173,8 @@ oficinadecientistas/
 | `cursos/curso-escrita/index.astro` | `/cursos/curso-escrita/` | Landing do curso (intro + grade) |
 | `cursos/curso-escrita/[slug].astro` | `/cursos/curso-escrita/<slug>/` | Renderiza cada aula via `AulaLayout` |
 | `blog/index.astro` | `/blog/` | Índice com expansão inline + filtro de tags |
-| `blog/[slug].astro` | `/blog/<slug>/` | Post individual |
+| `blog/[slug].astro` | `/blog/<slug>/` | Post individual (com anterior/próximo) |
+| `blog/rss.xml.js` | `/blog/rss.xml` | Feed RSS do blog (`@astrojs/rss`) |
 | `aulas-especiais/index.astro`, `links/index.astro` | `/aulas-especiais/`, `/links/` | Páginas "em construção" (seções planejadas) |
 | `404.astro` | qualquer endereço inexistente | Página 404 própria (o gato: "Este experimento não replicou") |
 
@@ -203,6 +204,8 @@ Há **dois sistemas de estilo deliberadamente separados** para o site não "vaza
 - Carrega o **design system próprio**: `styles/tokens.css` (variáveis `--oc-*`) + `styles/base.css`.
 - Fontes num único `<link>`: as **mesmas famílias do site** (Lato no texto, Lora nos títulos) +
   Montserrat 200 no título do header. **Favicons próprios** (`public/img/favicons/blog*`).
+- Header e rodapé próprios; o header (como o do site) é uma faixa de ponta a ponta, fora do
+  contêiner da página. `<link rel="alternate">` aponta o feed RSS.
 - **Não** tem sistema de citações.
 
 > Regra prática: estilizou algo no site principal? É em `public/estilos.css` ou no `<style>`
@@ -328,7 +331,8 @@ A auditoria completa (e o que já foi feito) está em
 5. A rota `/cursos/curso-escrita/aulaNN/` é gerada automaticamente.
 
 **Adicionar um post no blog:** crie `src/content/blog/AAAA-MM-DD-slug.mdx` com `title`,
-`dataPublicacao` (data sem aspas), `tags`, `summary`. Aparece sozinho no índice (ordenado por data).
+`dataPublicacao` (data sem aspas), `tags`, `summary`. Aparece sozinho no índice (ordenado por data),
+no RSS e na navegação anterior/próximo dos posts vizinhos.
 
 **Mexer no visual do site principal:** quase sempre é `public/estilos.css` ou o `<style>` do componente
 (cores só via papéis `--cor-*` — ver "Cores e tokens" na seção 8).

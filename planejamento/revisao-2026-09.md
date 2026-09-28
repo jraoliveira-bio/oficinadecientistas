@@ -26,11 +26,20 @@ Legenda: 🔴 quebrado · 🟠 inconsistência visível / UX · 🟡 higiene de 
 >     e o filtro de tags pela URL (parte do D13).
 >   - 🐛 Achado no caminho: **o filtro de tags do índice do blog nunca funcionou** — o script fica no
 >     `<main>`, antes da sidebar no HTML, e rodava quando ainda não havia botão nenhum. Corrigido.
+>   - ✅ **Bloco 6** — os estruturais da Parte 2:
+>     - **D5** — anterior/próxima no fim das aulas; "Aula 01 · com vídeo · ~8 min de leitura" sob o
+>       título; índice do curso recolhível no celular (`<details>`).
+>     - **D7** — campo `ciclo` nas aulas e grade agrupada pelos 3 ciclos (vazios = "em preparação").
+>       As três aulas no ar foram postas no Ciclo 1 — **o autor deve conferir**.
+>     - **D3** — header de ponta a ponta no site e no blog (o conteúdo segue alinhado à página).
+>     - **D13** — RSS (`/blog/rss.xml`), rodapé e anterior/próximo no blog. Falta só a imagem de
+>       capa opcional (campo `capa`), que fica para quando algum post tiver capa.
 > - Pendentes que dependem do autor: **D2** (qual fonte no corpo das aulas; reduzir a 3 papéis),
 >   I7 (e-mail de contato e Lattes) e a `description` da Aula 01 (fala de IMRaD).
-> - Próximos candidatos (Parte 2, os estruturais e baratos primeiro): D5 (anterior/próxima nas
->   aulas; índice recolhível no celular), D13 (rodapé, anterior/próximo e RSS no blog), D3 (header
->   de ponta a ponta), D7 (campo `ciclo` para agrupar a grade).
+> - Próximos candidatos (Parte 2, agora os de **gosto** — melhor combinar antes): D10 (o espelho de
+>   cor do blog: trocar o roxo/rosa provisório por uma tinta do site), D6 (família única de caixas),
+>   D4 (home menos repetitiva; card "Da Prancheta" com os últimos posts), D8 (vitrine com cursos
+>   "em breve"), D12 (estética de caderno/zine no blog) e D9 (Manifesto na largura toda).
 
 ---
 
