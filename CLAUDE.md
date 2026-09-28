@@ -206,6 +206,12 @@ Há **dois sistemas de estilo deliberadamente separados** para o site não "vaza
   Montserrat 200 no título do header. **Favicons próprios** (`public/img/favicons/blog*`).
 - Header e rodapé próprios; o header (como o do site) é uma faixa de ponta a ponta, fora do
   contêiner da página. `<link rel="alternate">` aponta o feed RSS.
+- **O espelho de cor (a "coxia"):** a página do blog é o negativo do site — fundo vinho bem
+  escuro (a *mesa*), texto cor de papel, destaque em ardósia clara. Cada post é uma **ficha de
+  papel** (`.oc-ficha`, em `src/styles/base.css`) que redefine os papéis `--oc-*` no próprio
+  escopo, então o que vai dentro dela (links, código, filetes) troca de cor sozinho. Detalhes de
+  arquivo reutilizáveis: `.oc-carimbo` (data), `.oc-etiqueta` (tag) e `.oc-ficha-linha` (a
+  linha vermelha da ficha). O índice é uma linha do tempo por mês.
 - **Não** tem sistema de citações.
 
 > Regra prática: estilizou algo no site principal? É em `public/estilos.css` ou no `<style>`
@@ -313,9 +319,9 @@ A auditoria completa (e o que já foi feito) está em
   Courier Prime, Montserrat). A proposta (revisão, D2) é reduzir a 3 papéis — inclusive
   decidir a fonte do corpo das aulas (hoje Source Sans 3; a revisão sugere testar uma serifada).
   É decisão de design do autor: não troque sem combinar.
-- **Conteúdo:** a `description` da Aula 01 ainda fala de IMRaD (assunto do vídeo antigo);
-  e-mail de contato e link do Lattes aguardam o autor (TODOs em `Sustentabilidade.astro` e
-  `QuemSouEu.astro`).
+- **Conteúdo:** e-mail de contato e link do Lattes aguardam o autor (TODOs em
+  `Sustentabilidade.astro` e `QuemSouEu.astro`). A lista de cursos "em preparação" da vitrine
+  (`EM_PREPARACAO`, em `src/pages/cursos/index.astro`) também é do autor: ajuste à vontade.
 - **Site não-listado** de propósito (`noindex` — ver seção 3).
 
 ---
