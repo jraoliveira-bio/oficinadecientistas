@@ -1,8 +1,9 @@
 ---
-/* Índice do Blog (“Os Bastidores”)
+/* Índice do blog “A Prancheta” (os bastidores da Oficina)
    - Lista todos os posts (sem paginação)
    - Expansão inline do conteúdo (pré-renderizado)
-   - Filtro client-side por tags (comportamento "OU")
+   - Filtro client-side por tags (comportamento "OU"), espelhado na URL (?tag=a&tag=b)
+     para poder compartilhar — e é assim que as tags da página de um post chegam aqui
    - Âncoras por mês (YYYY-MM) para a sidebar
 */
 
@@ -43,7 +44,7 @@ const items = all.map(({ post, Content }) => {
   return { post, Content, anchorId };
 });
 
-const pageTitle = "Blog de Desenvolvimento — Oficina de Cientistas";
+const pageTitle = "A Prancheta — bastidores da Oficina de Cientistas";
 const pageDesc =
   "Bastidores do projeto: arquitetura, componentes e decisões de design.";
 ---
@@ -64,13 +65,15 @@ const pageDesc =
       <!-- Cabeçalho do post (variante inline, sem borda própria) -->
       <PostCard post={post} anchorId={anchorId} variant="inline" />
 
-      <!-- Painel expansível (conteúdo MDX pré-renderizado) -->
+      <!-- Painel expansível (conteúdo MDX pré-renderizado).
+           Fechado = hidden + inert: continua medível para a animação, mas fora do Tab e do leitor de tela -->
       <section
         class="post-expand"
         id={`expand-${post.slug}`}
         role="region"
         aria-labelledby={`link-${post.slug}`}
         hidden
+        inert
       >
         <div class="post-expand__inner">
           <Content />
@@ -83,17 +86,20 @@ const pageDesc =
   ))}
 
   <Fragment slot="sidebar">
-    <BlogSidebar>
-      <p>“Os Bastidores”: registro das decisões e experimentos que não cabem na documentação formal.</p>
+    <BlogSidebar noIndice>
+      <p>Os bastidores da Oficina: registro das decisões e experimentos que não cabem na documentação formal.</p>
     </BlogSidebar>
   </Fragment>
 
   <!-- Expansão inline (JS externo em public/js/) -->
   <script src={withBase("js/blog-index-expand.js")} defer></script>
 
-  <!-- Filtro de tags (inline) com integração para fechar painel do item ocultado -->
+  <!-- Filtro de tags (inline) com integração para fechar painel do item ocultado.
+       Lê ?tag= ao carregar e mantém a URL em dia a cada clique.
+       Espera o DOMContentLoaded: este script fica no <main>, ANTES da sidebar no HTML — rodando
+       direto, ainda não existiria nenhum botão de tag (era por isso que o filtro nunca funcionava). -->
   <script is:inline>
-    (function () {
+    document.addEventListener('DOMContentLoaded', function () {
       const tagButtons = /** @type {NodeListOf<HTMLButtonElement>} */ (
         document.querySelectorAll('#oc-taglist .tag')
       );
@@ -132,31 +138,46 @@ const pageDesc =
             const link  = slug ? document.getElementById('link-' + slug)   : null;
             if (panel && !panel.hasAttribute('hidden')) {
               if (window.__ocCollapse) window.__ocCollapse(panel, link);
-              else { panel.setAttribute('hidden',''); if (link) link.setAttribute('aria-expanded','false'); }
+              else { panel.setAttribute('hidden',''); panel.inert = true; if (link) link.setAttribute('aria-expanded','false'); }
             }
           }
         }
         if (counter) counter.textContent = String(visible);
       }
 
+      function setActive(btn, on) {
+        const t = norm(btn.dataset.tag || '');
+        if (!t) return;
+        if (on) active.add(t); else active.delete(t);
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+
+      // Reflete o filtro na URL (?tag=a&tag=b), sem recarregar nem poluir o histórico
+      function syncUrl() {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('tag');
+        for (const btn of tagButtons) {
+          if (btn.classList.contains('is-active')) url.searchParams.append('tag', btn.dataset.tag || '');
+        }
+        history.replaceState(null, '', url);
+      }
+
       for (const btn of tagButtons) {
         btn.addEventListener('click', () => {
-          const t = norm(btn.dataset.tag || '');
-          if (!t) return;
-          if (active.has(t)) {
-            active.delete(t);
-            btn.classList.remove('is-active');
-            btn.setAttribute('aria-pressed', 'false');
-          } else {
-            active.add(t);
-            btn.classList.add('is-active');
-            btn.setAttribute('aria-pressed', 'true');
-          }
+          setActive(btn, !btn.classList.contains('is-active'));
           applyFilter();
+          syncUrl();
         });
       }
 
+      // Chegou com ?tag= (link de uma página de post ou compartilhado): já abre filtrado
+      const fromUrl = new Set(new URLSearchParams(window.location.search).getAll('tag').map(norm));
+      for (const btn of tagButtons) {
+        if (fromUrl.has(norm(btn.dataset.tag || ''))) setActive(btn, true);
+      }
+
       applyFilter();
-    })();
+    });
   </script>
 </BlogLayout>

@@ -1,6 +1,8 @@
 ---
 // src/components/VideoPlayer.astro
-// 1. DEFINIÇÃO DAS PROPS
+// Player do YouTube + painel com abas "Tópicos" e "Transcrição" (tempos clicáveis).
+// Pode haver mais de um por página: os ids são únicos por instância e um único
+// <script> (o Astro o inclui uma vez só) inicializa todos os players.
 interface Chapter {
   time: string;
   title: string;
@@ -15,46 +17,64 @@ export interface Props {
   transcript: TranscriptLine[];
 }
 const { videoId, chapters = [], transcript = [] } = Astro.props;
+
+const uid = `vp-${Math.random().toString(36).slice(2, 8)}`;
+// aba que começa selecionada: Tópicos, se houver; senão Transcrição
+const abaInicial = chapters.length > 0 ? 'topics' : 'transcript';
 ---
 
-<div class="video-player-container" id="video-player-wrapper">
-  
+<div class="video-player-container" id={uid} data-video-id={videoId}>
+
   <div class="video-wrapper">
-    <div id="youtube-player"></div>
+    <div class="yt-alvo"></div>
   </div>
 
-  {/* ✅ 2. A VERIFICAÇÃO PRINCIPAL COMEÇA AQUI */}
   {/* O painel interativo inteiro só aparece se houver Tópicos OU Transcrição */}
   {(chapters.length > 0 || transcript.length > 0) && (
-    <div class="interactive-panel" id="interactive-panel">
-      <nav class="tab-nav" role="tablist" aria-label="Navegação de conteúdo">
-        
-        {/* O botão "Tópicos" só aparece se a lista 'chapters' tiver itens */}
+    <div class="interactive-panel">
+      <div class="tab-nav" role="tablist" aria-label="Conteúdo do vídeo">
+
         {chapters.length > 0 && (
-          <button id="tab-topics" class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-topics" data-tab="topics">
+          <button
+            type="button" role="tab" data-tab="topics"
+            id={`${uid}-tab-topics`} aria-controls={`${uid}-panel-topics`}
+            class:list={['tab-button', { active: abaInicial === 'topics' }]}
+            aria-selected={abaInicial === 'topics' ? 'true' : 'false'}
+            aria-expanded="false"
+            tabindex={abaInicial === 'topics' ? 0 : -1}
+          >
             Tópicos
-            <span class="arrow-icon"></span>
+            <span class="arrow-icon" aria-hidden="true"></span>
           </button>
         )}
 
-        {/* O botão "Transcrição" só aparece se a lista 'transcript' tiver itens */}
         {transcript.length > 0 && (
-          <button id="tab-transcript" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-transcript" data-tab="transcript">
+          <button
+            type="button" role="tab" data-tab="transcript"
+            id={`${uid}-tab-transcript`} aria-controls={`${uid}-panel-transcript`}
+            class:list={['tab-button', { active: abaInicial === 'transcript' }]}
+            aria-selected={abaInicial === 'transcript' ? 'true' : 'false'}
+            aria-expanded="false"
+            tabindex={abaInicial === 'transcript' ? 0 : -1}
+          >
             Transcrição
-            <span class="arrow-icon"></span>
+            <span class="arrow-icon" aria-hidden="true"></span>
           </button>
         )}
-      </nav>
+      </div>
 
-      <div class="tab-content-panel">
-        
-        {/* O painel de Tópicos só aparece se a lista 'chapters' tiver itens */}
+      {/* Começa recolhido: inert tira os tempos do Tab enquanto estão invisíveis */}
+      <div class="tab-content-panel" inert>
+
         {chapters.length > 0 && (
-          <div id="panel-topics" class="tab-pane active" role="tabpanel" aria-labelledby="tab-topics">
+          <div
+            id={`${uid}-panel-topics`} role="tabpanel" aria-labelledby={`${uid}-tab-topics`}
+            data-panel="topics" class:list={['tab-pane', { active: abaInicial === 'topics' }]}
+          >
             <ul class="content-list">
-              {chapters.map((chapter, index) => (
-                <li class="list-item" data-index={index}>
-                  <a href="#" class="timestamp-link" data-time={chapter.time}>{chapter.time}</a>
+              {chapters.map((chapter) => (
+                <li class="list-item">
+                  <button type="button" class="timestamp-link" data-time={chapter.time} aria-label={`Ir para ${chapter.time} do vídeo`}>{chapter.time}</button>
                   <span class="text-content">{chapter.title}</span>
                 </li>
               ))}
@@ -62,13 +82,15 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
           </div>
         )}
 
-        {/* O painel de Transcrição só aparece se a lista 'transcript' tiver itens */}
         {transcript.length > 0 && (
-          <div id="panel-transcript" class="tab-pane" role="tabpanel" aria-labelledby="tab-transcript">
+          <div
+            id={`${uid}-panel-transcript`} role="tabpanel" aria-labelledby={`${uid}-tab-transcript`}
+            data-panel="transcript" class:list={['tab-pane', { active: abaInicial === 'transcript' }]}
+          >
             <div class="content-list">
-              {transcript.map((line, index) => (
-                <p class="list-item" data-index={index}>
-                  <a href="#" class="timestamp-link" data-time={line.time}>{line.time}</a>
+              {transcript.map((line) => (
+                <p class="list-item">
+                  <button type="button" class="timestamp-link" data-time={line.time} aria-label={`Ir para ${line.time} do vídeo`}>{line.time}</button>
                   <span class="text-content">{line.text}</span>
                 </p>
               ))}
@@ -175,6 +197,7 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
     transition: background-color 0.3s ease; /* Anima a cor de fundo do destaque */
   }
   .list-item .timestamp-link {
+    border: 0; cursor: pointer; /* é um <button> */
     flex-shrink: 0; width: 70px; font-family: var(--fonte-datilo);
     font-weight: bold; font-size: 0.95em; color: var(--cor-link);
     text-decoration: none; background-color: var(--cor-superficie-suave);
@@ -182,6 +205,11 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
     transition: background-color 0.2s ease;
   }
   .list-item .timestamp-link:hover { background-color: var(--cor-dica-fundo); }
+  .tab-button:focus-visible,
+  .list-item .timestamp-link:focus-visible {
+    outline: 3px solid var(--cor-foco);
+    outline-offset: 2px;
+  }
   .list-item .text-content { line-height: 1.6; color: var(--cor-texto); }
 
   /* MUDANÇA 3: Estilo Visual do Destaque */
@@ -193,130 +221,132 @@ const { videoId, chapters = [], transcript = [] } = Astro.props;
   }
 </style>
 
-<script define:vars={{ videoId }}>
-  let player;
-  let timeUpdater = null; // Variável para controlar o setInterval
+<script>
+  // Um só script para todos os players da página.
+  const containers = Array.from(document.querySelectorAll('.video-player-container[data-video-id]'));
+  const players = new WeakMap(); // container -> YT.Player
 
-  function timeToSeconds(timeStr) {
-    const parts = timeStr.split(':').map(Number);
-    return parts.length === 3
-      ? parts[0] * 3600 + parts[1] * 60 + parts[2]
-      : parts[0] * 60 + parts[1];
+  function segundos(tempo) {
+    const partes = tempo.split(':').map(Number);
+    return partes.length === 3
+      ? partes[0] * 3600 + partes[1] * 60 + partes[2]
+      : partes[0] * 60 + partes[1];
   }
 
-  // --- LÓGICA DO PLAYER DO YOUTUBE ---
-  window.onYouTubeIframeAPIReady = function() {
-    if (!videoId) return;
-    player = new YT.Player('youtube-player', {
-      height: '100%', width: '100%', videoId: videoId,
+  // --- Abas e tempos clicáveis (funcionam antes mesmo de o vídeo carregar) ---
+  function configurarPainel(container) {
+    const painel = container.querySelector('.interactive-panel');
+    if (!painel) return;
+    const conteudo = painel.querySelector('.tab-content-panel');
+    const abas = Array.from(painel.querySelectorAll('[role="tab"]'));
+
+    function abrir(aberto) {
+      painel.classList.toggle('panel-open', aberto);
+      conteudo.inert = !aberto;
+      abas.forEach(aba => aba.setAttribute('aria-expanded', String(aberto && aba.classList.contains('active'))));
+    }
+
+    function selecionar(aba) {
+      abas.forEach(outra => {
+        const ativa = outra === aba;
+        outra.classList.toggle('active', ativa);
+        outra.setAttribute('aria-selected', String(ativa));
+        outra.tabIndex = ativa ? 0 : -1;
+      });
+      painel.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.toggle('active', pane.dataset.panel === aba.dataset.tab);
+      });
+      abrir(true);
+    }
+
+    abas.forEach(aba => aba.addEventListener('click', () => {
+      // clicar na aba já ativa abre/fecha o painel; clicar na outra troca e abre
+      if (aba.classList.contains('active')) abrir(!painel.classList.contains('panel-open'));
+      else selecionar(aba);
+    }));
+
+    // Setas ←/→ (e Home/End) movem entre as abas, como pede o padrão de abas do ARIA
+    painel.querySelector('[role="tablist"]').addEventListener('keydown', (e) => {
+      const i = abas.indexOf(document.activeElement);
+      if (i < 0) return;
+      let j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % abas.length;
+      if (e.key === 'ArrowLeft') j = (i - 1 + abas.length) % abas.length;
+      if (e.key === 'Home') j = 0;
+      if (e.key === 'End') j = abas.length - 1;
+      if (j === null) return;
+      e.preventDefault();
+      abas[j].focus();
+      selecionar(abas[j]);
+    });
+
+    painel.addEventListener('click', (e) => {
+      const tempo = e.target.closest('.timestamp-link');
+      if (!tempo) return;
+      const player = players.get(container);
+      if (player && typeof player.seekTo === 'function') {
+        player.seekTo(segundos(tempo.dataset.time), true);
+      }
+    });
+  }
+
+  // --- Destaque do item correspondente ao ponto atual do vídeo ---
+  function atualizarItemAtivo(container, player) {
+    if (typeof player.getCurrentTime !== 'function') return;
+    const agora = player.getCurrentTime();
+    const pane = container.querySelector('.tab-pane.active');
+    if (!pane) return;
+
+    const itens = Array.from(pane.querySelectorAll('.list-item'));
+    const rolagem = pane.querySelector('.content-list');
+    let ativo = -1;
+    itens.forEach((item, i) => {
+      if (agora >= segundos(item.querySelector('.timestamp-link').dataset.time)) ativo = i;
+    });
+
+    itens.forEach((item, i) => {
+      if (i !== ativo) { item.classList.remove('current'); return; }
+      if (item.classList.contains('current')) return;
+      item.classList.add('current');
+      // rola só a lista (não a página) para centralizar o item ativo
+      rolagem.scroll({
+        top: item.offsetTop - rolagem.clientHeight / 2 + item.clientHeight / 2,
+        behavior: 'smooth',
+      });
+    });
+  }
+
+  function criarPlayer(container) {
+    let monitor = null;
+    const player = new YT.Player(container.querySelector('.yt-alvo'), {
+      height: '100%', width: '100%',
+      videoId: container.dataset.videoId,
       host: 'https://www.youtube-nocookie.com',
-      playerVars: { 'playsinline': 1, 'rel': 0 },
+      playerVars: { playsinline: 1, rel: 0 },
       events: {
-        'onStateChange': onPlayerStateChange // Adiciona um "vigia" para o estado do player
-      }
+        onStateChange(e) {
+          // enquanto toca, confere o tempo 4x por segundo; parado, não gasta nada
+          clearInterval(monitor);
+          if (e.data === YT.PlayerState.PLAYING) {
+            monitor = setInterval(() => atualizarItemAtivo(container, player), 250);
+          }
+        },
+      },
     });
-  }
-  
-  const tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  const firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  // --- LÓGICA DAS ABAS E DESTAQUES ---
-  document.addEventListener('DOMContentLoaded', () => {
-    const mainContainer = document.getElementById('video-player-wrapper');
-    const panelContainer = document.getElementById('interactive-panel');
-    const tabNav = panelContainer.querySelector('.tab-nav');
-
-    mainContainer.addEventListener('click', (e) => {
-      const timestampLink = e.target.closest('.timestamp-link');
-      if (timestampLink) {
-        e.preventDefault();
-        const timeStr = timestampLink.dataset.time;
-        if (timeStr && player && typeof player.seekTo === 'function') {
-          player.seekTo(timeToSeconds(timeStr), true);
-        }
-        return;
-      }
-
-      const clickedTab = e.target.closest('.tab-button');
-      if (clickedTab) {
-        const tabToActivate = clickedTab.dataset.tab;
-        const isAlreadyActive = clickedTab.classList.contains('active');
-        if (isAlreadyActive) {
-          panelContainer.classList.toggle('panel-open');
-        } else {
-          panelContainer.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-          panelContainer.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-          clickedTab.classList.add('active');
-          panelContainer.querySelector(`#panel-${tabToActivate}`).classList.add('active');
-          panelContainer.classList.add('panel-open');
-        }
-      }
-    });
-  });
-
-  // --- NOVA LÓGICA DE MONITORAMENTO ---
-  function onPlayerStateChange(event) {
-    // Se o vídeo está tocando, inicia o monitoramento
-    if (event.data == YT.PlayerState.PLAYING) {
-      // Limpa qualquer monitoramento anterior para segurança
-      if (timeUpdater) clearInterval(timeUpdater);
-      // Inicia um novo monitoramento a cada 250ms
-      timeUpdater = setInterval(updateActiveItem, 250);
-    } else {
-      // Se o vídeo for pausado, finalizado, etc., para o monitoramento
-      clearInterval(timeUpdater);
-    }
+    players.set(container, player);
   }
 
-  // Substitua a função updateActiveItem inteira por esta versão
-function updateActiveItem() {
-  if (!player || typeof player.getCurrentTime !== 'function') return;
+  // --- API do YouTube: carregada uma vez, cria todos os players quando fica pronta ---
+  function carregarApiDoYoutube(pronto) {
+    if (window.YT && window.YT.Player) { pronto(); return; }
+    const anterior = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { anterior?.(); pronto(); };
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  }
 
-  const currentTime = player.getCurrentTime();
-  const activePane = document.querySelector('.tab-pane.active');
-  if (!activePane) return;
-
-  const listItems = activePane.querySelectorAll('.list-item');
-  const scrollContainer = activePane.querySelector('.content-list'); // O nosso container com a rolagem
-  let currentActiveIndex = -1;
-
-  listItems.forEach((item, index) => {
-    const itemTime = timeToSeconds(item.querySelector('.timestamp-link').dataset.time);
-    if (currentTime >= itemTime) {
-      currentActiveIndex = index;
-    }
-  });
-
-  listItems.forEach((item, index) => {
-    if (index === currentActiveIndex) {
-      // Se este item se tornou o ativo AGORA
-      if (!item.classList.contains('current')) {
-        item.classList.add('current');
-        
-        // --- AQUI ESTÁ A MUDANÇA ---
-        // Em vez de scrollIntoView, calculamos e executamos a rolagem local.
-        
-        // Posição do topo do item em relação ao topo do container de rolagem
-        const itemOffsetTop = item.offsetTop;
-        
-        // Altura visível do container de rolagem
-        const containerHeight = scrollContainer.clientHeight;
-        
-        // Posição de rolagem desejada para centralizar o item
-        const desiredScrollTop = itemOffsetTop - (containerHeight / 2) + (item.clientHeight / 2);
-
-        // Executa a rolagem suave APENAS no container
-        scrollContainer.scroll({
-          top: desiredScrollTop,
-          behavior: 'smooth'
-        });
-      }
-    } else {
-      // Garante que todos os outros itens não tenham o destaque
-      item.classList.remove('current');
-    }
-  });
-}
+  containers.forEach(configurarPainel);
+  const comVideo = containers.filter(c => c.dataset.videoId);
+  if (comVideo.length) carregarApiDoYoutube(() => comVideo.forEach(criarPlayer));
 </script>

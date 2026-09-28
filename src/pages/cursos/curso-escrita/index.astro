@@ -16,6 +16,21 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 
 // "Ir para a primeira aula" segue a coleção (antes era fixo em aula01)
 const primeiraAula = aulas[0] ? `${base}cursos/curso-escrita/${aulas[0].slug}/` : `${base}cursos/curso-escrita/`;
+
+// Os ciclos do curso (os mesmos da introdução). Cada aula diz o seu com `ciclo: N` no
+// frontmatter; a grade agrupa por eles. Ciclo sem aula aparece como "em preparação" — mostra
+// o caminho inteiro do curso, não só o que já foi gravado. Outro curso define os seus ciclos.
+const CICLOS = [
+    { numero: 1, nome: 'As Fundações' },
+    { numero: 2, nome: 'A Arquitetura' },
+    { numero: 3, nome: 'A Reescrita' },
+];
+const grupos = CICLOS.map(ciclo => ({
+    titulo: `Ciclo ${ciclo.numero}: ${ciclo.nome}`,
+    aulas: aulas.filter(a => a.data.ciclo === ciclo.numero),
+}));
+const semCiclo = aulas.filter(a => !CICLOS.some(c => c.numero === a.data.ciclo));
+if (semCiclo.length) grupos.push({ titulo: 'Outras aulas', aulas: semCiclo });
 ---
 
 <Layout title="Curso de Escrita Científica" description="Escrita Científica: Da Estrutura ao Impacto — curso gratuito em aulas de vídeo e texto para pós-graduandos.">
@@ -36,17 +51,23 @@ const primeiraAula = aulas[0] ? `${base}cursos/curso-escrita/${aulas[0].slug}/` 
 
         <section id="grade" class="secao-grade-curricular">
             <h2>Grade Curricular</h2>
+            {grupos.map(grupo => (
+            <div class="grade-ciclo">
+            <h3 class="grade-ciclo-titulo">{grupo.titulo}</h3>
+            {grupo.aulas.length === 0 && <p class="grade-ciclo-vazio">Aulas em preparação.</p>}
+            {grupo.aulas.length > 0 && (
             <div class="acordeon-container">
-                {aulas.map(aula => {
+                {grupo.aulas.map(aula => {
                     const icone = aula.data.tipo === 'texto' ? 'fas fa-align-left' : 'fas fa-video';
                     const titulo = aula.data.shortTitle ?? aula.data.title;
                     return (
                         <div class="acordeon-item">
-                            <button class="acordeon-cabecalho" type="button" aria-expanded="false">
-                                <span class="acordeon-titulo"><i class={icone}></i> {titulo}</span>
+                            <button class="acordeon-cabecalho" type="button" aria-expanded="false" aria-controls={`grade-${aula.slug}`}>
+                                <span class="acordeon-titulo"><i class={icone} aria-hidden="true"></i> {titulo}</span>
                                 <i class="fas fa-plus icone-acordeon" aria-hidden="true"></i>
                             </button>
-                            <div class="acordeon-conteudo">
+                            {/* fechado = inert: o link de dentro não recebe Tab enquanto está invisível */}
+                            <div class="acordeon-conteudo" id={`grade-${aula.slug}`} inert>
                                 <p>{aula.data.description ?? 'Descrição em breve.'}</p>
                                 <p><a href={`${base}cursos/curso-escrita/${aula.slug}/`}>Ir para a aula →</a></p>
                             </div>
@@ -54,6 +75,9 @@ const primeiraAula = aulas[0] ? `${base}cursos/curso-escrita/${aulas[0].slug}/` 
                     );
                 })}
             </div>
+            )}
+            </div>
+            ))}
         </section>
 
         <div class="cta-container">
@@ -73,6 +97,7 @@ const primeiraAula = aulas[0] ? `${base}cursos/curso-escrita/${aulas[0].slug}/` 
                 item.classList.toggle('aberto');
                 // O ícone "+" gira 45° via CSS (.acordeon-item.aberto) e vira "×".
                 cabecalho.setAttribute('aria-expanded', String(!isAberto));
+                conteudo.inert = isAberto;
                 conteudo.style.maxHeight = isAberto ? null : conteudo.scrollHeight + "px";
             });
         });

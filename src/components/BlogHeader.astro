@@ -7,7 +7,7 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
 ---
 
 <style>
-  /* HEADER FIXO NO TOPO */
+  /* HEADER FIXO NO TOPO — a faixa vai de ponta a ponta; o conteúdo segue a largura do blog */
   header.wrap {
     position: sticky;
     top: 0;
@@ -15,7 +15,11 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
 
     background: var(--oc-cor-base);          /* o espelho do header ardósia do site */
     border-bottom: 1px solid color-mix(in srgb, var(--oc-sobre-base) 16%, transparent);
+  }
 
+  .wrap-conteudo {
+    max-width: var(--oc-maxw);
+    margin-inline: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -83,8 +87,8 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
   }
 
   @media (max-width: 640px) {
-    header.wrap {
-      padding: var(--oc-space-3) var(--oc-space-3);
+    .wrap-conteudo {
+      padding: var(--oc-space-3) var(--oc-space-4); /* laterais = as do .oc-container: logo alinhado aos cards */
       gap: var(--oc-space-3);
     }
     .title { max-width: 60vw; }
@@ -92,6 +96,7 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
 </style>
 
 <header class="wrap" role="banner">
+  <div class="wrap-conteudo">
   <div class="left">
     <img class="logo" src={logoSrc} alt="Logotipo do blog" width="40" height="40" />
     <div class="title">{title}</div>
@@ -99,5 +104,6 @@ const logoSrc = withBase("img/logo5.png"); // garanta public/img/logo5.png
 
   <div class="right">
     <a class="btn" href={backHref} aria-label="Ir para a Oficina de Cientistas">Oficina de Cientistas</a>
+  </div>
   </div>
 </header>

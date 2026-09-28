@@ -28,6 +28,7 @@ title: 'Aula 01: Se Comunicar Bem é Muito Difícil'   # obrigatório
 shortTitle: 'Aula 01: Se Comunicar Bem'              # opcional (título curto)
 description: 'Resumo da aula para SEO/menus.'         # opcional
 ordem: 1            # posição no menu lateral (número)
+ciclo: 1            # opcional — ciclo do curso (1 Fundações, 2 Arquitetura, 3 Reescrita)
 menu: true          # aparece no menu lateral? (default: false)
 tipo: 'video'       # 'video' (ícone de vídeo) ou 'texto' (ícone de pena). Default 'video'
 draft: false        # opcional — marca como rascunho
@@ -59,6 +60,11 @@ references:
 **Regras importantes:**
 - Só `menu: true` faz a aula aparecer no menu lateral. A ordenação usa `ordem` (numérico).
   Se `menu: true` e faltar `ordem`, a ordenação quebra — sempre defina `ordem` junto com `menu`.
+- `ciclo` agrupa a **grade curricular** da landing do curso. Os nomes dos ciclos ficam em
+  `CICLOS`, no topo de `src/pages/cursos/curso-escrita/index.astro`; ciclo sem nenhuma aula
+  aparece como "Aulas em preparação", e aula sem `ciclo` cai em "Outras aulas".
+- O fim de cada aula ganha sozinho os links **anterior/próxima** (na ordem de `ordem`), e o
+  título ganha a linha "Aula NN · ~N min de leitura" (o tempo é estimado pelo texto do MDX).
 - O schema completo está em `src/content.config.ts`. Campos desconhecidos pelo schema (como
   `videoId/chapters/transcript`) são **ignorados** por `entry.data` — por isso o vídeo é tratado
   de forma especial (seção 4).
@@ -105,6 +111,7 @@ export const { videoId, chapters, transcript } = frontmatter;
 - `transcript`: lista de `{ time: 'MM:SS', text: '...' }` → aba "Transcrição" clicável.
 - Clicar num timestamp pula o vídeo; o item ativo é destacado conforme o vídeo toca.
 - As abas só aparecem se houver `chapters` e/ou `transcript`.
+- Pode haver mais de um `VideoPlayer` na mesma aula (cada um ganha ids próprios).
 
 ---
 
@@ -153,7 +160,7 @@ Todos ficam em `src/components/`. Props com ✱ são obrigatórias.
 
 ### `NotaDeMargem` — anotação na margem
 ```mdx
-<NotaDeMargem resumo="A cultura surge da comunicação" lado="esquerda" cor="#22375a" largura="22ch" offset="2rem" icone="✎">
+<NotaDeMargem resumo="A cultura surge da comunicação" lado="direita" cor="#22375a" largura="22ch" offset="2rem" icone="✎">
   <p>Parágrafo principal que recebe a anotação ao lado.</p>
 </NotaDeMargem>
 ```
@@ -161,9 +168,12 @@ Todos ficam em `src/components/`. Props com ✱ são obrigatórias.
   `cor` (nome de uma tinta da paleta — `'jade'`, `'vinho'`, `'ardosia'`, `'tinta'`, `'salvia'`… —
   ou qualquer cor CSS/hex; default `'jade'`), `largura` (default `'18ch'`),
   `offset` (default `'1.5rem'`), `icone` (default `'✎'`; passe `icone=""` para nenhum).
-- **Importante:** no desktop, as notas da margem ficam **invisíveis até o leitor ativar o
-  "Modo leitura"** (que recolhe o menu e libera espaço lateral). No mobile viram um bloco
-  destacado acima do parágrafo. Ou seja, não use a nota de margem para informação essencial.
+- **Onde aparece:** em tela larga (≥1280px) a nota fica na margem **direita**, sempre visível — a
+  aula ganha sozinha uma coluna de margem (de ~14rem, que também limita a largura da nota).
+  Em telas menores ela vira um bloco destacado acima do parágrafo.
+- **Evite `lado="esquerda"`:** à esquerda fica o menu de aulas, então nesse lado a nota só aparece
+  quando o leitor ativa o "Modo leitura". Mesmo assim, não use a nota para informação essencial —
+  ela resume o parágrafo, não o substitui.
 
 ### `InfoBox` — caixa de destaque com ícone
 ```mdx
@@ -249,6 +259,7 @@ site principal). Estilos pontuais de um componente ficam no `<style>` do própri
 
 - [ ] Pasta `aulaNN/index.mdx` criada (ou arquivo solto, se for conteúdo avulso).
 - [ ] Frontmatter com `title`, e — se for entrar no menu — `menu: true` **e** `ordem: NN`.
+- [ ] `ciclo: N` para a aula entrar no ciclo certo da grade.
 - [ ] `tipo: 'video'` ou `'texto'` (define o ícone no menu).
 - [ ] Se houver vídeo: `videoId/chapters/transcript` no frontmatter + `export const {...} = frontmatter` + `<VideoPlayer/>`.
 - [ ] Se houver citações: `references:` no frontmatter + `<Cite/>` no texto + `<ReferenceList/>` no fim.

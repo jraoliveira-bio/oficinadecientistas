@@ -8,21 +8,22 @@ const { title = "Laboratório Mental" } = Astro.props;
 <section class="lab-container">
   <header class="lab-header">
     <div class="lab-icon">
-      <i class="fas fa-brain"></i>
+      <i class="fas fa-brain" aria-hidden="true"></i>
     </div>
     <div class="lab-title-group">
       <h2>{title}</h2>
-      <button class="lab-explainer-toggle">
+      <button class="lab-explainer-toggle" type="button" aria-expanded="false">
         O que é esta seção?
-        <span class="arrow-icon">▼</span>
+        <span class="arrow-icon" aria-hidden="true">▼</span>
       </button>
     </div>
   </header>
 
-  <div class="lab-explainer-content">
+  <!-- fechado = inert (fora do Tab e do leitor de tela, como já está fora da vista) -->
+  <div class="lab-explainer-content" inert>
     <div class="explainer-inner">
-      <p>Uma das habilidades mais poderosas da espécie humana é sua capacidade de criar e simular cenários virtuais complexos, com um horizonte temporal muito longo: somos capazes de visualizar e planejar simular situações impossívelmente complexas para outras espécias, como plantar intencionalmente uma árvore frutífera, construir habitações, manufaturar itens utilitários. Hoje em dia, somos capazes de imaginar e criar coisas como reatores nucleares e telescópios em órbita!</p>
-      <p>A principal ferramenta de Einstein era utilizar sua mente como um verdadeiro laboratório mental. Com o que ele sabia sobre as coisas a qual estudava, ele imaginava experimentos como "o que aconteceria se eu cavalgasse um raio de luz"? Nas aulas com selo "Laboratório Mental" vamos criar experimentos imaginários para explicar conceitos ou desenvolver ideias.</p>
+      <p>Uma das habilidades mais poderosas da espécie humana é sua capacidade de criar e simular cenários virtuais complexos, com um horizonte temporal muito longo: somos capazes de visualizar, planejar e simular situações impossivelmente complexas para outras espécies, como plantar intencionalmente uma árvore frutífera, construir habitações, manufaturar itens utilitários. Hoje em dia, somos capazes de imaginar e criar coisas como reatores nucleares e telescópios em órbita!</p>
+      <p>A principal ferramenta de Einstein era utilizar sua mente como um verdadeiro laboratório mental. Com o que ele sabia sobre as coisas que estudava, ele imaginava experimentos como "o que aconteceria se eu cavalgasse um raio de luz"? Nas aulas com selo "Laboratório Mental" vamos criar experimentos imaginários para explicar conceitos ou desenvolver ideias.</p>
     </div>
   </div>
 
@@ -35,13 +36,19 @@ const { title = "Laboratório Mental" } = Astro.props;
   // Encontra todos os laboratórios na página (pode haver mais de um)
   const laboratorios = document.querySelectorAll('.lab-container');
 
-  laboratorios.forEach(lab => {
+  laboratorios.forEach((lab, i) => {
     const toggleButton = lab.querySelector('.lab-explainer-toggle');
     const content = lab.querySelector('.lab-explainer-content');
+
+    // id único por laboratório (pode haver mais de um na página) para o aria-controls
+    content.id = `lab-explicacao-${i + 1}`;
+    toggleButton.setAttribute('aria-controls', content.id);
 
     toggleButton.addEventListener('click', () => {
       lab.classList.toggle('is-open');
       const isOpen = lab.classList.contains('is-open');
+      toggleButton.setAttribute('aria-expanded', String(isOpen));
+      content.inert = !isOpen;
 
       if (isOpen) {
         content.style.maxHeight = content.scrollHeight + 'px';

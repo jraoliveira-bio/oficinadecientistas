@@ -1,7 +1,18 @@
 ---
-/* Supondo: bio vem por slot; se não houver, usa fallback curto. Tags e arquivos por mês baseados em getCollection('blog'). */
+/* Bio vem por slot (se não houver, usa um texto curto). Tags e arquivo por mês vêm de getCollection('blog').
+   - No índice (noIndice): as tags são botões que filtram a lista ali mesmo e o arquivo pula para o mês.
+   - Nas outras páginas (post): as tags viram links para o índice já filtrado (blog/?tag=…)
+     e o arquivo leva ao mês no índice (blog/#m-AAAA-MM) — as âncoras só existem lá. */
 import { getCollection } from "astro:content";
 import { countTags, groupByMonth } from "@/lib/blog-utils";
+import { withBase } from "@/lib/url";
+
+interface Props {
+  /** true só no índice do blog, onde existe o filtro de tags */
+  noIndice?: boolean;
+}
+const { noIndice = false } = Astro.props;
+const indice = withBase("blog/");
 
 const entries = (await getCollection("blog")).sort(
   (a, b) => b.data.dataPublicacao.getTime() - a.data.dataPublicacao.getTime()
@@ -32,10 +43,18 @@ const months = groupByMonth(entries);
     border: 1px dashed var(--oc-border);
     border-radius: 999px;
     padding: 0.25rem 0.6rem;
-    font-size: var(--oc-fs-xs);
     background: var(--oc-card);
+    color: inherit;      /* botão (índice) e link (post) com a mesma cara */
+    font: inherit;
+    font-size: var(--oc-fs-xs);
     cursor: pointer;
     user-select: none;
+  }
+  a.tag:hover { text-decoration: none; border-style: solid; }
+  .tag:focus-visible,
+  .monthlist a:focus-visible {
+    outline: 2px solid var(--oc-accent);
+    outline-offset: 2px;
   }
   .tag.is-active {
     border-style: solid;
@@ -60,7 +79,9 @@ const months = groupByMonth(entries);
     <div class="title">Tags</div>
     <div class="taglist" id="oc-taglist">
       {Array.from(tagsMap.entries()).sort((a,b)=>a[0].localeCompare(b[0],'pt-BR')).map(([tag, n]) => (
-        <button class="tag" data-tag={tag} aria-pressed="false">{tag} <span class="counts">({n})</span></button>
+        noIndice
+          ? <button type="button" class="tag" data-tag={tag} aria-pressed="false">{tag} <span class="counts">({n})</span></button>
+          : <a class="tag" href={`${indice}?tag=${encodeURIComponent(tag)}`}>{tag} <span class="counts">({n})</span></a>
       ))}
     </div>
   </div>
@@ -69,7 +90,7 @@ const months = groupByMonth(entries);
     <div class="title">Arquivo</div>
     <div class="monthlist">
       {months.map(m => (
-        <a href={`#m-${m.ym}`} title={`${m.label} (${m.count})`}>{m.label} <span class="counts">({m.count})</span></a>
+        <a href={noIndice ? `#m-${m.ym}` : `${indice}#m-${m.ym}`} title={`${m.label} (${m.count})`}>{m.label} <span class="counts">({m.count})</span></a>
       ))}
     </div>
   </div>

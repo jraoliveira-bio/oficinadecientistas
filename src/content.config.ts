@@ -34,6 +34,7 @@ const cursoEscritaCollection = defineCollection({
     shortTitle: z.string().optional(),      // título curto para menu (se quiser)
     menu: z.boolean().default(false),       // aparece no menu? (default: false)
     ordem: z.number().int().optional(),     // ordem no menu (se aplicável)
+    ciclo: z.number().int().positive().optional(), // ciclo do curso (1, 2, 3…) — agrupa a grade da landing
     tipo: z.enum(['video', 'texto']).default('video'), // Define video como padrão
 
     // Metadados úteis (opcionais)
@@ -47,7 +48,7 @@ const cursoEscritaCollection = defineCollection({
 });
 
 /**
- * Coleção do blog de desenvolvimento (“Os Bastidores”).
+ * Coleção do blog “A Prancheta” (os bastidores da Oficina: diário de desenvolvimento).
  * Os posts ficam em: src/content/blog/*.mdx
  * Importante: dataPublicacao é Date real (use YYYY-MM-DD no frontmatter).
  */

@@ -6,6 +6,7 @@
 
   function measureOpen(panel) {
     panel.removeAttribute('hidden');
+    panel.inert = false; // aberto: volta a ser alcançável pelo Tab e pelo leitor de tela
     panel.classList.add('is-open');
     panel.style.height = 'auto';
     const h = panel.scrollHeight;
@@ -39,6 +40,7 @@
     const _ = panel.offsetHeight;
     panel.style.height = '0px';
     panel.style.opacity = '0';
+    panel.inert = true; // fechando: sai do Tab já (o conteúdo não está mais "lá")
     if (link) link.setAttribute('aria-expanded', 'false');
 
     const onEnd = () => {
