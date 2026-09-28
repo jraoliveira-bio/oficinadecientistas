@@ -11,26 +11,28 @@
 </section>
 
 <style>
+  /* Base comum das caixas (D6: --caixa-*, em public/estilos.css).
+     O traço próprio da Síntese é o título em versalete vinho, centrado sobre um filete. */
   .caixa-sintese {
     margin: 60px auto;
-    padding: 25px 30px;
-    border-radius: var(--raio-m);
-    border: 1px solid color-mix(in srgb, var(--cor-neutro) 30%, white);
-    background-color: var(--cor-neutro-fundo);
+    padding: var(--caixa-respiro);
+    border: var(--caixa-filete);
+    border-radius: var(--caixa-raio);
+    background: var(--caixa-fundo);
     max-width: 900px;
-    box-shadow: var(--sombra-1);
   }
 
   .sintese-titulo {
     margin-top: 0;
     margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--cor-neutro);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cor-destaque);
     border-bottom: 1px solid var(--borda-escura);
-    padding-bottom: 15px;
-    /* Alterações aqui 👇 */
-    text-align: center; 
+    padding-bottom: 12px;
+    text-align: center;
   }
 
   .sintese-conteudo :global(p) {

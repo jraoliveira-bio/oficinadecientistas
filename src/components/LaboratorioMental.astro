@@ -60,12 +60,13 @@ const { title = "Laboratório Mental" } = Astro.props;
 </script>
 
 <style>
+  /* Base comum das caixas (D6: --caixa-*, em public/estilos.css).
+     O traço próprio do Laboratório é a letra de máquina de escrever, em jade. */
   .lab-container {
     margin: 60px 0;
-    border-radius: var(--raio-l);
-    background-color: var(--cor-lab-fundo);
-    border: 1px solid color-mix(in srgb, var(--cor-lab) 13%, white);
-    box-shadow: var(--sombra-1);
+    border: var(--caixa-filete);
+    border-radius: var(--caixa-raio);
+    background: var(--caixa-fundo);
     overflow: hidden; /* Importante para o border-radius funcionar no conteúdo */
   }
 
@@ -117,7 +118,7 @@ const { title = "Laboratório Mental" } = Astro.props;
 
   .explainer-inner {
     padding: 0 30px 25px 30px;
-    border-top: 1px solid color-mix(in srgb, var(--cor-lab) 13%, white);
+    border-top: 1px solid var(--borda-escura);
     margin-left: 72px; /* Alinha com o início do título */
     font-size: 16px;
     line-height: 1.6;
@@ -126,6 +127,6 @@ const { title = "Laboratório Mental" } = Astro.props;
 
   .lab-main-content {
     padding: 30px;
-    background-color: color-mix(in srgb, var(--cor-superficie) 45%, transparent); /* "folha" interna */
+    border-top: 1px solid var(--borda-escura);
   }
 </style>

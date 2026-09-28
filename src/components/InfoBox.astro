@@ -48,29 +48,17 @@ const currentStyle = styleMap[type] ?? styleMap['saiba-mais'];
 
 
 <style>
-  /* --- ESTILO BASE DA CAIXA EDITORIAL --- */
+  /* --- BASE COMUM DAS CAIXAS (D6: --caixa-*, em public/estilos.css) ---
+     O traço próprio da InfoBox é a cor semântica: o filete grosso à esquerda,
+     o ícone e o título. Sem sombra e sem hover: a caixa não é clicável. */
   .info-box {
     margin: 30px 0;
-    padding: 20px 25px;
-    border-radius: var(--raio-m);
-
-
-    /* 2. Borda fina para dar definição */
-    border: 1px solid color-mix(in srgb, var(--cor-neutro) 40%, white);
-    
-    /* Borda esquerda mais grossa, que será colorida pelas variações */
+    padding: var(--caixa-respiro);
+    border: var(--caixa-filete);
     border-left-width: 4px;
     border-left-style: solid;
-
-    /* 3. Sombra muito suave para dar profundidade */
-    box-shadow: var(--sombra-1);
-
-    transition: all 0.3s ease-out;
-  }
-
-  .info-box:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--sombra-2);
+    border-radius: var(--caixa-raio);
+    background: var(--caixa-fundo);
   }
 
   .info-box-titulo {
@@ -99,7 +87,6 @@ const currentStyle = styleMap[type] ?? styleMap['saiba-mais'];
 
 /* Variação: Dica */
 .info-box-dica {
-  background-color: var(--cor-dica-fundo);
   border-left-color: var(--cor-dica);
 }
 .info-box-dica .info-box-titulo {
@@ -108,7 +95,6 @@ const currentStyle = styleMap[type] ?? styleMap['saiba-mais'];
 
 /* Variação: Atenção (com a nova paleta vermelho-vinho) */
 .info-box-atencao {
-  background-color: var(--cor-atencao-fundo);
   border-left-color: var(--cor-atencao);
 }
 .info-box-atencao .info-box-titulo {
@@ -117,7 +103,6 @@ const currentStyle = styleMap[type] ?? styleMap['saiba-mais'];
 
 /* Variação: Saiba Mais */
 .info-box-saiba-mais {
-  background-color: var(--cor-neutro-fundo);
   border-left-color: var(--cor-neutro);
 }
 .info-box-saiba-mais .info-box-titulo {
@@ -126,7 +111,6 @@ const currentStyle = styleMap[type] ?? styleMap['saiba-mais'];
 
 /* NOVA VARIAÇÃO: Conceito-Chave */
 .info-box-chave {
-  background-color: var(--cor-conceito-fundo);
   border-left-color: var(--cor-conceito);
 }
 .info-box-chave .info-box-titulo {

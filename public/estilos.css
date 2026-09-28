@@ -34,19 +34,25 @@
   --borda: var(--nevoa);
   --borda-escura: var(--cinza-linha);
 
-  /* --- Semânticas das caixas editoriais: cor + fundo claro derivado dela --- */
+  /* --- Semânticas das caixas editoriais (a caixa em si é papel: ver --caixa-*) --- */
   --cor-dica: var(--ardosia);
   --cor-dica-fundo: color-mix(in srgb, var(--cor-dica) 9%, white);
   --cor-atencao: var(--vinho);
-  --cor-atencao-fundo: color-mix(in srgb, var(--cor-atencao) 7%, white);
   --cor-conceito: var(--salvia);
-  --cor-conceito-fundo: color-mix(in srgb, var(--cor-conceito) 8%, white);
   --cor-neutro: var(--cinza);
-  --cor-neutro-fundo: var(--papel-sombra);
   --cor-lab: var(--jade);
-  --cor-lab-fundo: color-mix(in srgb, var(--cor-lab) 11%, white);
   --cor-gravando: var(--sinal);
   --cor-gravando-fundo: color-mix(in srgb, var(--cor-gravando) 7%, white);
+
+  /* --- Caixas editoriais das aulas (revisão, D6): UMA base para todas ---
+     Papel, filete e o mesmo raio, sem sombra e sem efeito de hover (não são links).
+     Cada caixa se diferencia por um traço só: a cor semântica (InfoBox), a régua de
+     cor no topo (BoxArtigo), o título em versalete vinho (Síntese), a letra de máquina
+     (Laboratório Mental), o itálico flutuante (PullOutBox). */
+  --caixa-fundo: var(--cor-superficie);
+  --caixa-filete: 1px solid var(--borda-escura);
+  --caixa-raio: var(--raio-m);
+  --caixa-respiro: 1.5rem 1.75rem;
 
   /* --- Paletas do BoxArtigo (prop palette="vermelho|roxo|neutro") --- */
   --cor-box-vermelho: var(--terracota);
