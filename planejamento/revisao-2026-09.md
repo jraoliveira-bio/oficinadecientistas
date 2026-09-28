@@ -44,9 +44,10 @@ Legenda: 🔴 quebrado · 🟠 inconsistência visível / UX · 🟡 higiene de 
 >     - **D11** — blog com a largura e as laterais do site; título do header mais perto do tamanho do
 >       nome no header do site.
 >     - **D6** — caixas editoriais com uma base só (`--caixa-*`) e um traço próprio cada.
->     - **D4** — home: nome uma vez só, proposta no herói ao lado de uma frase do Manifesto numa folha
->       datilografada, painel "Da Prancheta" com os 3 últimos posts. O gato ficou só na capa do
->       curso, logo abaixo (no herói ele se repetiria).
+>     - **D4** — home: nome uma vez só; painel escuro "Da Prancheta" com a capa do blog e os 3
+>       últimos posts, no mesmo arranjo do card do curso. **A pedido do autor, o primeiro contato é
+>       com o conteúdo**: curso e Prancheta vêm primeiro, e a apresentação da Oficina (nome, lema,
+>       proposta e uma frase do Manifesto numa folha datilografada) fecha a página.
 >     - **D8** — vitrine com Estatística, Ecologia e R "em preparação", em cards de esboço.
 >     - **D9** — folha do Manifesto mais larga, com o texto numa medida confortável.
 >     - Conteúdo: `description` da Aula 01 reescrita a partir dos títulos da própria aula.

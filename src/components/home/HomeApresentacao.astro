@@ -1,7 +1,8 @@
 ---
-/* Herói da home (revisão, D4): o nome aparece uma vez só (o logo já está no header),
-   a proposta vem junto, e a alma fica por conta de uma frase do próprio Manifesto,
-   datilografada numa folha de papel. O gato aparece logo abaixo, na capa do curso. */
+/* Apresentação da Oficina, no FIM da home (revisão, D4 + pedido do autor): o primeiro
+   contato é com o conteúdo (o curso e a Prancheta); quem é a Oficina vem depois.
+   O nome aparece uma vez só (o logo já está no header), a proposta vem junto, e a alma
+   fica por conta de uma frase do próprio Manifesto, datilografada numa folha de papel. */
 interface Props {
   base: string;
   proposta: string;
@@ -9,9 +10,9 @@ interface Props {
 const { base, proposta } = Astro.props;
 ---
 
-<section class="home-hero">
+<section class="home-hero" aria-labelledby="home-apresentacao-titulo">
   <div class="home-hero__texto">
-    <h1 class="home-hero__titulo">Oficina de Cientistas</h1>
+    <h2 class="home-hero__titulo" id="home-apresentacao-titulo">Oficina de Cientistas</h2>
     <p class="home-hero__slogan">Difundindo conhecimento e propagando redes</p>
 
     <p class="home-hero__rotulo">Nossa proposta</p>
@@ -40,7 +41,7 @@ const { base, proposta } = Astro.props;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     gap: 3rem;
     align-items: center;
-    border-bottom: 1px solid var(--borda);
+    border-top: 1px solid var(--borda);
   }
 
   .home-hero__titulo {

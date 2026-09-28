@@ -223,6 +223,19 @@ footer {
    3. COMPONENTES REUTILIZÁVEIS
    ========================================================================== */
 
+/* Texto só para leitores de tela (ex.: o <h1> da home, cujo nome já está no header) */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* --- Botões --- */
 .botao-principal {
   display: inline-block;

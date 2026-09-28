@@ -1,8 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import HomeHero from "../components/home/HomeHero.astro";
 import HomeFeatured from "../components/home/HomeFeatured.astro";
 import HomePrancheta from "../components/home/HomePrancheta.astro";
+import HomeApresentacao from "../components/home/HomeApresentacao.astro";
 import { getCollection } from "astro:content";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
@@ -29,14 +29,18 @@ const hero = {
 
 <Layout title="Home">
   <main class="home">
-    <HomeHero
-      base={base}
-      proposta="Fornecer um ciclo básico de formação para alunos da pós-graduação e fazer análises científicas de temas importantes."
-    />
+    <!-- O nome do site já está no header; este h1 é para leitores de tela e buscadores -->
+    <h1 class="visualmente-oculto">Oficina de Cientistas</h1>
 
+    <!-- Primeiro o conteúdo (o curso e a Prancheta); a apresentação da Oficina vem no fim -->
     <HomeFeatured hero={hero} />
 
     <HomePrancheta />
+
+    <HomeApresentacao
+      base={base}
+      proposta="Fornecer um ciclo básico de formação para alunos da pós-graduação e fazer análises científicas de temas importantes."
+    />
   </main>
 </Layout>
 
