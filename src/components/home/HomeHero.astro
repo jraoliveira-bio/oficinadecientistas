@@ -1,48 +1,129 @@
 ---
+/* Herói da home (revisão, D4): o nome aparece uma vez só (o logo já está no header),
+   a proposta vem junto, e a alma fica por conta de uma frase do próprio Manifesto,
+   datilografada numa folha de papel. O gato aparece logo abaixo, na capa do curso. */
 interface Props {
   base: string;
+  proposta: string;
 }
-const { base } = Astro.props;
+const { base, proposta } = Astro.props;
 ---
 
 <section class="home-hero">
-  <img
-    src={`${base}logo1.png`}
-    alt="Logo Oficina de Cientistas"
-    class="home-hero__logo"
-    loading="eager"
-    decoding="async"
-  />
-  <h1 class="home-hero__titulo">Oficina de Cientistas</h1>
-  <p class="home-hero__slogan">DIFUNDINDO CONHECIMENTO E PROPAGANDO REDES</p>
+  <div class="home-hero__texto">
+    <h1 class="home-hero__titulo">Oficina de Cientistas</h1>
+    <p class="home-hero__slogan">Difundindo conhecimento e propagando redes</p>
+
+    <p class="home-hero__rotulo">Nossa proposta</p>
+    <p class="home-hero__proposta">{proposta}</p>
+
+    <div class="home-hero__acoes">
+      <a class="botao-principal" href={`${base}cursos/`}>Conhecer os cursos</a>
+      <a class="home-hero__link" href={`${base}sobre/#manifesto`}>Ler o Manifesto →</a>
+    </div>
+  </div>
+
+  <figure class="home-hero__folha" style={`background-image: url(${base}imagens/textura-papel2.jpg)`}>
+    <blockquote>
+      <p>Fazer ciência no Brasil é um desafio constante. Ainda assim, com todas as dificuldades, produzimos boa ciência.</p>
+    </blockquote>
+    <figcaption>do <a href={`${base}sobre/#manifesto`}>Manifesto</a> da Oficina</figcaption>
+  </figure>
 </section>
 
 <style>
   .home-hero {
-    text-align: center;
-    padding: 45px 40px 60px 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 3rem;
+    align-items: center;
     border-bottom: 1px solid var(--borda);
   }
 
-  .home-hero__logo {
-    display: block;
-    max-width: 150px;
-    height: auto;
-    margin: 0 auto 1px auto;
-    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
-  }
-
   .home-hero__titulo {
-    font-size: 36px;
     margin: 0;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.15;
+    text-wrap: balance;
   }
 
   .home-hero__slogan {
+    margin: 0.4rem 0 2rem;
     font-family: var(--fonte-lema);
-    margin: 4px 0 0 0;
-    color: var(--cor-texto-sec);
-    font-size: medium;
     font-weight: 300;
+    font-size: 0.9rem;
     letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--cor-texto-sec);
+  }
+
+  .home-hero__rotulo {
+    margin: 0 0 0.25rem;
+    font-family: var(--fonte-ui);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cor-destaque);
+  }
+
+  .home-hero__proposta {
+    max-width: 36rem;
+    margin: 0 0 2rem;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--cor-texto);
+  }
+
+  .home-hero__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+
+  .home-hero__link {
+    font-family: var(--fonte-ui);
+    font-weight: 600;
+    color: var(--cor-link);
+  }
+
+  /* A folha datilografada: o mesmo papel do Manifesto, reta sobre a mesa */
+  .home-hero__folha {
+    margin: 0;
+    padding: 2.5rem 2.25rem 2rem;
+    background-size: cover;
+    box-shadow: var(--sombra-folha);
+    color: var(--cor-nanquim);
+  }
+  .home-hero__folha blockquote { margin: 0; }
+  .home-hero__folha blockquote p {
+    margin: 0 0 1.5rem;
+    font-family: var(--fonte-datilo);
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    line-height: 1.6;
+  }
+  .home-hero__folha figcaption {
+    font-family: var(--fonte-maquina);
+    font-size: 0.95rem;
+    text-align: right;
+  }
+  .home-hero__folha figcaption::before { content: "— "; }
+  .home-hero__folha a { color: inherit; }
+
+  .home-hero a:focus-visible {
+    outline: 3px solid var(--cor-foco);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .home-hero {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 40px 20px;
+    }
   }
 </style>

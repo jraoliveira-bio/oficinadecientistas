@@ -8,6 +8,14 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 // Nº de aulas publicadas (no menu e fora de rascunho)
 const totalAulas = (await getCollection('curso-escrita'))
   .filter(a => a.data.menu === true && !a.data.draft).length;
+
+// Cursos ainda na prancheta (revisão, D8): mostram que isto é uma plataforma, não um curso só.
+// Quando um deles ganhar aulas, sai daqui e vira um card de verdade na vitrine acima.
+const EM_PREPARACAO = [
+    { titulo: 'Estatística', icone: 'fas fa-chart-column' },
+    { titulo: 'Ecologia', icone: 'fas fa-seedling' },
+    { titulo: 'R', icone: 'fab fa-r-project' },
+];
 ---
 
 <Layout title="Cursos" description="Cursos gratuitos com as habilidades essenciais que raramente são ensinadas na pós-graduação.">
@@ -38,6 +46,20 @@ const totalAulas = (await getCollection('curso-escrita'))
                     </div>
                 </a>
             </div>
+        </section>
+
+        <section class="secao-vitrine-cursos secao-em-preparacao" aria-labelledby="em-preparacao">
+            <h2 id="em-preparacao">Em preparação</h2>
+            <p class="em-preparacao-intro">Os próximos cursos da Oficina, ainda em esboço.</p>
+            <ul class="vitrine-esbocos">
+                {EM_PREPARACAO.map(curso => (
+                    <li class="card-curso-esboco">
+                        <i class={`${curso.icone} esboco-icone`} aria-hidden="true"></i>
+                        <h3>{curso.titulo}</h3>
+                        <p class="esboco-carimbo">Em breve</p>
+                    </li>
+                ))}
+            </ul>
         </section>
     </main>
 </Layout>

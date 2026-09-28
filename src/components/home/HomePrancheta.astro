@@ -1,0 +1,130 @@
+---
+/* "Da Prancheta" (revisão, D4): os 3 posts mais recentes do blog, gerados da coleção.
+   É uma janela para a coxia dentro do palco: usa as cores do blog (--cor-coxia-*),
+   o negativo do resto da home — o mesmo "espelho estranho" entre site e blog. */
+import { getCollection } from "astro:content";
+import { formatDate } from "~/lib/blog-utils";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + "/";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.dataPublicacao.getTime() - a.data.dataPublicacao.getTime())
+  .slice(0, 3);
+---
+
+<section class="home-prancheta" aria-labelledby="home-prancheta-titulo">
+  <div class="home-prancheta__cabeca">
+    <p class="home-prancheta__rotulo">Da Prancheta</p>
+    <h2 id="home-prancheta-titulo">Os bastidores da Oficina</h2>
+    <p class="home-prancheta__desc">Decisões, bastidores e construção do projeto em tempo real — com ideias e testes de layout.</p>
+    <a class="home-prancheta__todos" href={`${base}blog/`}>Ver todos os posts →</a>
+  </div>
+
+  <ol class="home-prancheta__lista">
+    {posts.map((post) => (
+      <li>
+        <time class="home-prancheta__data" datetime={post.data.dataPublicacao.toISOString().slice(0, 10)}>
+          {formatDate(post.data.dataPublicacao)}
+        </time>
+        <a href={`${base}blog/${post.slug}/`}>{post.data.title}</a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .home-prancheta {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 2.5rem;
+    border-radius: var(--raio-card);
+    background: var(--cor-coxia);
+    color: var(--cor-sobre-coxia);
+  }
+
+  .home-prancheta__rotulo {
+    margin: 0 0 0.35rem;
+    font-family: var(--fonte-maquina);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cor-coxia-suave);
+  }
+  .home-prancheta h2 {
+    margin: 0 0 0.75rem;
+    color: var(--cor-sobre-coxia);
+    font-size: 1.6rem;
+  }
+  .home-prancheta__desc {
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--cor-coxia-suave);
+  }
+  .home-prancheta a {
+    color: var(--cor-coxia-destaque);
+  }
+  .home-prancheta__todos {
+    font-family: var(--fonte-ui);
+    font-weight: 600;
+  }
+
+  .home-prancheta__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    align-content: start;
+  }
+  .home-prancheta__lista li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px dashed color-mix(in srgb, var(--cor-sobre-coxia) 20%, transparent);
+  }
+  .home-prancheta__lista li:first-child { padding-top: 0; }
+  .home-prancheta__lista a {
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+  }
+  .home-prancheta__lista a:hover { text-decoration: underline; }
+
+  /* A data como carimbo, igual à do blog */
+  .home-prancheta__data {
+    flex: 0 0 auto;
+    padding: 0 0.4rem;
+    border: 2px solid currentColor;
+    border-radius: 3px;
+    font-family: var(--fonte-maquina);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cor-coxia-destaque);
+  }
+
+  .home-prancheta a:focus-visible {
+    outline: 3px solid var(--cor-coxia-destaque);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 1280px) {
+    .home-prancheta { margin-inline: 40px; }
+  }
+  @media (max-width: 900px) {
+    .home-prancheta {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-inline: 20px;
+      padding: 1.75rem 1.5rem;
+    }
+  }
+</style>
