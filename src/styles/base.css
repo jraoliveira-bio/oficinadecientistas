@@ -5,7 +5,7 @@
 
 html, body { margin: 0; padding: 0; }
 
-html { color-scheme: light; }
+html { color-scheme: dark; } /* a mesa é escura: barras de rolagem e controles acompanham */
 
 body {
   background: var(--oc-bg);
@@ -21,13 +21,14 @@ body {
 img, svg, video { max-width: 100%; height: auto; }
 
 a {
-  color: var(--oc-accent);
+  color: var(--oc-link);
   text-decoration: none;
 }
 a:hover { text-decoration: underline; }
 
 h1, h2, h3 {
   font-family: var(--oc-font-serif);
+  color: var(--oc-titulo);
   line-height: 1.25;
   margin: var(--oc-space-6) 0 var(--oc-space-3);
 }
@@ -59,4 +60,85 @@ hr {
   border: 0;
   border-top: 1px solid var(--oc-border);
   margin: var(--oc-space-8) 0;
+}
+
+/* ==========================================================================
+   Ficha (D10/D12): cada post é uma ficha de arquivo, papel sobre a mesa escura.
+   Redefine os papéis no próprio escopo: tudo que vai dentro (links, código,
+   filetes, títulos) ganha as cores de papel sem precisar saber que está numa ficha.
+   ========================================================================== */
+.oc-ficha {
+  --oc-fg: var(--oc-ficha-fg);
+  --oc-muted: var(--oc-ficha-muted);
+  --oc-titulo: var(--oc-ficha-titulo);
+  --oc-link: var(--oc-ficha-link);
+  --oc-accent: var(--oc-ficha-link);
+  --oc-border: var(--oc-ficha-borda);
+  --oc-codigo-fundo: var(--oc-ficha-codigo);
+  --oc-furo: var(--oc-ficha);            /* o furo da etiqueta mostra o papel da ficha */
+  color-scheme: light;
+  background: var(--oc-ficha);
+  color: var(--oc-fg);
+  border-radius: var(--oc-radius-ficha);
+  box-shadow: var(--oc-shadow-ficha);
+}
+
+/* A linha vermelha da ficha de arquivo: separa o cabeçalho (título, data, tags) do texto */
+.oc-ficha-linha {
+  border-bottom: 2px solid var(--oc-ficha-linha);
+}
+
+/* Data como carimbo: letra de máquina, tinta ardósia, moldura de carimbo (reto, sem inclinar) */
+.oc-carimbo {
+  display: inline-block;
+  padding: 0.05rem 0.45rem;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  color: var(--oc-carimbo);
+  font-family: var(--oc-font-display);
+  font-size: var(--oc-fs-xs);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Tags como etiquetas de arquivo: papel manila, ponta cortada e o furo do barbante */
+.oc-etiqueta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;                              /* "tag (3)": o flex engole o espaço do texto */
+  padding: 0.1rem 0.6rem 0.1rem 1.1rem;
+  border: 0;
+  border-radius: 0 3px 3px 0;
+  background: var(--oc-etiqueta);
+  color: var(--oc-etiqueta-fg);
+  font: inherit;
+  font-size: var(--oc-fs-xxs);
+  line-height: 1.5;
+  text-decoration: none;
+  clip-path: polygon(0.55rem 0, 100% 0, 100% 100%, 0.55rem 100%, 0 50%);
+}
+.oc-etiqueta::before {
+  content: "";
+  position: absolute;
+  left: 0.45rem;
+  top: 50%;
+  width: 0.3rem;
+  height: 0.3rem;
+  margin-top: -0.15rem;
+  border-radius: 50%;
+  background: var(--oc-furo, var(--oc-bg)); /* o que está atrás da etiqueta */
+}
+a.oc-etiqueta:hover,
+button.oc-etiqueta:hover { text-decoration: none; filter: brightness(1.06); }
+/* o clip-path corta o outline: o foco vira um anel por dentro */
+.oc-etiqueta:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--oc-etiqueta-fg);
+}
+.oc-etiqueta.is-active {
+  background: var(--oc-etiqueta-ativa);
+  color: var(--oc-etiqueta-ativa-fg);
 }

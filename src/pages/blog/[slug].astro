@@ -41,15 +41,19 @@ const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
     <BlogHeader backHref={withBase("blog/")} />
   </Fragment>
 
-  <article class="oc-card" style="padding: var(--oc-space-4);">
-    <header style="margin-bottom: var(--oc-space-4);">
-      <h1 style="margin: 0 0 var(--oc-space-2);">{title}</h1>
-      <div style="color: var(--oc-muted); font-size: var(--oc-fs-xs); display:flex; gap:.5rem; flex-wrap:wrap;">
-        <span>{dateLabel}</span>
-        {tagList.length > 0 && <>
-          <span>•</span>
-          <span>{tagList.join(", ")}</span>
-        </>}
+  <article class="oc-ficha ficha-post">
+    <!-- Cabeçalho da ficha: título, carimbo da data e etiquetas; a linha vermelha fecha o cabeçalho -->
+    <header class="ficha-cabeca oc-ficha-linha">
+      <h1>{title}</h1>
+      <div class="ficha-meta">
+        <time class="oc-carimbo" datetime={post.data.dataPublicacao.toISOString().slice(0, 10)}>{dateLabel}</time>
+        {tagList.length > 0 && (
+          <span class="ficha-tags">
+            {tagList.map((t) => (
+              <a class="oc-etiqueta" href={withBase(`blog/?tag=${encodeURIComponent(t)}`)} title={`Posts com a tag ${t}`}>{t}</a>
+            ))}
+          </span>
+        )}
       </div>
     </header>
 
@@ -95,6 +99,23 @@ const tagList = Array.isArray(post.data.tags) ? post.data.tags : [];
 </BlogLayout>
 
 <style>
+  .ficha-post { padding: var(--oc-space-6) var(--oc-space-6) var(--oc-space-4); }
+  .ficha-cabeca {
+    padding-bottom: var(--oc-space-4);
+    margin-bottom: var(--oc-space-6);
+  }
+  .ficha-cabeca h1 { margin: 0 0 var(--oc-space-3); }
+  .ficha-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--oc-space-2) var(--oc-space-3);
+  }
+  .ficha-tags { display: inline-flex; flex-wrap: wrap; gap: .4rem; }
+  @media (max-width: 640px) {
+    .ficha-post { padding: var(--oc-space-4); }
+  }
+
   /* Anterior/próximo: o mesmo desenho do fim das aulas, com os tokens do blog */
   .nav-posts {
     display: flex;

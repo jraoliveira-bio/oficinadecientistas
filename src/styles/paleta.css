@@ -8,11 +8,13 @@
      - site principal → public/estilos.css, seção 0  (--cor-*, --raio-*, --sombra-*)
      - blog           → src/styles/tokens.css        (--oc-*)
 
-   O "espelho estranho" (CLAUDE.md §1) mora aqui: são as MESMAS tintas com os
-   papéis trocados. Hoje, por exemplo:
-                         site (palco)          blog (bastidores)
+   O "espelho estranho" (CLAUDE.md §1) mora aqui: são as MESMAS famílias de tinta
+   com os papéis trocados. O site é o palco (claro); o blog é a coxia (o negativo):
+                         site (palco)          blog (coxia)
+     fundo               --nevoa-fria (claro)  --vinho-coxia (escuro)
+     texto               --tinta               --papel-coxia
      cor base / header   --tinta (ardósia)     --vinho-escuro
-     destaque            --vinho               (roxo provisório — ver tokens.css)
+     destaque / links    --vinho               --ardosia-clara (a base do site vira destaque)
      logo                cogumelo em vinho     cogumelo em ardósia
    Para mexer no espelho, troque os papéis em tokens.css — não crie cores novas.
    ========================================================================== */
@@ -22,6 +24,7 @@
   --tinta:    #34495E; /* texto e header do site */
   --ardosia:  #4A698B; /* títulos e links do site */
   --grafite:  #5a6a7a; /* texto secundário */
+  --ardosia-clara: #9fbad8; /* destaque do blog: a ardósia do site, clareada para o fundo escuro */
 
   /* --- Vinhos --- */
   --vinho:          #8c4b4b; /* destaque do site (capitular, CTA, aula ativa) */
@@ -29,6 +32,7 @@
   --vinho-profundo: #470d0d; /* títulos do blog */
   --vinho-noite:    #380a0a; /* texto de destaque do blog */
   --vinho-breu:     #240101; /* texto dos posts do blog */
+  --vinho-coxia:    #2a1616; /* fundo do blog: a coxia, o negativo do fundo claro do site */
 
   /* --- Verdes --- */
   --jade:   #00695C; /* Laboratório Mental, notas de margem */
@@ -51,7 +55,9 @@
   --nevoa-quente: #E2DFDC; /* fundo do blog — o mesmo tom, espelhado para o quente */
   --papel:        #fdfdfb;
   --papel-sombra: #f7f7f7;
-  --papel-cru:    #f4f2f0; /* cartão de curso */
+  --papel-cru:    #f4f2f0; /* cartão de curso; fichas de post no blog */
+  --papel-coxia:  #efe6da; /* texto sobre o fundo escuro do blog (papel sob luz quente) */
+  --manila:       #e3d3ad; /* etiquetas de arquivo (tags do blog), cor de pasta manila */
   --branco:       #ffffff;
   --preto:        #000000;
 }

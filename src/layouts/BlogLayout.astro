@@ -49,11 +49,12 @@ const {
 <meta name="theme-color" content="#683636">
 
     <!-- Fontes num único pedido — as mesmas famílias do site (o espelho troca cores, não letras):
-         Lato (texto, --oc-font-sans), Lora (títulos e botão, --oc-font-serif) e
-         Montserrat 200 (título do header, que rima com o slogan da home) -->
+         Lato (texto, --oc-font-sans), Lora (títulos e botão, --oc-font-serif),
+         Montserrat 200 (título do header, que rima com o slogan da home) e
+         Special Elite (carimbos de data e de mês, --oc-font-display) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;700&family=Montserrat:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;700&family=Montserrat:wght@200&family=Special+Elite&display=swap" rel="stylesheet">
 
     <!-- Feed RSS (src/pages/blog/rss.xml.js): leitores de feed acham sozinhos por aqui -->
     <link rel="alternate" type="application/rss+xml" title="A Prancheta" href={withBase("blog/rss.xml")} />
@@ -65,8 +66,8 @@ const {
       :global(.oc-container){
         max-width: var(--oc-maxw);
         margin: 0 auto;
-        /* topo 0; laterais padrão; base com respiro */
-        padding: 0 var(--oc-space-4) var(--oc-space-6);
+        /* topo 0; laterais como as do site (40px no desktop); base com respiro */
+        padding: 0 var(--oc-gutter) var(--oc-space-6);
       }
       :global(.oc-grid){
         display: grid;
@@ -82,12 +83,6 @@ const {
         position: sticky;
         top: var(--oc-space-6); /* ajuste se quiser colar mais/menos abaixo do header */
         align-self: start;
-      }
-      :global(.oc-card){
-        background: var(--oc-card);
-        border: 1px solid var(--oc-border);
-        border-radius: var(--oc-radius);
-        box-shadow: var(--oc-shadow-1);
       }
       /* Rodapé: rima com o do site (filete em cima, centralizado, discreto) */
       .oc-rodape {

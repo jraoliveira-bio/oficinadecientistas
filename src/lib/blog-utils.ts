@@ -12,6 +12,7 @@ export function formatDate(
   })
     .format(date)
     .replace(/\sde\s/gi, " ")
+    .replace(".", "") // "nov." → "nov" (o carimbo fica "08 NOV 2025")
     .toLowerCase(); // ex.: "08 nov 2025"
 }
 
