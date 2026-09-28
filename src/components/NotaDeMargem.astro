@@ -129,18 +129,16 @@ const fundo = `color-mix(in srgb, ${corCss} 9%, white)`;
       margin-right: 0.25rem;
     }
 
-    /* Leve sensação "manual": a nota fica um pouco torta, como anotada a lápis */
+    /* A nota fica reta, alinhada ao lado do parágrafo */
     .nota-de-margem[data-lado="direita"] .nota {
       left: 100%;
       margin-left: var(--nota-offset);
-      transform: rotate(1deg);
       text-align: left;
     }
 
     .nota-de-margem[data-lado="esquerda"] .nota {
       right: 100%;
       margin-right: var(--nota-offset);
-      transform: rotate(-1deg);
       text-align: right;
     }
   }
