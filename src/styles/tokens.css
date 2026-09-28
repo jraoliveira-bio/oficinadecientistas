@@ -1,41 +1,52 @@
-/* src/styles/tokens.css — papéis semânticos do BLOG (estética "zine").
+/* src/styles/tokens.css — papéis semânticos do BLOG ("A Prancheta").
    As tintas vêm de src/styles/paleta.css (a mesma do site principal).
-   O "espelho estranho": o blog usa as MESMAS tintas do site com os papéis
-   trocados — a cor de destaque do site (vinho) vira a cor base daqui.
+   O "espelho estranho" (revisão, D10): o site é o palco, claro; o blog é a COXIA, o negativo.
+     - a MESA (fundo da página) é vinho bem escuro, com texto cor de papel;
+     - a cor de destaque é a ardósia — a cor BASE do site vira o destaque aqui;
+     - o header é vinho, onde o do site é ardósia.
+   Sobre a mesa, cada post é uma FICHA de papel (.oc-ficha), com texto escuro para ler com
+   conforto. A ficha redefine os mesmos papéis (--oc-fg, --oc-link…) no próprio escopo, então
+   tudo que vai dentro dela (links, código, filetes) troca de cor sozinho.
    Para mexer no espelho, troque as atribuições abaixo; não crie hex novos. */
 :root {
-  /* --- Fundo e superfícies --- */
-  --oc-bg: var(--nevoa);
-  --oc-bg-image: linear-gradient(to right, var(--nevoa-quente), var(--nevoa)); /* o site vai do frio; o blog, do quente */
-  --oc-card: var(--branco);
-  --oc-border: var(--nevoa-quente);
+  /* --- A mesa (fundo da página, a coxia) --- */
+  --oc-bg: var(--vinho-coxia);
+  --oc-bg-image: linear-gradient(to right, color-mix(in srgb, var(--vinho-escuro) 35%, var(--vinho-coxia)), var(--vinho-coxia)); /* o site vai do frio claro; o blog, do quente escuro */
+  --oc-fg: var(--papel-coxia);                                        /* texto sobre a mesa */
+  --oc-muted: color-mix(in srgb, var(--papel-coxia) 68%, var(--vinho-coxia)); /* datas, contagens */
+  --oc-titulo: var(--papel-coxia);                                    /* títulos sobre a mesa */
+  --oc-link: var(--ardosia-clara);
+  --oc-accent: var(--ardosia-clara);                                  /* destaque: foco, tag ativa */
+  --oc-border: color-mix(in srgb, var(--papel-coxia) 18%, transparent);
+  --oc-painel: color-mix(in srgb, var(--papel-coxia) 6%, var(--vinho-coxia)); /* sidebar: um painel da coxia */
+  --oc-codigo-fundo: color-mix(in srgb, var(--papel-coxia) 8%, var(--vinho-coxia));
 
-  /* --- Marca (o espelho do header do site) --- */
+  /* --- Marca (o espelho do header ardósia do site) --- */
   --oc-cor-base: var(--vinho-escuro);   /* header — no site, a base é a ardósia (--tinta) */
   --oc-sobre-base: var(--branco);       /* texto/contornos sobre a cor base */
 
-  /* --- Texto --- */
-  --oc-fg: var(--tinta);                /* texto corrido */
-  --oc-titulo: var(--vinho-profundo);   /* títulos dos posts */
-  --oc-fg-highlight: var(--vinho-noite);/* chamada dos posts no índice */
-  --oc-pfblack: var(--vinho-breu);      /* texto do post expandido */
-  --oc-muted: var(--cinza-quente);      /* datas, contagens, legendas */
+  /* --- A ficha (post): papel sobre a mesa --- */
+  --oc-ficha: var(--papel-cru);
+  --oc-ficha-fg: var(--tinta);
+  --oc-ficha-muted: var(--cinza-quente);
+  --oc-ficha-titulo: var(--vinho-profundo);
+  --oc-ficha-link: var(--ardosia);
+  --oc-ficha-linha: var(--vinho);       /* a linha vermelha da ficha de arquivo */
+  --oc-ficha-borda: color-mix(in srgb, var(--tinta) 14%, transparent);
+  --oc-ficha-codigo: color-mix(in srgb, var(--tinta) 6%, var(--papel-cru));
 
-  /* --- Ação / detalhes ---
-     PROVISÓRIO: roxo e rosa estão FORA da paleta da Oficina (herança do esboço).
-     No redesign do blog (revisão D10) o destaque passa a ser uma tinta do site
-     — p.ex. a ardósia —, fechando o espelho. Trocar só aqui. */
-  --oc-accent: #7a3cff;
-  --oc-accent-2: #ff3c7a;
-  --oc-tag-ativa-fundo: color-mix(in srgb, var(--oc-accent) 9%, white);
-  --oc-codigo-fundo: color-mix(in srgb, var(--oc-accent) 3%, white);
-  
+  /* --- Detalhes de arquivo (D12): carimbo da data e etiquetas das tags --- */
+  --oc-carimbo: var(--ardosia);         /* tinta de carimbo, sobre a ficha */
+  --oc-etiqueta: var(--manila);
+  --oc-etiqueta-fg: var(--tinta);
+  --oc-etiqueta-ativa: var(--ardosia-clara);
+  --oc-etiqueta-ativa-fg: var(--vinho-coxia);
+
   /* --- Tipografia --- */
   /* Tipografia básica alinhada ao site */
   --oc-font-sans: 'Lato', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --oc-font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
-  /* Adicionei 'Special Elite' aqui para você poder usar var(--oc-font-display) */
-  --oc-font-display: "Special Elite", "Courier New", monospace; 
+  --oc-font-display: "Special Elite", "Courier New", monospace; /* carimbos (datas, mês) */
   --oc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   /* --- Tamanhos de Fonte --- */
@@ -59,12 +70,15 @@
   --oc-space-12: 3rem;
 
   /* --- Raio e sombra --- */
-  --oc-radius: 12px;
+  --oc-radius: 12px;       /* o mesmo raio de cartão do site (--raio-card) */
+  --oc-radius-ficha: 3px;  /* fichas de arquivo têm canto quase reto */
   --oc-shadow-1: 0 1px 2px rgba(0,0,0,0.04), 0 6px 16px rgba(0,0,0,0.06);
   --oc-shadow-2: 0 2px 4px rgba(0,0,0,0.06), 0 12px 28px rgba(0,0,0,0.08);
+  --oc-shadow-ficha: 0 1px 0 rgba(0,0,0,0.25), 0 10px 24px rgba(0,0,0,0.35); /* papel sobre a mesa escura */
 
   /* --- Layout --- */
-  --oc-maxw: 72rem;
+  --oc-maxw: 80rem;                        /* = 1280px, a largura do site (rima) */
+  --oc-gutter: clamp(1rem, 3vw, 2.5rem);   /* laterais: 40px no desktop, como o site */
   --oc-colw-main: 1fr;
   --oc-colw-aside: 320px;
 }

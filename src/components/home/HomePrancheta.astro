@@ -1,0 +1,185 @@
+---
+/* "Da Prancheta" (revisão, D4): a capa do blog + os 3 posts mais recentes, gerados da coleção.
+   Mesmo arranjo do card do curso logo acima (capa à esquerda, texto à direita, mesma largura),
+   mas nas cores do blog (--cor-coxia-*): uma janela para a coxia dentro do palco — o mesmo
+   "espelho estranho" entre site e blog. */
+import { getCollection } from "astro:content";
+import { formatDate } from "~/lib/blog-utils";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + "/";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.dataPublicacao.getTime() - a.data.dataPublicacao.getTime())
+  .slice(0, 3);
+---
+
+<section class="home-prancheta" aria-labelledby="home-prancheta-titulo">
+  <div class="home-prancheta__media">
+    <a class="home-prancheta__capa" href={`${base}blog/`} tabindex="-1" aria-hidden="true">
+      <img
+        src={`${base}imagens/prancheta-card.webp`}
+        alt=""
+        width="900"
+        height="1200"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+  </div>
+
+  <div class="home-prancheta__texto">
+    <p class="home-prancheta__rotulo">Da Prancheta</p>
+    <h2 id="home-prancheta-titulo">Os bastidores da Oficina</h2>
+    <p class="home-prancheta__desc">Decisões, bastidores e construção do projeto em tempo real — com ideias e testes de layout.</p>
+
+    <ol class="home-prancheta__lista">
+      {posts.map((post) => (
+        <li>
+          <time class="home-prancheta__data" datetime={post.data.dataPublicacao.toISOString().slice(0, 10)}>
+            {formatDate(post.data.dataPublicacao)}
+          </time>
+          <a href={`${base}blog/${post.slug}/`}>{post.data.title}</a>
+        </li>
+      ))}
+    </ol>
+
+    <a class="home-prancheta__todos" href={`${base}blog/`}>Ver todos os posts →</a>
+  </div>
+</section>
+
+<style>
+  .home-prancheta {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    display: grid;
+    grid-template-columns: 1.25fr 1fr; /* as mesmas proporções do card do curso */
+    gap: 1.4rem;
+    align-items: stretch;
+    border-radius: var(--raio-l);
+    overflow: hidden;
+    background: var(--cor-coxia);
+    color: var(--cor-sobre-coxia);
+  }
+
+  /* Coluna da capa: um tom acima da mesa, como a coluna da imagem no card do curso */
+  .home-prancheta__media {
+    padding: 1.1rem;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--cor-sobre-coxia) 6%, var(--cor-coxia));
+  }
+  .home-prancheta__capa {
+    display: block;
+    width: min(420px, 100%);
+    border-radius: var(--raio-l);
+    overflow: hidden;
+  }
+  /* o mesmo pôster 4:5 do card do curso (os dois cards ficam da mesma altura);
+     a imagem é 3:4, então ancora no topo para o clipe da prancheta aparecer inteiro */
+  .home-prancheta__capa img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .home-prancheta__texto {
+    padding: 2rem 2rem 2rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .home-prancheta__rotulo {
+    margin: 0 0 0.35rem;
+    font-family: var(--fonte-maquina);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cor-coxia-suave);
+  }
+  .home-prancheta h2 {
+    margin: 0 0 0.6rem;
+    color: var(--cor-sobre-coxia);
+    font-size: 26px;
+    line-height: 1.15;
+  }
+  .home-prancheta__desc {
+    margin: 0 0 1.25rem;
+    font-family: var(--fonte-ui);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--cor-coxia-suave);
+    max-width: 46ch;
+  }
+  .home-prancheta a {
+    color: var(--cor-coxia-destaque);
+  }
+
+  .home-prancheta__lista {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+  .home-prancheta__lista li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.8rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed color-mix(in srgb, var(--cor-sobre-coxia) 20%, transparent);
+  }
+  .home-prancheta__lista li:first-child {
+    border-top: 1px dashed color-mix(in srgb, var(--cor-sobre-coxia) 20%, transparent);
+  }
+  .home-prancheta__lista a {
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    text-decoration: none;
+  }
+  .home-prancheta__lista a:hover { text-decoration: underline; }
+
+  /* A data como carimbo, igual à do blog */
+  .home-prancheta__data {
+    flex: 0 0 auto;
+    padding: 0 0.4rem;
+    border: 2px solid currentColor;
+    border-radius: 3px;
+    font-family: var(--fonte-maquina);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cor-coxia-destaque);
+  }
+
+  .home-prancheta__todos {
+    font-family: var(--fonte-ui);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .home-prancheta a:focus-visible {
+    outline: 3px solid var(--cor-coxia-destaque);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 1280px) {
+    .home-prancheta { margin-inline: 40px; }
+  }
+  @media (max-width: 900px) {
+    .home-prancheta {
+      grid-template-columns: 1fr;
+      margin-inline: 20px;
+    }
+    .home-prancheta__capa { width: min(520px, 100%); }
+    .home-prancheta__texto { padding: 0.8rem 1.4rem 1.6rem; }
+    .home-prancheta h2 { font-size: 22px; }
+  }
+</style>

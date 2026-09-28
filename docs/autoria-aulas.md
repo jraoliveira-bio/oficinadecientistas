@@ -175,6 +175,12 @@ Todos ficam em `src/components/`. Props com ✱ são obrigatórias.
   quando o leitor ativa o "Modo leitura". Mesmo assim, não use a nota para informação essencial —
   ela resume o parágrafo, não o substitui.
 
+> **Caixas editoriais (InfoBox, BoxArtigo, Síntese, Laboratório Mental, PullOutBox):** todas
+> têm a mesma base — papel, filete e o mesmo raio, sem sombra (papéis `--caixa-*` em
+> `public/estilos.css`). Cada uma se distingue por um traço só: a cor semântica (InfoBox), a
+> régua de cor no topo (BoxArtigo), o título em versalete vinho (Síntese), a letra de máquina
+> (Laboratório) e o itálico flutuante (PullOutBox). Caixa nova? Parta da mesma base.
+
 ### `InfoBox` — caixa de destaque com ícone
 ```mdx
 <InfoBox type="dica" title="Dica de ouro">

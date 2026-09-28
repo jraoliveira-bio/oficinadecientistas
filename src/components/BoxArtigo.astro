@@ -39,20 +39,15 @@ const themeClass = `theme-${PALETAS.includes(escolhida) ? escolhida : 'neutro'}`
 </div>
 
 <style>
+  /* Base comum das caixas (D6: --caixa-*, em public/estilos.css).
+     O traço próprio do BoxArtigo é a régua de cor no topo, como o box de uma revista. */
   .box-artigo-editorial {
     margin: 40px 0;
-    padding: 25px 30px;
-    border-radius: var(--raio-s);
-
-    /* ESTILO NOVO: Bordas duplas verticais */
-    border-left: 3px solid;
-    border-right: 3px solid;
-
-    /* Borda superior e inferior muito sutis para fechar o quadro */
-    border-top: 1px solid var(--borda);
-    border-bottom: 1px solid var(--borda);
-
-    box-shadow: var(--sombra-1);
+    padding: var(--caixa-respiro);
+    border: var(--caixa-filete);
+    border-top: 4px solid var(--box-cor);
+    border-radius: var(--caixa-raio);
+    background: var(--caixa-fundo);
   }
 
   .box-artigo-titulo {
@@ -87,26 +82,18 @@ const themeClass = `theme-${PALETAS.includes(escolhida) ? escolhida : 'neutro'}`
   .coluna :global(p) {
     margin-top: 0;
     line-height: 1.7;
+    text-align: start; /* coluna estreita + justificado = "rios" de espaço entre as palavras */
   }
 
   /* --- PALETAS DE COR --- */
   /* Cores vêm dos papéis --cor-box-* e --cor-neutro (public/estilos.css) */
-  .theme-vermelho {
-    border-color: var(--cor-box-vermelho-borda);
-    background-color: color-mix(in srgb, var(--cor-box-vermelho-borda) 7%, white);
-  }
+  .theme-vermelho { --box-cor: var(--cor-box-vermelho-borda); }
   .theme-vermelho .box-artigo-titulo { color: var(--cor-box-vermelho); }
 
-  .theme-roxo {
-    border-color: var(--cor-box-roxo-borda);
-    background-color: color-mix(in srgb, var(--cor-box-roxo-borda) 10%, white);
-  }
+  .theme-roxo { --box-cor: var(--cor-box-roxo-borda); }
   .theme-roxo .box-artigo-titulo { color: var(--cor-box-roxo); }
 
-  .theme-neutro {
-    border-color: color-mix(in srgb, var(--cor-neutro) 30%, white);
-    background-color: var(--cor-neutro-fundo);
-  }
+  .theme-neutro { --box-cor: var(--cor-neutro); }
   .theme-neutro .box-artigo-titulo { color: var(--cor-neutro); }
 
   /* --- RESPONSIVIDADE --- */

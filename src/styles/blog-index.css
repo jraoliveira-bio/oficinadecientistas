@@ -1,29 +1,47 @@
-/* Container unificado do post (chamada + expandido) */
-.post-item {
-  /* Fallback sólido leve (entra em browsers sem color-mix/backdrop) */
-  background: rgba(255, 255, 255, 0.78);
-  /* GLASS SUAVE quando suportado (esta linha sobrescreve a de cima em browsers modernos) */
-  background: color-mix(in oklab, white 75%, transparent);
+/* Índice do blog: linha do tempo por mês, com uma ficha (.oc-ficha) por post.
+   As cores vêm dos papéis de tokens.css; a ficha em si é definida em base.css. */
 
-  /* Fallback de borda simples */
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  /* Quando suportado, borda mais sutil via mix */
-  border: 1px solid color-mix(in oklab, var(--oc-border) 70%, transparent);
+.contagem {
+  margin: 0 0 var(--oc-space-4);
+  color: var(--oc-muted);
+}
+.contagem strong { color: var(--oc-fg); }
 
-  border-radius: var(--oc-radius);
-  box-shadow: var(--oc-shadow-1);
+/* Linha do tempo: um fio tracejado à esquerda, com um ponto em cada mês */
+.linha-do-tempo {
+  border-left: 1px dashed var(--oc-border);
+  padding-left: var(--oc-space-6);
+}
+.mes { margin-bottom: var(--oc-space-8); }
+.mes[hidden] { display: none; }
 
-  /* “Une” cabeçalho + painel (sem gap visual) */
-  overflow: hidden;
-  margin-bottom: var(--oc-space-4);
-
-  /* Vidro (quando suportado) */
-  backdrop-filter: blur(8px) saturate(120%);
-  -webkit-backdrop-filter: blur(8px) saturate(120%);
+.mes-titulo {
+  position: relative;
+  margin: 0 0 var(--oc-space-4);
+  font-family: var(--oc-font-display);   /* carimbo de mês, letra de máquina */
+  font-size: var(--oc-fs-sm);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--oc-muted);
+}
+.mes-titulo::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--oc-space-6) - 5px); /* em cima do fio */
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--oc-accent);
 }
 
-/* Encosta o painel no cabeçalho do item */
-.post-card.inline { padding-bottom: 0; color: var(--oc-fg-highlight);}
+/* A ficha: cabeçalho (PostCard) + painel expansível, sem vão entre os dois */
+.post-item {
+  overflow: hidden;
+  margin-bottom: var(--oc-space-4);
+}
 
 /* Painel expandido: começa colapsado para animar */
 .post-expand {
@@ -33,11 +51,6 @@
   overflow: hidden;
   transition: height 220ms ease, opacity 180ms ease;
   will-change: height, opacity;
-
-  /* Fallback de borda-top */
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  /* Versão com mix quando suportado */
-  border-top: 1px solid color-mix(in oklab, var(--oc-border) 70%, transparent);
 }
 
 .post-expand[hidden] {
@@ -52,7 +65,7 @@
   opacity: 1;
 }
 
-.post-expand__inner { padding: var(--oc-space-4);color: var(--oc-pfblack); }
+.post-expand__inner { padding: 0 var(--oc-space-4) var(--oc-space-4); }
 
 .expand-actions { margin-top: var(--oc-space-4); text-align: right; }
 .expand-actions a { text-decoration: underline; }
@@ -65,4 +78,9 @@
   .post-expand {
     transition: none;
   }
+}
+
+@media (max-width: 640px) {
+  .linha-do-tempo { padding-left: var(--oc-space-4); }
+  .mes-titulo::before { left: calc(-1 * var(--oc-space-4) - 5px); }
 }

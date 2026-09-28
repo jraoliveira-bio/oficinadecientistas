@@ -4,10 +4,10 @@
    - Expansão inline do conteúdo (pré-renderizado)
    - Filtro client-side por tags (comportamento "OU"), espelhado na URL (?tag=a&tag=b)
      para poder compartilhar — e é assim que as tags da página de um post chegam aqui
-   - Âncoras por mês (YYYY-MM) para a sidebar
+   - Linha do tempo: posts agrupados por mês (id m-AAAA-MM, o alvo do arquivo da sidebar)
 */
 
-import "@/styles/blog-index.css"; // estilos específicos do índice (glass + animação)
+import "@/styles/blog-index.css"; // estilos específicos do índice (fichas, linha do tempo, animação)
 
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import BlogHeader from "@/components/BlogHeader.astro";
@@ -32,17 +32,22 @@ const all = await Promise.all(
     })
 );
 
-// 2) Âncoras por mês (primeira ocorrência YYYY-MM recebe id para navegação da sidebar)
-const seen = new Set<string>();
+// 2) Linha do tempo: agrupa por mês (já vem em ordem decrescente de data)
 function ym(d: Date) {
   return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
 }
-const items = all.map(({ post, Content }) => {
-  const key = ym(post.data.dataPublicacao);
-  const anchorId = seen.has(key) ? null : `m-${key}`;
-  if (!seen.has(key)) seen.add(key);
-  return { post, Content, anchorId };
-});
+const nomeDoMes = (d: Date) =>
+  new Intl.DateTimeFormat("pt-BR", { month: "long", year: "numeric", timeZone: "UTC" }).format(d);
+const meses: { ym: string; rotulo: string; itens: typeof all }[] = [];
+for (const item of all) {
+  const chave = ym(item.post.data.dataPublicacao);
+  let mes = meses.find((m) => m.ym === chave);
+  if (!mes) {
+    mes = { ym: chave, rotulo: nomeDoMes(item.post.data.dataPublicacao), itens: [] };
+    meses.push(mes);
+  }
+  mes.itens.push(item);
+}
 
 const pageTitle = "A Prancheta — bastidores da Oficina de Cientistas";
 const pageDesc =
@@ -56,14 +61,18 @@ const pageDesc =
 
   <h1 class="oc-sr-only">A Prancheta — bastidores da Oficina de Cientistas</h1>
 
-  <section aria-live="polite" aria-atomic="true" style="margin-bottom: var(--oc-space-3);">
-    <strong id="oc-count">{items.length}</strong> posts
-  </section>
+  <p class="contagem" aria-live="polite" aria-atomic="true">
+    <strong id="oc-count">{all.length}</strong> posts
+  </p>
 
-  {items.map(({ post, Content, anchorId }) => (
-    <div class="post-item" id={`item-${post.slug}`}>
-      <!-- Cabeçalho do post (variante inline, sem borda própria) -->
-      <PostCard post={post} anchorId={anchorId} variant="inline" />
+  <div class="linha-do-tempo">
+  {meses.map((mes) => (
+    <section class="mes" id={`m-${mes.ym}`} aria-labelledby={`t-${mes.ym}`}>
+      <h2 class="mes-titulo" id={`t-${mes.ym}`}>{mes.rotulo}</h2>
+  {mes.itens.map(({ post, Content }) => (
+    <div class="post-item oc-ficha" id={`item-${post.slug}`}>
+      <!-- Cabeçalho da ficha (variante inline: a ficha é o .post-item) -->
+      <PostCard post={post} variant="inline" nivel={3} />
 
       <!-- Painel expansível (conteúdo MDX pré-renderizado).
            Fechado = hidden + inert: continua medível para a animação, mas fora do Tab e do leitor de tela -->
@@ -84,6 +93,9 @@ const pageDesc =
       </section>
     </div>
   ))}
+    </section>
+  ))}
+  </div>
 
   <Fragment slot="sidebar">
     <BlogSidebar noIndice>
@@ -143,6 +155,10 @@ const pageDesc =
           }
         }
         if (counter) counter.textContent = String(visible);
+        // mês sem nenhum post visível some da linha do tempo
+        document.querySelectorAll('.mes').forEach((mes) => {
+          mes.hidden = !mes.querySelector('.post-item:not(.hidden)');
+        });
       }
 
       function setActive(btn, on) {

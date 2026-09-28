@@ -1,0 +1,86 @@
+---
+/* AntesDepois — dois prints lado a lado, para os posts d'A Prancheta (revisão, D12).
+   É o que um diário de desenvolvimento mais precisa: mostrar o que mudou.
+
+   Uso no MDX de um post:
+     import AntesDepois from "@/components/AntesDepois.astro";
+     <AntesDepois
+       antes="imagens/blog/menu-antes.png"  altAntes="Menu com ícones desalinhados"
+       depois="imagens/blog/menu-depois.png" altDepois="Menu com ícones alinhados"
+       legenda="O menu de aulas antes e depois do ajuste."
+     />
+
+   Props:
+   - antes / depois (obrigatórios): caminho em public/ (sem a base; o componente aplica)
+     ou uma imagem importada como módulo (usa o .src dela).
+   - altAntes / altDepois: texto alternativo de cada imagem (descreva o que se vê).
+   - legenda: opcional, vai no <figcaption> abaixo das duas.
+   - rotuloAntes / rotuloDepois: os carimbos (default "Antes" / "Depois").
+*/
+import { withBase } from "@/lib/url";
+
+interface Props {
+  antes: string | { src: string };
+  depois: string | { src: string };
+  altAntes?: string;
+  altDepois?: string;
+  legenda?: string;
+  rotuloAntes?: string;
+  rotuloDepois?: string;
+}
+
+const {
+  antes,
+  depois,
+  altAntes = "",
+  altDepois = "",
+  legenda,
+  rotuloAntes = "Antes",
+  rotuloDepois = "Depois",
+} = Astro.props;
+
+const caminho = (img: string | { src: string }) => (typeof img === "string" ? withBase(img) : img.src);
+---
+
+<figure class="antes-depois">
+  <div class="lados">
+    <div class="lado">
+      <span class="oc-carimbo">{rotuloAntes}</span>
+      <img src={caminho(antes)} alt={altAntes} loading="lazy" decoding="async" />
+    </div>
+    <div class="lado">
+      <span class="oc-carimbo">{rotuloDepois}</span>
+      <img src={caminho(depois)} alt={altDepois} loading="lazy" decoding="async" />
+    </div>
+  </div>
+  {legenda && <figcaption>{legenda}</figcaption>}
+</figure>
+
+<style>
+  .antes-depois { margin: var(--oc-space-6) 0; }
+  .lados {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--oc-space-4);
+    align-items: start;
+  }
+  .lado {
+    display: grid;
+    gap: var(--oc-space-2);
+    justify-items: start;
+  }
+  .lado img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--oc-border);
+    border-radius: 2px;
+  }
+  figcaption {
+    margin-top: var(--oc-space-3);
+    color: var(--oc-muted);
+    font-size: var(--oc-fs-sm);
+  }
+  @media (max-width: 640px) {
+    .lados { grid-template-columns: 1fr; }
+  }
+</style>

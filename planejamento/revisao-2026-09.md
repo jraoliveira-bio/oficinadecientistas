@@ -34,12 +34,27 @@ Legenda: 🔴 quebrado · 🟠 inconsistência visível / UX · 🟡 higiene de 
 >     - **D3** — header de ponta a ponta no site e no blog (o conteúdo segue alinhado à página).
 >     - **D13** — RSS (`/blog/rss.xml`), rodapé e anterior/próximo no blog. Falta só a imagem de
 >       capa opcional (campo `capa`), que fica para quando algum post tiver capa.
-> - Pendentes que dependem do autor: **D2** (qual fonte no corpo das aulas; reduzir a 3 papéis),
->   I7 (e-mail de contato e Lattes) e a `description` da Aula 01 (fala de IMRaD).
-> - Próximos candidatos (Parte 2, agora os de **gosto** — melhor combinar antes): D10 (o espelho de
->   cor do blog: trocar o roxo/rosa provisório por uma tinta do site), D6 (família única de caixas),
->   D4 (home menos repetitiva; card "Da Prancheta" com os últimos posts), D8 (vitrine com cursos
->   "em breve"), D12 (estética de caderno/zine no blog) e D9 (Manifesto na largura toda).
+>   - ✅ **Bloco 7** — os de gosto da Parte 2 (o autor pediu para seguir):
+>     - **D10** — o blog vira a coxia: fundo vinho bem escuro, texto papel, destaque ardósia clara;
+>       posts como fichas de papel. Sai o roxo/rosa. Tintas novas: `--vinho-coxia`, `--papel-coxia`,
+>       `--ardosia-clara`, `--manila`.
+>     - **D12** — data como carimbo, tags como etiquetas manila, índice como linha do tempo por mês
+>       e o componente `AntesDepois`. **Sem inclinar nada**: o autor prefere as coisas retas (pediu
+>       para endireitar as notas de margem), então fichas e carimbos ficam retos e não há fita crepe.
+>     - **D11** — blog com a largura e as laterais do site; título do header mais perto do tamanho do
+>       nome no header do site.
+>     - **D6** — caixas editoriais com uma base só (`--caixa-*`) e um traço próprio cada.
+>     - **D4** — home: nome uma vez só; painel escuro "Da Prancheta" com a capa do blog e os 3
+>       últimos posts, no mesmo arranjo do card do curso. **A pedido do autor, o primeiro contato é
+>       com o conteúdo**: curso e Prancheta vêm primeiro, e a apresentação da Oficina (nome, lema,
+>       proposta e uma frase do Manifesto numa folha datilografada) fecha a página.
+>     - **D8** — vitrine com Estatística, Ecologia e R "em preparação", em cards de esboço.
+>     - **D9** — folha do Manifesto mais larga, com o texto numa medida confortável.
+>     - Conteúdo: `description` da Aula 01 reescrita a partir dos títulos da própria aula.
+> - Pendentes que dependem do autor: **D2** (qual fonte no corpo das aulas; reduzir a 3 papéis) e
+>   I7 (e-mail de contato e Lattes).
+> - Ficaram de fora de propósito: imagem de capa por post (D13; nenhum post tem capa ainda),
+>   anotações manuscritas nas margens do blog (D12) e a "inversão tipográfica" opcional do D11.
 
 ---
 

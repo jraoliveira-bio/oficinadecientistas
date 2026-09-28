@@ -17,9 +17,10 @@ const alignmentClass = align === 'right' ? 'align-right' : 'align-left';
     width: 45%; /* Ocupa um pouco menos da metade da largura */
     padding: 15px 20px;
     margin-bottom: 1rem; /* Espaço abaixo da caixa */
-    background-color: var(--cor-superficie-suave);
-    border: 1px solid var(--borda); /* Borda fina para dar definição */
-    border-radius: var(--raio-l);
+    /* Base comum das caixas (D6); o traço próprio é o itálico que flutua ao lado do texto */
+    background: var(--caixa-fundo);
+    border: var(--caixa-filete);
+    border-radius: var(--caixa-raio);
     font-size: 16px; /* Fonte ligeiramente menor */
     font-style: italic; /* Estilo de nota de margem */
     color: var(--cor-texto);

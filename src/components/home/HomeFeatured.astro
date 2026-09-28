@@ -1,6 +1,5 @@
 ---
 import FeatureHeroCard from "./FeatureHeroCard.astro";
-import CoverCard from "./CoverCard.astro";
 
 interface Hero {
   href: string;
@@ -13,32 +12,16 @@ interface Hero {
   cta?: string;
 }
 
-interface Cover {
-  href: string;
-  imgSrc: string;
-  imgAlt: string;
-  label?: string;
-  title: string;
-  meta?: string;
-  cta?: string;
-}
-
 interface Props {
   hero: Hero;
-  covers: Cover[];
 }
 
-const { hero, covers } = Astro.props;
+// O blog saiu daqui: agora é o painel "Da Prancheta" (HomePrancheta), com os últimos posts
+const { hero } = Astro.props;
 ---
 
-<section class="home-featured" aria-label="Destaques">
+<section class="home-featured" aria-label="Curso em destaque">
   <FeatureHeroCard {...hero} />
-
-  {covers?.length > 0 && (
-    <div class="home-featured__covers" data-count={covers.length}>
-      {covers.map((c) => <CoverCard {...c} />)}
-    </div>
-  )}
 </section>
 
 <style>
@@ -50,27 +33,10 @@ const { hero, covers } = Astro.props;
     gap: 1.6rem;
   }
 
-  /* Capas: 2-up no desktop, 1-up no mobile */
-  .home-featured__covers {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.2rem;
-    align-items: stretch;
-  }
-
-  /* Um único cover não deve esticar para a largura toda nem deixar metade vazia */
-  .home-featured__covers[data-count="1"] {
-    grid-template-columns: minmax(0, 420px);
-  }
-
   @media (max-width: 900px) {
     .home-featured {
       padding: 0 20px;
       margin: 40px auto;
-    }
-
-    .home-featured__covers {
-      grid-template-columns: 1fr;
     }
   }
 </style>
