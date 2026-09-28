@@ -332,7 +332,9 @@ A auditoria completa (e o que já foi feito) está em
 
 **Adicionar um post no blog:** crie `src/content/blog/AAAA-MM-DD-slug.mdx` com `title`,
 `dataPublicacao` (data sem aspas), `tags`, `summary`. Aparece sozinho no índice (ordenado por data),
-no RSS e na navegação anterior/próximo dos posts vizinhos.
+no RSS e na navegação anterior/próximo dos posts vizinhos. Para mostrar o que mudou, use
+`<AntesDepois antes="imagens/blog/x-antes.png" depois="imagens/blog/x-depois.png" altAntes="…" altDepois="…" />`
+(`src/components/AntesDepois.astro`; imagens em `public/imagens/blog/`).
 
 **Mexer no visual do site principal:** quase sempre é `public/estilos.css` ou o `<style>` do componente
 (cores só via papéis `--cor-*` — ver "Cores e tokens" na seção 8).
